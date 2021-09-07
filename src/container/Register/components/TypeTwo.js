@@ -28,7 +28,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import zIndex from '@material-ui/core/styles/zIndex';
-
+import axios from 'axios';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -106,29 +106,30 @@ export default function TypeTwo() {
                    setSubmitting(true);
                    console.log(values);
                    setSubmitting(false);
-                  // axios.post(contactFormEndpoint,
-                  //   values,
-                  //   {
-                  //     headers: {
-                  //       'Access-Control-Allow-Origin': '*',
-                  //       'Content-Type': 'application/json',
-                  //     }
-                  //   },
-                  // ).then((resp) => {
-                  //   setSubmitionCompleted(true);
-                  // }
-                  // );
+                  axios.post("http://localhost:4000/users",
+                      values,
+                      // {
+                      //   headers: {
+                      //     'Access-Control-Allow-Origin': '*',
+                      //     'Content-Type': 'application/json',
+                      //   }
+                      // },
+                    ).then((resp) => {
+                      console.log(resp);
+                      setSubmitting(false);
+                    }
+                    );
                 }}
 
                 validationSchema={
                   Yup.object().shape({
                     email: Yup.string()
-                      .email()
-                      .required('Required'),
-                    lastName: Yup.string()
-                      .required('Required'),
-                    firstName: Yup.string()
-                    .required('Required'),                    
+                      .email(),
+                      //.required('Required'),
+                    lastName: Yup.string(),
+                      //.required('Required'),
+                    firstName: Yup.string(),
+                    //.required('Required'),                    
                     password: Yup.string()
                       .min(6, 'Password should be of minimum 6 characters length')
                       .max(8, 'Password should be of maximum 8 characters length')
@@ -136,11 +137,11 @@ export default function TypeTwo() {
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,8}$/,
                         // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,8})$/,
                         "One Uppercase, One Lowercase, One Number and one special case Character"
-                      )
-                      .required('Required'),
+                      ),
+                      //.required('Required'),
                     cpassword: Yup.string()
                       .oneOf([Yup.ref('password'), ""], 'Passwords must match')
-                      .required('Password confirm is required'),
+                    //  .required('Password confirm is required'),
                 })}
               >
                 {(props) => {
