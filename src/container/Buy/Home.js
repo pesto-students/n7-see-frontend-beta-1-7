@@ -28,15 +28,12 @@ import {
 import TotalGrowthBarChart from "./components/TotalGrowthBarChart";
 import Sales from "./components/Sales";
 import ReqCard from '../../components/Card/ReqCard';
-import BuyCard from '../../components/Card/BuyCard';
-import BottomCard from '../../components/Card/BottomCard';
 import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import { collapseClasses } from "@material-ui/core";
-import CarouselSlider from './components/CarouselSlider';
-import FeatureCard from "../../components/Card/FeatureCard";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(0),
+    paddingBottom: theme.spacing(4),
     marginLeft:"40px",
     //border:"1px solid #000"
   },
@@ -89,26 +86,9 @@ const useStyles = makeStyles((theme) => ({
     // border:"1px solid #000",
     borderRadius: "0px 5px 5px 0px",
     padding:"40px"
-  },
-  grid2Col1Bottom:{
-    display:"flex",
-    marginTop:"20px",
-    alignItems:"flex-start",
-    justifyContent:"space-between",
-  },
+  }
 }));
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 export default function Home() {
   const classes = useStyles();
   // const counter = useSelector(getCounter);
@@ -119,20 +99,21 @@ export default function Home() {
 <Fragment>
   <Grid className={classes.container}>
     <Grid container>
-            <Grid item xs={12} md={7} lg={8}>
-                {/* <Box className={classes.grid1Col1}>
+    <Grid item xs={12} md={7} lg={8}>
+                <Box className={classes.grid1Col1}>
                 <img src={dashboardimg}  className={classes.grid1Col1Img}/>
-                <CarouselSlider/>
-                </Box> */}
-                <Box style={{marginRight:"10px"}}>
-                <CarouselSlider/>
                 </Box>
+               
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
                 <Container className={classes.grid1Col2}>
                    <Box>
                   <Grid item>
-                    <BuyCard/>
+                    Seller
+                  </Grid>
+                  <Grid item>
+                    <ReqCard/>
+                    <ReqCard/>
                   </Grid>
                   {/* <Box
                     sx={{
@@ -153,13 +134,13 @@ export default function Home() {
                   </Box>
                   <br/>
                   <Box>
-                  {/* <Grid item>
+                  <Grid item>
                     Buyer
                   </Grid>
                   <Grid item>
                     <ReqCard/>
                     <ReqCard/>
-                  </Grid> */}
+                  </Grid>
                 </Box>              
                 </Container>
       
@@ -179,35 +160,15 @@ export default function Home() {
       </Grid>
       <Grid container>
     <Grid item xs={12} md={7} lg={8}>
-                {/* <Box className={classes.grid1Col1}>
+                <Box className={classes.grid1Col1}>
                 <TotalGrowthBarChart isLoading={true} />
-                <Sales/>
-               
-                </Box> */}
-              
-                <Box style={{marginRight:"10px",marginTop:"30px"}}>
-                <Grid container direction="row" justifyContent="space-between">
-                 
-                <FeatureCard/>
-                <FeatureCard/>
-                <FeatureCard/>
-                  
-
-                </Grid>
+                {/* <Sales/> */}
                 </Box>
-                <Box className={classes.grid2Col1Bottom} style={{marginTop:"30px",marginRight:"10px"}}>
-                <BottomCard/>
-                <BottomCard/>
-                </Box>
-                
                
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
                 <Container className={classes.grid1Col2}>
-                <BuyCard/>
-                <BuyCard/>
-                <BuyCard/>
-                   {/* <Box>
+                   <Box>
                   <Grid item>
                     Category
                   </Grid>
@@ -220,7 +181,7 @@ export default function Home() {
                   </Box>
                   <br/>
                   <Box>
-                </Box>               */}
+                </Box>              
                 </Container>
       
             </Grid>
@@ -247,12 +208,9 @@ export default function Home() {
   //             </Paper>
   //           </Grid> */}
           </Grid>
-          <Grid item >
-          <Box pt={4}>
-             <Copyright />
+           <Box pt={4}>
+             {/* <Copyright /> */}
          </Box>
-          </Grid>
-           
   {/* </Container>  */}
   </Fragment>
   );

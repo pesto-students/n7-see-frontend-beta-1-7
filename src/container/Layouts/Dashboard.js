@@ -20,7 +20,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/icons/Notifications';
 import seelogo from '../../assets/images/seelogo.png';
-import { mainListItems, secondaryListItems } from '../../components/listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';

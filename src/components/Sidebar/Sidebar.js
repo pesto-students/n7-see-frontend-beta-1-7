@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
-import { mainListItems, secondaryListItems } from '../../components/listItems';
+import { mainListItems, secondaryListItems } from './listItems';
 import Avatar from '@material-ui/core/Avatar';
 import seelogo from '../../assets/images/seelogo.png';
 import avatarimg from '../../assets/images/avatar.jpg';

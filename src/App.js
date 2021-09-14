@@ -12,6 +12,10 @@ Grid
 import MainLayout from "./container/Layouts/MainLayout";
 import Dashboard from "./container/Layouts/Dashboard";
 import Home from './container/Home/Home';
+import SearchItems from './container/Search';
+import SellProducts from './container/Sell';
+import BuyProducts from './container/Buy';
+import { Search } from '@material-ui/icons';
 function App() {
   return (
     <Router>
@@ -19,7 +23,13 @@ function App() {
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
     <Dashboard>
-       <Route path="/" component={Home}/>
+       <Route exact path="/" component={Home}/>
+       <Route exact path="/search" component={SearchItems}/>
+       <Route exact path="/sell" component={SellProducts}/>
+       <Route exact path="/buy" component={BuyProducts}/>
+       <Route exact path="/settings" component={SearchItems}/>
+       <Route exact path="/category" component={SearchItems}/>
+       <Route exact path="/reports" component={SearchItems}/>
     </Dashboard>
 
     {/* <Route exact path="/home" component={Home} /> */}

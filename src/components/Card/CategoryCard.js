@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ===========================|| DASHBOARD - TOTAL INCOME DARK CARD ||=========================== //
 
-const TotalIncomeDarkCard = ({ isLoading }) => {
+const CategoryCard = ({ isLoading }) => {
     const classes = useStyles();
 
     return (
@@ -100,8 +100,8 @@ const TotalIncomeDarkCard = ({ isLoading }) => {
     );
 };
 
-TotalIncomeDarkCard.propTypes = {
+CategoryCard.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default TotalIncomeDarkCard;
+export default CategoryCard;
