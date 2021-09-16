@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import Chip from '@material-ui/core/Chip';
 import {
   Avatar,
   NotificationsIcon,
@@ -34,9 +35,12 @@ import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
+import DividerComponent from '../../components/DividerComponent';
+
 import { collapseClasses } from "@material-ui/core";
 import CarouselSlider from './components/CarouselSlider';
 import FeatureCard from "../../components/Card/FeatureCard";
+import SearchSection from '../../components/SearchSection'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -49,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
     marginLeft:"40px",
-    //border:"1px solid #000"
+    // border:"1px solid #000"
   },
   paper: {
     padding: theme.spacing(2),
@@ -81,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight:'10px',
     // border:"1px solid #000",
     borderRadius: "0px 5px 5px 0px",
-    padding:"40px"
+    padding:"30px 40px 10px 40px",
   },
   grid1Col2Buyer:{
     backgroundColor:"#F9F9FB",
@@ -96,6 +100,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"flex-start",
     justifyContent:"space-between",
   },
+  homeSearch:{
+    margin:"0px 10px 20px 0px",
+    // border:"1px solid #000"
+  }
 }));
 function Copyright() {
   return (
@@ -109,12 +117,16 @@ function Copyright() {
     </Typography>
   );
 }
+
 export default function Home() {
   const classes = useStyles();
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  useEffect(()=>{
+    
+  },[])
   return (
 <Fragment>
   <Grid className={classes.container}>
@@ -124,14 +136,54 @@ export default function Home() {
                 <img src={dashboardimg}  className={classes.grid1Col1Img}/>
                 <CarouselSlider/>
                 </Box> */}
+                <Box className={classes.homeSearch}>
+                  <SearchSection theme="light" />
+                </Box>
                 <Box style={{marginRight:"10px"}}>
                 <CarouselSlider/>
                 </Box>
+                <Box style={{paddingBottom:"20px",paddingTop:"20px"}}>
+                    <DividerComponent>Highlighted Products</DividerComponent>
+                </Box>  
+                <Box style={{marginRight:"10px",marginTop:"20px"}}>
+                <Grid container direction="row" justifyContent="space-between">
+                 
+                <FeatureCard/>
+                <FeatureCard/>
+                <FeatureCard/>
+                  
+
+                </Grid>
+                
+                </Box>
+                <Box style={{paddingBottom:"20px",paddingTop:"40px"}}>
+                    <DividerComponent>Featured Products</DividerComponent>
+                    </Box>  
+                <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
+                <BottomCard/>
+                <BottomCard/>
+                </Box>
+                <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
+                <BottomCard/>
+                <BottomCard/>
+                </Box>
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
+                 
                 <Container className={classes.grid1Col2}>
+               
+                    <Box style={{paddingBottom:"30px"}}>
+                    <DividerComponent>Fresh Recommendations</DividerComponent>
+                    </Box>           
                    <Box>
+                  
+                 
                   <Grid item>
+                    <BuyCard/>
+                    <BuyCard/>
+                    <BuyCard/>
+                    <BuyCard/>
+                    <BuyCard/>
                     <BuyCard/>
                   </Grid>
                   {/* <Box
@@ -185,7 +237,7 @@ export default function Home() {
                
                 </Box> */}
               
-                <Box style={{marginRight:"10px",marginTop:"30px"}}>
+                {/* <Box style={{marginRight:"10px",marginTop:"30px"}}>
                 <Grid container direction="row" justifyContent="space-between">
                  
                 <FeatureCard/>
@@ -194,19 +246,19 @@ export default function Home() {
                   
 
                 </Grid>
-                </Box>
-                <Box className={classes.grid2Col1Bottom} style={{marginTop:"30px",marginRight:"10px"}}>
+                </Box> */}
+                {/* <Box className={classes.grid2Col1Bottom} style={{marginTop:"30px",marginRight:"10px"}}>
                 <BottomCard/>
                 <BottomCard/>
-                </Box>
+                </Box> */}
                 
                
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
                 <Container className={classes.grid1Col2}>
+                {/* <BuyCard/>
                 <BuyCard/>
-                <BuyCard/>
-                <BuyCard/>
+                <BuyCard/> */}
                    {/* <Box>
                   <Grid item>
                     Category
@@ -247,7 +299,7 @@ export default function Home() {
   //             </Paper>
   //           </Grid> */}
           </Grid>
-          <Grid item >
+          <Grid item style={{backgroundColor:"#F9F9FB"}}>
           <Box pt={4}>
              <Copyright />
          </Box>

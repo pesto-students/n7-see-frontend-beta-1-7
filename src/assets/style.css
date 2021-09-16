@@ -25,6 +25,20 @@
 {
     border: '1px solid #000';
 }
+
+.dividercontainer{
+  display: flex;
+  align-items: center;
+}
+
+.dividerborder{
+  border-bottom: 1px solid lightgray;
+  width: 100%;
+}
+
+.content {
+  padding: 0 10px 0 10px;
+}
 /* .avatar-style{
   align-items: center;
 } */

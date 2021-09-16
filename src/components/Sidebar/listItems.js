@@ -25,15 +25,6 @@ export const mainListItems = (
             <ListItemText primary="Dashboard" />
           </ListItem>
         </Link>
-        <Link to="/setting">
-          <ListItem button>
-            <ListItemIcon>
-            <IconSettings stroke={1.5} size="1.3rem" />
-              {/* <SettingsIcon /> */}
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
-        </Link>
       </List>
     <Link to="/sell">
     <ListItem button>

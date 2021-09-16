@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -18,7 +18,7 @@ import {
   Avatar,
 } from '@material-ui/core';
 import { ToastContainer, toast } from 'material-react-toastify';
-  import 'material-react-toastify/dist/ReactToastify.css';
+import 'material-react-toastify/dist/ReactToastify.css';
 
 function Copyright() {
   return (
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 export default function Login() {
 const classes = useStyles();
 let history = useHistory();
@@ -102,50 +103,43 @@ let history = useHistory();
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign In
         </Typography>
         <Formik
-                initialValues={{ firstName:'',email: '', lastName: '', password: '',cpassword:'' }}
+                initialValues={{ email: '', password: ''}}
                 onSubmit={(values, { setSubmitting }) => {
                    setSubmitting(true);
                    console.log(values);
-                 
-                   axios.post("http://localhost:4000/users",values,
-                      // {
-                      //   headers: {
-                      //     'Access-Control-Allow-Origin': '*',
-                      //     'Content-Type': 'application/json',
-                      //   }
-                      // }, 
-                    ).then((resp) => {
-                      console.log(resp);
+                   axios.post("http://localhost:4000/users/login",values).then((resp) => {
+                      console.log("resp");
 
                       setSubmitting(false);
                       if(resp.status==200)
                       {
                         console.log(resp);
+                        // localStorage.setItem('username', values.email);
+                        sessionStorage.setItem('username', values.email);
                         toast.success(resp.data.message,{autoClose: 3000,});
-                        // history.push("/home");
+                        history.push("/")
                       }
                       else{
                         toast.error(resp.data.message,{autoClose: 3000,});
                         console.log(resp);
                       }
                       
-                    }
-                    );
+                    }).catch(e=>{
+                     toast.error("Failed to login",{autoClose: 3000,});
+                    });
+                   
+                   
                 }}
 
                 validationSchema={
                   Yup.object().shape({
                     email: Yup.string()
                       .email(),
-                      //.required('Required'),
-                    lastName: Yup.string(),
-                      //.required('Required'),
-                    firstName: Yup.string(),
-                    //.required('Required'),                    
-                    // password: Yup.string()
+                      //.required('Required'),                   
+                    password: Yup.string()
                     //   .min(6, 'Password should be of minimum 6 characters length')
                     //   .max(8, 'Password should be of maximum 8 characters length')
                     //   .matches(
@@ -216,7 +210,7 @@ let history = useHistory();
           <Grid container spacing={2}>
           {isSubmitting && <LinearProgress />}
           <Grid item xs={12}>
-          <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
+          <Button type="submit" fullWidth color="primary" variant="contained">
                           Submit
                         </Button>
           </Grid>
@@ -234,7 +228,7 @@ let history = useHistory();
 
           <Grid container justifyContent="flex-end" spacing={4}>
             <Grid item>
-              <Link href="/" variant="body2">
+              <Link href="/register" variant="body2">
               Don't have an account? Sign up
               </Link>
             </Grid>

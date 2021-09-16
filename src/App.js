@@ -1,5 +1,5 @@
-import React from 'react';
-import { Switch, Route,useHistory, BrowserRouter as Router } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { Switch,Redirect, Route,useHistory, BrowserRouter as Router } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import './assets/style.css';
@@ -16,21 +16,44 @@ import SearchItems from './container/Search';
 import SellProducts from './container/Sell';
 import BuyProducts from './container/Buy';
 import { Search } from '@material-ui/icons';
+function IsLoggedIn(){
+  let userName=sessionStorage.getItem('username');
+  console.log(userName)
+  // let userName=localStorage.getItem('username');
+  if(userName!==null)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 function App() {
+  // let username=sessionStorage.getItem('username');
+console.log("ASDASD",IsLoggedIn())
+
   return (
     <Router>
     <Switch>
+   
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
-    <Dashboard>
-       <Route exact path="/" component={Home}/>
-       <Route exact path="/search" component={SearchItems}/>
-       <Route exact path="/sell" component={SellProducts}/>
-       <Route exact path="/buy" component={BuyProducts}/>
-       <Route exact path="/settings" component={SearchItems}/>
-       <Route exact path="/category" component={SearchItems}/>
-       <Route exact path="/reports" component={SearchItems}/>
-    </Dashboard>
+    {
+      IsLoggedIn()===true?<Dashboard>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/search" component={SearchItems}/>
+      <Route exact path="/sell" component={SellProducts}/>
+      <Route exact path="/buy" component={BuyProducts}/>
+      <Route exact path="/settings" component={SearchItems}/>
+      <Route exact path="/category" component={SearchItems}/>
+      <Route exact path="/reports" component={SearchItems}/>
+    </Dashboard>:<Redirect to="/login" />
+    }
+
+ 
+
 
     {/* <Route exact path="/home" component={Home} /> */}
     {/* <Route path="/features" component={FeaturePage} /> */}

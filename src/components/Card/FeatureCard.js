@@ -16,8 +16,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Chat from '@material-ui/icons/Chat';
-
-
+import img2 from '../../assets/images/img2.png';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -68,7 +67,7 @@ export default function FeatureCard() {
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        image={img2}
         title="Paella dish"
       />
       <CardContent>

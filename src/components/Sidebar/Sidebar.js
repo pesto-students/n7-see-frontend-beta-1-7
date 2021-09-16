@@ -134,13 +134,10 @@ const Sidebar = props => {
     <div className={classes.listStyle}>
     <List>{mainListItems}</List>
     {/* <Divider /> */}
-    <List>{secondaryListItems}</List>
+    {/* <List>{secondaryListItems}</List> */}
     </div>
 
-    <div className={classes.toolbarIcon}>
-      
-    <Avatar alt="Remy Sharp" src={avatarimg}/>
-    </div>
+  
   </Drawer>
 
 
