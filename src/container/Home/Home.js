@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect,useState } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -30,7 +30,8 @@ import TotalGrowthBarChart from "./components/TotalGrowthBarChart";
 import Sales from "./components/Sales";
 import ReqCard from '../../components/Card/ReqCard';
 import BuyCard from '../../components/Card/BuyCard';
-import BottomCard from '../../components/Card/BottomCard';
+import FeatureCard from '../../components/Card/FeatureCard';
+import HighlightCard from "../../components/Card/HighlightCard";
 import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
@@ -39,8 +40,13 @@ import DividerComponent from '../../components/DividerComponent';
 
 import { collapseClasses } from "@material-ui/core";
 import CarouselSlider from './components/CarouselSlider';
-import FeatureCard from "../../components/Card/FeatureCard";
+
 import SearchSection from '../../components/SearchSection'
+import { useSelector,useDispatch } from 'react-redux';
+import {fetchHomeData} from '../../redux/actions';
+import Skeleton from '@material-ui/lab/Skeleton';
+import axios from 'axios';
+import { ToastContainer, toast } from 'material-react-toastify';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -122,51 +128,98 @@ export default function Home() {
   const classes = useStyles();
   // const counter = useSelector(getCounter);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  // let loading = useSelector(state=>state.fetchDataReducer.loading);
+  // let data = useSelector(state=>state.fetchDataReducer.data);
+
+  // let highlightedProduct=!loading?data.highlightedProduct:[];
+  // console.log(loading);
+  // console.log(!loading?data.banner:[]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const[loadingIndicator,setLoadingIndicator]=useState(true);
+  const[data,setData]=useState(null);
+  const[banner,setBanner]=useState([]);
+  const[highlightedListing,setHighlightedListing]=useState([]);
+  const[featuredListing,setFeaturedListing]=useState([]);
+  const[latestListing,setLatestListing]=useState([]);
   useEffect(()=>{
-    
+    // dispatch(fetchHomeData());
+    const fetchData = async () => {
+      setLoadingIndicator(true);
+      // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
+      await axios('http://localhost:4000/request').then((resp)=>{
+        console.log(resp);
+        setLoadingIndicator(false);
+        setData(resp.data.response);
+        setBanner(resp.data.response.banner);
+        setHighlightedListing(resp.data.response.highlightedlisting)
+        setFeaturedListing(resp.data.response.featuredlisting)
+        setLatestListing(resp.data.response.latestlisting)
+        // console.log(resp.data.banner);
+
+      }).catch(e=>{
+        setLoadingIndicator(false);
+        toast.error("Something Went Wrong",{autoClose: 3000,});
+       });
+        // setUser(result.data);
+    };
+ 
+    fetchData();
   },[])
   return (
 <Fragment>
   <Grid className={classes.container}>
     <Grid container>
             <Grid item xs={12} md={7} lg={8}>
-                {/* <Box className={classes.grid1Col1}>
-                <img src={dashboardimg}  className={classes.grid1Col1Img}/>
-                <CarouselSlider/>
-                </Box> */}
                 <Box className={classes.homeSearch}>
                   <SearchSection theme="light" />
                 </Box>
                 <Box style={{marginRight:"10px"}}>
-                <CarouselSlider/>
+                <CarouselSlider banner={banner}/>
                 </Box>
                 <Box style={{paddingBottom:"20px",paddingTop:"20px"}}>
-                    <DividerComponent>Highlighted Products</DividerComponent>
+                    <DividerComponent>Highlighted Listing</DividerComponent>
                 </Box>  
                 <Box style={{marginRight:"10px",marginTop:"20px"}}>
                 <Grid container direction="row" justifyContent="space-between">
                  
+                {
+                  !loadingIndicator&& data!=null?highlightedListing.slice(0, 3).map((highlightedproduct,i)=>(
+                        <HighlightCard key={i} item={highlightedproduct}/>
+                    )):<Skeleton animation="wave" />
+                }
+                {/* <FeatureCard/>
                 <FeatureCard/>
-                <FeatureCard/>
-                <FeatureCard/>
+                <FeatureCard/> */}
                   
 
                 </Grid>
                 
                 </Box>
                 <Box style={{paddingBottom:"20px",paddingTop:"40px"}}>
-                    <DividerComponent>Featured Products</DividerComponent>
-                    </Box>  
-                <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
-                <BottomCard/>
-                <BottomCard/>
-                </Box>
-                <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
-                <BottomCard/>
-                <BottomCard/>
-                </Box>
+                    <DividerComponent>Featured Listing</DividerComponent>
+                </Box>  
+
+                
+                  <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
+                  <Grid container>
+                  {
+                  !loadingIndicator&&data!=null?featuredListing.slice(0, 4).map((featuredproduct,i)=>(
+                     <Grid item xs={12} md={6} lg={6}>
+                      <FeatureCard key={i} item={featuredproduct}/>
+                      </Grid>
+                  )):<Skeleton animation="wave" />
+                  }
+                   </Grid>
+                  </Box>
+                
+
+
+    
+                {/* <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
+                <FeatureCard/>
+                <FeatureCard/>
+                </Box> */}
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
                  
@@ -179,133 +232,45 @@ export default function Home() {
                   
                  
                   <Grid item>
+
+                  {
+                  !loadingIndicator&& data!=null?latestListing.slice(0, 6).map((latestproduct,i)=>(
+                    <BuyCard key={i} item={latestproduct}/>
+                  )):<Skeleton animation="wave" />
+                }
+
+{/*                  
                     <BuyCard/>
                     <BuyCard/>
                     <BuyCard/>
                     <BuyCard/>
                     <BuyCard/>
-                    <BuyCard/>
+                    <BuyCard/> */}
                   </Grid>
-                  {/* <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      p: 1
-                    }}
-                  >
-                    <Button
-                      color="primary"
-                      endIcon={<ArrowRight />}
-                      size="small"
-                      variant="text"
-                    >
-                      View all
-                    </Button>
-                  </Box> */}
                   </Box>
                   <br/>
                   <Box>
-                  {/* <Grid item>
-                    Buyer
-                  </Grid>
-                  <Grid item>
-                    <ReqCard/>
-                    <ReqCard/>
-                  </Grid> */}
                 </Box>              
                 </Container>
       
             </Grid>
-
-            
-    {/* <Grid item xs={12} md={7} lg={8}>
-              <Paper className={fixedHeightPaper}>
-               <Chart /> 
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={5} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid> */}
       </Grid>
       <Grid container>
     <Grid item xs={12} md={7} lg={8}>
-                {/* <Box className={classes.grid1Col1}>
-                <TotalGrowthBarChart isLoading={true} />
-                <Sales/>
-               
-                </Box> */}
-              
-                {/* <Box style={{marginRight:"10px",marginTop:"30px"}}>
-                <Grid container direction="row" justifyContent="space-between">
-                 
-                <FeatureCard/>
-                <FeatureCard/>
-                <FeatureCard/>
-                  
-
-                </Grid>
-                </Box> */}
-                {/* <Box className={classes.grid2Col1Bottom} style={{marginTop:"30px",marginRight:"10px"}}>
-                <BottomCard/>
-                <BottomCard/>
-                </Box> */}
-                
-               
             </Grid>
             <Grid item xs={12} md={5} lg={4} >
                 <Container className={classes.grid1Col2}>
-                {/* <BuyCard/>
-                <BuyCard/>
-                <BuyCard/> */}
-                   {/* <Box>
-                  <Grid item>
-                    Category
-                  </Grid>
-                  <Grid item>
-                    <CategoryCard/>
-                    <CategoryCard/>
-                    <CategoryCard/>
-                    <CategoryCard/>
-                  </Grid>
-                  </Box>
-                  <br/>
-                  <Box>
-                </Box>               */}
                 </Container>
       
             </Grid>
       </Grid>
-
-  {/* <Container maxWidth="lg" className={classes.container}> */}
-           {/* <Grid container spacing={3} > */}
-  {/* //           Chart
-            // <Grid item xs={12} md={8} lg={9}>
-            //   <Paper className={fixedHeightPaper}>
-            //     <Chart />
-            //   </Paper>
-            // </Grid>
-  //           Recent Deposits
-  //           <Grid item xs={12} md={4} lg={3}>
-  //             <Paper className={fixedHeightPaper}>
-  //               <Deposits />
-  //             </Paper>
-  //           </Grid>
-  //           Recent Orders
-  //           <Grid item xs={12}>
-  //             <Paper className={classes.paper}>
-  //               <Orders />
-  //             </Paper>
-  //           </Grid> */}
           </Grid>
           <Grid item style={{backgroundColor:"#F9F9FB"}}>
           <Box pt={4}>
              <Copyright />
          </Box>
           </Grid>
-           
-  {/* </Container>  */}
+          <ToastContainer />
   </Fragment>
   );
 };

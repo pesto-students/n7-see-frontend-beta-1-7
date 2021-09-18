@@ -12,7 +12,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { IconDashboard, IconSettings, IconBrandStripe,IconBrandSkype,IconBold,IconBrandProducthunt,IconFilter,IconChartInfographic } from '@tabler/icons';
+import { IconDashboard, IconSettings, IconBrandStripe,IconBrandSkype,IconBold,IconBrandProducthunt,IconFilter,IconChartInfographic,IconBrandGravatar } from '@tabler/icons';
 export const mainListItems = (
   <div>
           <List>
@@ -26,7 +26,7 @@ export const mainListItems = (
           </ListItem>
         </Link>
       </List>
-    <Link to="/sell">
+    {/* <Link to="/sell">
     <ListItem button>
       <ListItemIcon>
       <IconBrandStripe stroke={1.5} size="1.3rem" />
@@ -41,13 +41,29 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Buy" />
     </ListItem>
+    </Link> */}
+    <Link to="/request">
+    <ListItem button>
+      <ListItemIcon>
+      <IconBold stroke={1.5} size="1.3rem" />
+      </ListItemIcon>
+      <ListItemText primary="Request" />
+    </ListItem>
     </Link>
-    <Link to="/category">
+    <Link to="/interest">
+    <ListItem button>
+      <ListItemIcon>
+      <IconBold stroke={1.5} size="1.3rem" />
+      </ListItemIcon>
+      <ListItemText primary="Interest" />
+    </ListItem>
+    </Link>
+    <Link to="/complaint">
     <ListItem button>
       <ListItemIcon>
       <IconBrandProducthunt stroke={1.5} size="1.3rem" />
       </ListItemIcon>
-      <ListItemText primary="Category" />
+      <ListItemText primary="Complaint" />
     </ListItem>
     </Link>
     <Link to="/reports">
@@ -64,6 +80,22 @@ export const mainListItems = (
       <IconFilter stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Search" />
+    </ListItem>
+    </Link>
+    <Link to="/profile">
+    <ListItem button>
+      <ListItemIcon>
+      <IconBrandGravatar stroke={1.5} size="1.3rem" />
+      </ListItemIcon>
+      <ListItemText primary="Search" />
+    </ListItem>
+    </Link>
+    <Link to="/details">
+    <ListItem button>
+      <ListItemIcon>
+      <IconBrandGravatar stroke={1.5} size="1.3rem" />
+      </ListItemIcon>
+      <ListItemText primary="Details" />
     </ListItem>
     </Link>
   </div>

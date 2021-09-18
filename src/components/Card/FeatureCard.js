@@ -1,128 +1,170 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
 import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Chat from '@material-ui/icons/Chat';
-import img2 from '../../assets/images/img2.png';
+import Grid from '@material-ui/core/Grid';
+import Rating from '@material-ui/lab/Rating';
+import {
+  Favorite,
+  MoreVert,
+  Chat
+} from '@material-ui/icons';
+
+// import { increment, decrement, getCounter } from "./counterReducer";
+// import { useSelector, useDispatch } from "react-redux";
+// import dashboardimg from '../../assets/images/dashboardimg.png';
+// import { collapseClasses,Chip } from "@material-ui/core";
+// import SearchCard from "./SearchCard";
+import img1 from '../../assets/images/img1.png';
+// const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 320,
-    // marginRight:"20px",
+    display: 'flex',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    marginLeft:"40px",
+    //border:"1px solid #000"
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
   },
-  avatar: {
-    backgroundColor: red[500],
+  fixedHeight: {
+    height: 240,
+    // border:"1px solid #000"
   },
+  headerAvatar: {
+    height:'10vh'
+  },
+  grid1Col1:{
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center",
+    // border:"1px solid #000",
+    padding:"40px"
+  },
+  grid1Col1Img:{
+    height: "100%",
+    width: "600px"
+  },
+  grid1Col2:{
+    backgroundColor:"#F9F9FB",
+    marginRight:'10px',
+    // border:"1px solid #000",
+    borderRadius: "0px 5px 5px 0px",
+    padding:"40px"
+  },
+  grid1Col2Buyer:{
+    backgroundColor:"#F9F9FB",
+    marginRight:'10px',
+    // border:"1px solid #000",
+    borderRadius: "0px 5px 5px 0px",
+    padding:"40px"
+  },
+  padding: {
+    width:"500px",
+    height:"200px",
+    // marginTop: 10,
+    // marginBottom: 20
+    // border:"1px solid #000",
+},
+searchBox:{
+  margin:"10px",
+},
+image: {
+  width: 150,
+  height: 150,
+//   border:"1px solid #000"
+},
+endStyle:{
+  display:"flex"
+}
 }));
 
-export default function FeatureCard() {
+export default function FeatureCard(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  // const counter = useSelector(getCounter);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+  // const dispatch = useDispatch();
+  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image={img2}
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-        <IconButton aria-label="chat">
+
+<Grid
+          container
+          spacing={2}
+          direction="row"
+          alignItems="center"
+        //   justifyContent="center"
+          style={{ margin:"3px",borderRadius:"4px",boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}}
+          item
+          md={12}
+        >
+         <Grid item md={4} lg={4}>
+            <div className={classes.image}>
+                <img src={img1} className={classes.image} alt="cardimage"/>
+            </div>
+            
+          </Grid>
+          <Grid item md={8} lg={8} style={{paddingLeft:"20px"}}>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+               
+             
+                <Typography variant="body2" gutterBottom>
+                  {props.item.category}
+                </Typography>
+               
+                <Typography variant="body2" color="textSecondary">
+                {props.item.productname}
+                </Typography>
+                <br/>
+              </Grid>
+              <Grid item>
+             
+                  <Rating
+                    name="simple-controlled"
+                    value={2}
+                  />
+                  <Typography variant="subtitle1">Rs. {props.item.cost}</Typography>
+        
+              
+                   
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Typography variant="h4" > 
+                 <IconButton aria-label="settings">
+                  <MoreVert />
+                 </IconButton> 
+             </Typography>
+              <Typography variant="h4" > 
+                <IconButton aria-label="add to favorites">
+                     <Favorite />
+                </IconButton>
+            </Typography>
+            <Typography variant="h4" > 
+                 <IconButton aria-label="chat">
                 <Chat />
             </IconButton>
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+            </Typography>
+            </Grid>
+            
+          </Grid>
+
+          </Grid>
+          </Grid>
+    
   );
-}
+};

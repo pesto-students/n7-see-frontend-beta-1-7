@@ -111,7 +111,8 @@ endStyle:{
 }
 }));
 
-export default function BuyCard(props) {
+export default function HistoryCard(props) {
+  console.log(props);
   const classes = useStyles();
   // const counter = useSelector(getCounter);
 
@@ -142,11 +143,11 @@ export default function BuyCard(props) {
                
              
                 <Typography variant="body2" gutterBottom>
-                {props.item.category}
+                {props.historydata.category}
                 </Typography>
                
                 <Typography variant="body2" color="textSecondary">
-                {props.item.productname}
+                {props.historydata.productname}
                 </Typography>
                 <br/>
               </Grid>
@@ -156,7 +157,7 @@ export default function BuyCard(props) {
                     name="simple-controlled"
                     value={2}
                   />
-                  <Typography variant="subtitle1">Rs. {props.item.cost}</Typography>
+                  <Typography variant="subtitle1">Rs. {props.historydata.cost}</Typography>
         
               
                    

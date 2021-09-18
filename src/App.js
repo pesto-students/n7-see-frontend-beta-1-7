@@ -1,21 +1,22 @@
-import React, { useState,useEffect } from 'react';
-import { Switch,Redirect, Route,useHistory, BrowserRouter as Router } from 'react-router-dom';
-import logo from './logo.svg';
+import React from 'react';
+import { Switch,Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
+// import logo from './logo.svg';
 import './App.css';
 import './assets/style.css';
 import  Register from './container/Register';
 import  Login from './container/Login';
-import NavBar from './components/NavBar';
-import {
-Grid
-} from '@material-ui/core';
-import MainLayout from "./container/Layouts/MainLayout";
+// import MainLayout from "./container/Layouts/MainLayout";
 import Dashboard from "./container/Layouts/Dashboard";
 import Home from './container/Home/Home';
 import SearchItems from './container/Search';
 import SellProducts from './container/Sell';
 import BuyProducts from './container/Buy';
-import { Search } from '@material-ui/icons';
+import Complaint from './container/Complaint';
+import Profile from './container/Profile';
+import Details from './container/Details';
+import MyRequest from './container/Request';
+import MyInterest from './container/Interest';
+// import { Search } from '@material-ui/icons';
 function IsLoggedIn(){
   let userName=sessionStorage.getItem('username');
   console.log(userName)
@@ -40,17 +41,33 @@ console.log("ASDASD",IsLoggedIn())
    
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
-    {
+    <Dashboard>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/search" component={SearchItems}/>
+      <Route exact path="/sell" component={SellProducts}/>
+      <Route exact path="/buy" component={BuyProducts}/>
+      <Route exact path="/interest" component={MyInterest}/>
+      <Route exact path="/complaint" component={Complaint}/>
+      <Route exact path="/request" component={MyRequest}/>
+      <Route exact path="/settings" component={SearchItems}/>
+      <Route exact path="/category" component={SearchItems}/>
+      <Route exact path="/reports" component={SearchItems}/>
+      <Route exact path="/profile" component={Profile}/>
+      <Route exact path="/details" component={Details}/>
+      
+    </Dashboard>
+    {/* {
       IsLoggedIn()===true?<Dashboard>
       <Route exact path="/" component={Home}/>
       <Route exact path="/search" component={SearchItems}/>
       <Route exact path="/sell" component={SellProducts}/>
       <Route exact path="/buy" component={BuyProducts}/>
+      <Route exact path="/request" component={RequestProducts}/>
       <Route exact path="/settings" component={SearchItems}/>
       <Route exact path="/category" component={SearchItems}/>
       <Route exact path="/reports" component={SearchItems}/>
     </Dashboard>:<Redirect to="/login" />
-    }
+    } */}
 
  
 

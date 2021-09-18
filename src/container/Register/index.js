@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -18,8 +18,10 @@ import {
   Avatar,
 } from '@material-ui/core';
 import { ToastContainer, toast } from 'material-react-toastify';
-  import 'material-react-toastify/dist/ReactToastify.css';
-
+import 'material-react-toastify/dist/ReactToastify.css';
+import RSelect from '../../components/Select/RSelect';
+import BlockUI from 'react-block-ui';
+import Loader from 'react-loaders';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -77,8 +79,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
 const classes = useStyles();
 let history = useHistory();
+const [loadingIndicator,setLoadingIndicator]=useState(false);
 
   return (
+    
       <div>
             <div className="App">
       <div className="bg">
@@ -109,7 +113,7 @@ let history = useHistory();
                 onSubmit={(values, { setSubmitting }) => {
                    setSubmitting(true);
                    console.log(values);
-                 
+                  setLoadingIndicator(true);
                    axios.post("http://localhost:4000/users",values,
                       // {
                       //   headers: {
@@ -125,13 +129,16 @@ let history = useHistory();
                       {
                         console.log(resp);
                         toast.success(resp.data.message,{autoClose: 3000,});
-                        history.push("/login");
+                        setInterval(function(){ 
+                          history.push("/login");
+                        }, 3000);
+                        
                       }
                       else{
                         toast.error(resp.data.message,{autoClose: 3000,});
                         console.log(resp);
                       }
-                      
+                      setLoadingIndicator(false);
                     }
                     );
                 }}
@@ -172,6 +179,7 @@ let history = useHistory();
                     handleReset,
                   } = props;
                   return (
+                    <BlockUI tag="div" blocking={loadingIndicator} loader={<Loader active type='ball-spin-fade-loader' />}>
         <Form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
@@ -297,7 +305,9 @@ let history = useHistory();
               </Link>
             </Grid>
           </Grid>
+          
         </Form>
+        </BlockUI>
             );
             }}
           </Formik>
@@ -324,6 +334,7 @@ let history = useHistory();
        
         <ToastContainer />
       </div>
+
   );
 
 }

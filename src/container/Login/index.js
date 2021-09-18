@@ -116,9 +116,10 @@ let history = useHistory();
                       setSubmitting(false);
                       if(resp.status==200)
                       {
-                        console.log(resp);
+                        console.log("resp",resp);
                         // localStorage.setItem('username', values.email);
-                        sessionStorage.setItem('username', values.email);
+                        sessionStorage.setItem('email', values.email);
+                        sessionStorage.setItem('username', values.username);
                         toast.success(resp.data.message,{autoClose: 3000,});
                         history.push("/")
                       }

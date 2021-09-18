@@ -43,8 +43,6 @@ export default function UserCardRedux() {
   const dispatch = useDispatch();
   let user = useSelector(state=>state.fetchDataReducer.user);
   let loading = useSelector(state=>state.fetchDataReducer.loading);
-  console.log("user",user);
-
   useEffect(()=>{
     dispatch(fetchData());
   },[])

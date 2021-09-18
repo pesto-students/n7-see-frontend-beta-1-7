@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ReqCard() {
+export default function ReqCard(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -82,17 +82,17 @@ export default function ReqCard() {
         <ListItemText
           primary={
             <Typography color="textSecondary" variant="body1" className={classes.primaryText}>
-            sfsdfs
+            {props.historydata.productname}
           </Typography>
           }
           secondary={
             <Typography variant="body1" className={classes.secondaryText}>
-            Sfsdfs
+              {props.historydata.description}
           </Typography>
           }
           className={classes.item}
         />
-          <Typography className={classes.amtText}>$100</Typography>
+          <Typography className={classes.amtText}>Rs. {props.historydata.cost}</Typography>
           <Avatar className={classes.chat}>
           <IconBrandHipchat stroke={1.5} size="1.3rem" />
                     </Avatar>
