@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Register() {
+export default function Login() {
 const classes = useStyles();
 let history = useHistory();
 
@@ -174,34 +174,6 @@ let history = useHistory();
                   return (
         <Form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-            <Field
-                              component={TextField}
-                              label="First Name"
-                              id="firstName"
-                              name="firstName"
-                              value={values.firstName}
-                              error={errors.firstName && touched.firstName}
-                              helperText={(errors.firstName && touched.firstName) && errors.firstName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              variant="outlined" 
-                            />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <Field
-                              component={TextField}
-                              label="Last Name"
-                              id="lastName"
-                              name="lastName"
-                              value={values.lastName}
-                              error={errors.lastName && touched.lastName}
-                              helperText={(errors.lastName && touched.lastName) && errors.lastName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              variant="outlined" 
-                            />
-            </Grid>
             <Grid item xs={12} sm={12}>
 
               <Field
@@ -219,7 +191,7 @@ let history = useHistory();
                   fullWidth
                 />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
             <Field
                 component={TextField}
                 label="Password"
@@ -234,25 +206,8 @@ let history = useHistory();
                 variant="outlined" 
                 type="password"
                 maxLength="9"
+                fullWidth
               />
-              </Grid>
-              <Grid item xs={6}>
-
-              <Field
-                  component={TextField}
-                  label="Confirm Password"
-                  name="cpassword"
-                  id="cpassword"
-                  error={errors.cpassword && touched.cpassword}
-                  value={values.cpassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={(errors.cpassword && touched.cpassword) && errors.cpassword}
-                  margin="normal"
-                  variant="outlined" 
-                  type="password"
-                  maxLength="9"
-                />
               </Grid>
             
 
@@ -260,20 +215,7 @@ let history = useHistory();
           
           <Grid container spacing={2}>
           {isSubmitting && <LinearProgress />}
-          <Grid item xs={6}>
-          <Button
-              type="button"
-              className="outline"
-              color="secondary"
-              variant="contained"
-              onClick={handleReset}
-              disabled={!dirty || isSubmitting}
-              fullWidth
-            >
-              Reset
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
           <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
                           Submit
                         </Button>
@@ -292,8 +234,8 @@ let history = useHistory();
 
           <Grid container justifyContent="flex-end" spacing={4}>
             <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
+              <Link href="/" variant="body2">
+              Don't have an account? Sign up
               </Link>
             </Grid>
           </Grid>

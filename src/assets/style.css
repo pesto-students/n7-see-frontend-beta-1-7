@@ -26,6 +26,20 @@
     border: '1px solid #000';
 }
 
+.dividercontainer{
+  display: flex;
+  align-items: center;
+}
+
+.dividerborder{
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+
+.dividercontent {
+  padding: 0 10px 0 10px;
+}
+
 /* a {
     position: relative;
     padding: 20px 50px;
