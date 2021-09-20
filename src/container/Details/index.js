@@ -34,6 +34,7 @@ import dashboardimg from '../../assets/images/dashboardimg.png';
 import { CardHeader, collapseClasses } from "@material-ui/core";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import {
   Container,
@@ -132,13 +133,15 @@ const style = {
   boxShadow: 24,
   p: 4,
 }
-export default function Details() {
+export default function Details(props) {
   const classes = useStyles();
   const [categoryData,setCategoryData]=useState([{value:1,label:"category 1"},{value:2,label:"category 2"}])
   let history = useHistory();
   const [historyData,setHistoryData]=useState([]);
   const [loadingIndicator,setLoadingIndicator]=useState(false);
   const [pageEdit,setPageEdit]=useState(false)
+  const location = useLocation();
+  const [itemDetails,setItemDetails]=useState(null);
   useEffect(()=>{
     const getMyHistory = async () => {
       setLoadingIndicator(true);
@@ -158,6 +161,14 @@ export default function Details() {
     
     getMyHistory()
   },[])
+
+
+
+  useEffect(() => {
+    //  console.log(location.pathname); // result: '/secondpage'// result: '?query=abc'
+    //  console.log(location.state);
+     setItemDetails(location.state)// result: 'some_value'
+  }, [location]);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -191,7 +202,7 @@ export default function Details() {
                 }
                 title={
                   <div style={{display:"flex",justifyContent:"space-between",}}>
-                    <div style={{fontSize:"24px"}}>Product Name</div>
+                    <div style={{fontSize:"24px"}}>{itemDetails!=null?itemDetails.productname:""}</div>
                     <Chip
                       label="Express Interest"
                       onClick={()=>handleClick()}
@@ -220,33 +231,7 @@ export default function Details() {
               
                   </Grid>
                   <Grid item md={8}>
-                  Officia amet eiusmod eu sunt tempor 
-                  voluptate laboris velit nisi amet enim proident et. 
-                  Consequat laborum non eiusmod cillum eu exercitation.
-                   Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                   cupidatat pariatur mollit ad est proident reprehenderit.
-                    Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                    Officia amet eiusmod eu sunt tempor 
-                  voluptate laboris velit nisi amet enim proident et. 
-                  Consequat laborum non eiusmod cillum eu exercitation.
-                   Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                   cupidatat pariatur mollit ad est proident reprehenderit.
-                    Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                    Officia amet eiusmod eu sunt tempor 
-                  voluptate laboris velit nisi amet enim proident et. 
-                  Consequat laborum non eiusmod cillum eu exercitation.
-                   Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                   cupidatat pariatur mollit ad est proident reprehenderit.
-                    Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                    Officia amet eiusmod eu sunt tempor 
-                  voluptate laboris velit nisi amet enim proident et. 
-                  Consequat laborum non eiusmod cillum eu exercitation.
-                   Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                   cupidatat pariatur mollit ad est proident reprehenderit.
-                    Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                    Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                   cupidatat pariatur mollit ad est proident reprehenderit.
-                    Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
+                {itemDetails!=null?itemDetails.description:""}
               
                   </Grid>
                 </Grid>

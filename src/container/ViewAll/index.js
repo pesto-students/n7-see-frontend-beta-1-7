@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment,useState,useMemo } from "react";
+import data from './components/mock.json';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -29,8 +30,6 @@ import {
   MoreVert,
   Chat
 } from '@material-ui/icons';
-import TotalGrowthBarChart from "./components/TotalGrowthBarChart";
-import Sales from "./components/Sales";
 import ReqCard from '../../components/Card/ReqCard';
 import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
@@ -40,10 +39,12 @@ import { collapseClasses,Chip } from "@material-ui/core";
 import SearchCard from "../../components/Card/SearchCard";
 import img1 from '../../assets/images/img1.png';
 import LeafletMap from "./components/LeafletMap";
-import "leaflet/dist/leaflet.css";
 import SearchSection from '../../components/SearchSection';
 import Pagination from '@material-ui/lab/Pagination';
+import "leaflet/dist/leaflet.css";
+
 const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:"#F9F9FB",
     marginRight:'10px',
     // border:"1px solid #000",
-    borderRadius: "0px 5px 5px 0px",
+    borderRadius: "5px 5px 5px 5px",
     padding:"10px"
   },
   grid1Col2Buyer:{
@@ -124,15 +125,20 @@ rootpagination: {
     marginTop: theme.spacing(2),
   },
 },
-
 }));
-
+let PageSize = 10;
 export default function Search() {
   const classes = useStyles();
+  const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return data.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -141,8 +147,8 @@ export default function Search() {
 <Fragment>
   <Grid className={classes.container}>
     <Grid container>
-    <Grid item xs={12} md={6} lg={6} style={{padding:"20px"}}>
-    <Box className={classes.homeSearch}>
+    <Grid item xs={12} md={6} lg={6}>
+       <Box className={classes.homeSearch}>
           <SearchSection theme="light" />
         </Box>
         <Box style={{display:"flex",justifyContent:"space-between",paddingRight:"20px"}}>
@@ -165,7 +171,9 @@ export default function Search() {
         <SearchCard/>
         <SearchCard/>
         <SearchCard/>
-        </Box>    
+        </Box>
+
+               
             </Grid>
             <Grid item xs={12} md={6} lg={6} >
                 <Container className={classes.grid1Col2}>

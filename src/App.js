@@ -16,6 +16,8 @@ import Profile from './container/Profile';
 import Details from './container/Details';
 import MyRequest from './container/Request';
 import MyInterest from './container/Interest';
+import ViewAll from './container/ViewAll';
+
 // import { Search } from '@material-ui/icons';
 function IsLoggedIn(){
   let userName=sessionStorage.getItem('username');
@@ -54,6 +56,7 @@ console.log("ASDASD",IsLoggedIn())
       <Route exact path="/reports" component={SearchItems}/>
       <Route exact path="/profile" component={Profile}/>
       <Route exact path="/details" component={Details}/>
+      <Route exact path="/viewall" component={ViewAll}/>
       
     </Dashboard>
     {/* {

@@ -181,11 +181,13 @@ export default function Home() {
                     <DividerComponent>Highlighted Listing</DividerComponent>
                 </Box>  
                 <Box style={{marginRight:"10px",marginTop:"20px"}}>
-                <Grid container direction="row" justifyContent="space-between">
+                <Grid container direction="row" justifyContent="space-between" spacing={2}>
                  
                 {
                   !loadingIndicator&& data!=null?highlightedListing.slice(0, 3).map((highlightedproduct,i)=>(
+                        <Grid item md={4}>
                         <HighlightCard key={i} item={highlightedproduct}/>
+                        </Grid>
                     )):<Skeleton animation="wave" />
                 }
                 {/* <FeatureCard/>

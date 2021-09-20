@@ -95,8 +95,9 @@ const Header = props => {
       }
 
       <div className={classes.toolbarIcon}>
-      
+      <Link to="/profile">
       <Avatar alt="Remy Sharp" src={avatarimg}/>
+      </Link>
       </div>
 
       {/* <IconButton color="inherit">

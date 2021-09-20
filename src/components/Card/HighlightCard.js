@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
+import Box from '@material-ui/core/Box';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,8 +16,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Visibility from '@material-ui/icons/Visibility';
 import Chat from '@material-ui/icons/Chat';
 import img2 from '../../assets/images/img2.png';
+import { Redirect, useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -43,14 +46,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HighlightCard(props) {
   const classes = useStyles();
+  let history = useHistory();
   const [expanded, setExpanded] = React.useState(false);
 console.log(props);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const getDetails=(items)=>{
+    history.push({
+      pathname:"/details",
+      state:items
+    })
+
+    
+  }
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -71,9 +84,18 @@ console.log(props);
         title="Paella dish"
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-         {props.item.description}
+        <Typography variant="body2" color="textSecondary" style={{whiteSpace: 'nowrap'}}>
+          <Box sx={{
+          textOverflow: 'ellipsis',
+          // my:1,
+          overflow: 'hidden',
+          bgcolor: 'background.paper',
+        }}>
+          {props.item.description}
+        </Box>
+         
         </Typography>
+        Rs 200
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -88,14 +110,14 @@ console.log(props);
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          // onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <ExpandMoreIcon />
+          <Visibility  onClick={()=>getDetails(props.item)}/>
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
@@ -122,6 +144,7 @@ console.log(props);
           </Typography>
         </CardContent>
       </Collapse>
+     */}
     </Card>
   );
 }

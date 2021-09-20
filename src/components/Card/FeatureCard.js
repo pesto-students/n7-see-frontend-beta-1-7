@@ -8,7 +8,8 @@ import Rating from '@material-ui/lab/Rating';
 import {
   Favorite,
   MoreVert,
-  Chat
+  Chat,
+  Visibility
 } from '@material-ui/icons';
 
 // import { increment, decrement, getCounter } from "./counterReducer";
@@ -17,6 +18,7 @@ import {
 // import { collapseClasses,Chip } from "@material-ui/core";
 // import SearchCard from "./SearchCard";
 import img1 from '../../assets/images/img1.png';
+import { Redirect, useHistory } from 'react-router-dom';
 // const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -94,10 +96,17 @@ endStyle:{
 
 export default function FeatureCard(props) {
   const classes = useStyles();
+  let history = useHistory();
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const getDetails=(items)=>{
+    history.push({
+      pathname:"/details",
+      state:items
+    })    
+  }
   return (
 
 <Grid
@@ -109,6 +118,7 @@ export default function FeatureCard(props) {
           style={{ margin:"3px",borderRadius:"4px",boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}}
           item
           md={12}
+          
         >
          <Grid item md={4} lg={4}>
             <div className={classes.image}>
@@ -146,7 +156,7 @@ export default function FeatureCard(props) {
             <Grid item>
               <Typography variant="h4" > 
                  <IconButton aria-label="settings">
-                  <MoreVert />
+                 <Visibility onClick={()=>getDetails(props.item)}/>
                  </IconButton> 
              </Typography>
               <Typography variant="h4" > 

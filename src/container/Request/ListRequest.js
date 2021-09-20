@@ -24,7 +24,7 @@ import {
   MenuBook,
   Visibility
 } from '@material-ui/icons';
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core';
+import { Avatar, ListItem, ListItemAvatar, ListItemText,Tooltip  } from '@material-ui/core';
 import HistoryCard from '../../components/Card/HistoryCard';
 import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
@@ -150,12 +150,14 @@ export default function ListRequest(props) {
   }
   return (
 <Fragment>
-  <Grid container style={{marginTop:"30px",backgroundColor:"#fcfcfc",padding:"0px 30px 60px 30px"}}>
+  <Grid container style={{backgroundColor:"#fcfcfc",padding:"0px 30px 60px 30px"}}>
     <Grid item md={12} style={{display:"flex",justifyContent:"space-between",minHeight:"70px"}}>
       <div style={{display:"flex",alignItems:"center",fontSize:"24px"}}>
+
       <IconButton aria-label="add to favorites">
                           <MenuBook />
         </IconButton>  My Request
+        
       </div>
     </Grid>
     {
@@ -170,7 +172,9 @@ export default function ListRequest(props) {
        }
        title={
         <div style={{display:"flex",justifyContent:"space-between"}}>
+           
           <div>Latest Request</div>
+
           <div>
           <Chip
             label="Add New Request"

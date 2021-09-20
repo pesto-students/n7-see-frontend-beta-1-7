@@ -12,19 +12,24 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { IconDashboard, IconSettings, IconBrandStripe,IconBrandSkype,IconBold,IconBrandProducthunt,IconFilter,IconChartInfographic,IconBrandGravatar } from '@tabler/icons';
+import Tooltip from '@material-ui/core/Tooltip';
+import { IconDashboard, IconHeart,IconFileReport,IconSend,IconAlertCircle,IconSettings, IconBrandStripe,IconBrandSkype,IconBold,IconBrandProducthunt,IconFilter,IconChartInfographic,IconBrandGravatar } from '@tabler/icons';
 export const mainListItems = (
   <div>
           <List>
+          <Tooltip title="Dashboard" placement="top">
         <Link to="/">
           <ListItem button>
             <ListItemIcon>
+            
             <IconDashboard stroke={1.5} size="1.3rem" />
+            
               {/* <DashboardIcon /> */}
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
         </Link>
+        </Tooltip>
       </List>
     {/* <Link to="/sell">
     <ListItem button>
@@ -43,61 +48,79 @@ export const mainListItems = (
     </ListItem>
     </Link> */}
     <Link to="/request">
+    <Tooltip title="My Request" placement="top-end">
     <ListItem button>
       <ListItemIcon>
-      <IconBold stroke={1.5} size="1.3rem" />
+      <IconSend stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Request" />
     </ListItem>
+    </Tooltip>
     </Link>
     <Link to="/interest">
+    <Tooltip title="My Interest" placement="top-end">
     <ListItem button>
       <ListItemIcon>
-      <IconBold stroke={1.5} size="1.3rem" />
+      <IconHeart stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Interest" />
     </ListItem>
+    </Tooltip>
     </Link>
     <Link to="/complaint">
+    <Tooltip title="Complaint" placement="top-end">
     <ListItem button>
       <ListItemIcon>
-      <IconBrandProducthunt stroke={1.5} size="1.3rem" />
+      <IconAlertCircle stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Complaint" />
     </ListItem>
+    </Tooltip>
     </Link>
-    <Link to="/reports">
+    {/* <Link to="/reports">
     <ListItem button>
       <ListItemIcon>
-      <IconChartInfographic stroke={1.5} size="1.3rem" />
+      <IconAlertCircle stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Reports" />
     </ListItem>
-    </Link>
+    </Link> */}
     <Link to="/search">
+    <Tooltip title="Search" placement="top-end">
     <ListItem button>
       <ListItemIcon>
       <IconFilter stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Search" />
     </ListItem>
+    </Tooltip>
     </Link>
-    <Link to="/profile">
+    <Link to="/viewall">
+    <Tooltip title="Dashboard" placement="top-end">
+    <ListItem button>
+      <ListItemIcon>
+      <IconFilter stroke={1.5} size="1.3rem" />
+      </ListItemIcon>
+      <ListItemText primary="Search" />
+    </ListItem>
+    </Tooltip>
+    </Link>
+    {/* <Link to="/profile">
     <ListItem button>
       <ListItemIcon>
       <IconBrandGravatar stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Search" />
     </ListItem>
-    </Link>
-    <Link to="/details">
+    </Link> */}
+    {/* <Link to="/details">
     <ListItem button>
       <ListItemIcon>
       <IconBrandGravatar stroke={1.5} size="1.3rem" />
       </ListItemIcon>
       <ListItemText primary="Details" />
     </ListItem>
-    </Link>
+    </Link> */}
   </div>
 );
 

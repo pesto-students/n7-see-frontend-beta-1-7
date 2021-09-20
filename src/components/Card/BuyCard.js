@@ -27,7 +27,8 @@ import {
   ArrowRight,
   Favorite,
   MoreVert,
-  Chat
+  Chat,
+  Visibility
 } from '@material-ui/icons';
 
 // import { increment, decrement, getCounter } from "./counterReducer";
@@ -36,6 +37,7 @@ import dashboardimg from '../../assets/images/dashboardimg.png';
 import { collapseClasses,Chip } from "@material-ui/core";
 import SearchCard from "./SearchCard";
 import img1 from '../../assets/images/img1.png';
+import { Redirect, useHistory } from 'react-router-dom';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -113,10 +115,19 @@ endStyle:{
 
 export default function BuyCard(props) {
   const classes = useStyles();
+  let history = useHistory();
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const getDetails=(items)=>{
+    history.push({
+      pathname:"/details",
+      state:items
+    })
+
+    
+  }
   return (
 
 <Grid
@@ -165,7 +176,7 @@ export default function BuyCard(props) {
             <Grid item>
               <Typography variant="h4" > 
                  <IconButton aria-label="settings">
-                  <MoreVert />
+                  <Visibility  onClick={()=>getDetails(props.item)}/>
                  </IconButton> 
              </Typography>
               <Typography variant="h4" > 

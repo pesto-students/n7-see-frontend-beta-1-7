@@ -130,6 +130,7 @@ export default function NewRequest(props) {
   const classes = useStyles();
   
   const [categoryData,setCategoryData]=useState([{value:1,label:"category 1"},{value:2,label:"category 2"}])
+  const [cityData,setCityData]=useState([{value:1,label:"city 1"},{value:2,label:"city 1"}])
   let history = useHistory();
   const [historyData,setHistoryData]=useState([]);
   const [loadingIndicator,setLoadingIndicator]=useState(false);
@@ -161,6 +162,9 @@ export default function NewRequest(props) {
     setFieldValue("category",value)
   }
 
+  const cityFunc=(value,setFieldValue)=>{
+    setFieldValue("city",value)
+  }  
 
   const cancelAddRequest = () => {
     props.setAddNewRequest(false)
@@ -303,8 +307,8 @@ export default function NewRequest(props) {
                               name="city"
                               id="city"
                               value={values.city}
-                              onChange={ev => categoryFunc(ev, setFieldValue)}
-                              options={categoryData}
+                              onChange={ev => cityFunc(ev, setFieldValue)}
+                              options={cityData}
                               placeholder="--Select--"
                               error={errors.city}
                               touched={touched.city}

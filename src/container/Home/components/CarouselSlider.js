@@ -47,7 +47,7 @@ export default function UMainPage (){
 
     return (
 
-            <Carousel>
+            <Carousel indicators={false}>
                 {pictures.map(({image, title}) => (
                     <CarouselSlide key={image}>
                         <Card>
