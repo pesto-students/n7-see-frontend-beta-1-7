@@ -1,9 +1,11 @@
 import React, { Fragment, Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from '@material-ui/styles';
 import classNames from "classnames";
 
 import Header from "../../components/Header"
 import Sidebar from "../../components/Sidebar";
+import { AppBar, CssBaseline, Toolbar, useMediaQuery } from '@material-ui/core';
+
 import Home from '../Home/Home';
 // import MainLayouts  from "./MainLayout/index.js"
 const drawerWidth = 240;
@@ -12,6 +14,9 @@ const styles = theme => ({
   root: {
     display: "flex"
   },
+  appBar: {
+    backgroundColor: theme.palette.background.default
+},
   content: {
     flexGrow: 1,
     marginLeft: theme.spacing(9),
@@ -45,12 +50,25 @@ class MainLayout extends Component {
     return (
       <Fragment>
         <div className={classes.root}>
-          sdfsd
           {/* <MainLayouts/> */}
-           <Header
+            <AppBar
+                position="fixed"
+                color="inherit"
+                elevation={0}
+                className={this.state.open ? classes.appBarWidth : classes.appBar}
+            >
+                <Toolbar>
+                <Header
+                    handleToggleDrawer={this.handleToggleDrawer}
+                    open={this.state.open}
+                  /> 
+                    {/* <Header handleLeftDrawerToggle={handleLeftDrawerToggle} /> */}
+                </Toolbar>
+            </AppBar>
+           {/* <Header
             handleToggleDrawer={this.handleToggleDrawer}
             open={this.state.open}
-          /> 
+          />  */}
           <main
             className={classNames(classes.content, {
               [classes.contentShift]: this.state.open

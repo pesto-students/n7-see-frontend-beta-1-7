@@ -1,5 +1,9 @@
-import React,{ Fragment,useState,useEffect,useRef} from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, {
+  Fragment, useState, useEffect, useRef
+} from 'react';
+import {
+  Formik, Field, Form, ErrorMessage
+} from 'formik';
 import * as Yup from 'yup';
 import {
   Container,
@@ -21,23 +25,24 @@ import {
   Dialog,
   DialogActions,
   Card,
-  makeStyles,
   Avatar,
   Checkbox,
   withTheme,
 } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import zIndex from '@material-ui/core/styles/zIndex';
-import axios from 'axios';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>
+      {' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -48,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    
+
   },
   avatar: {
     margin: theme.spacing(1),
@@ -61,211 +66,214 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  container:{
-    backgroundColor:"#fff",
-    borderRadius:"2%",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-    opacity:".8",
-    zIndex:"1"
+  container: {
+    backgroundColor: '#fff',
+    borderRadius: '2%',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    opacity: '.8',
+    zIndex: '1'
 
   },
-  fragment:{
+  fragment: {
     // backgroundColor:"#f0f0f0",
-    backgroundColor: "rgba(255,255,255,0.7)",
-    borderRadius:"2%",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: '2%',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     // opacity:".9",
-    padding:"10px",
-    zIndex:"-1",
-    border:"1px solid secondary"
+    padding: '10px',
+    zIndex: '-1',
+    border: '1px solid secondary'
   }
-  
-}));
 
+}));
 
 export default function TypeTwo() {
   const classes = useStyles();
 
-
-
   return (
     <div className={classes.fragment}>
-    <Container component="main" 
-       border={1} maxWidth="xs"  className={classes.container}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Formik
-                initialValues={{ firstName:'',email: '', lastName: '', password: '',cpassword:'' }}
-                onSubmit={(values, { setSubmitting }) => {
-                   setSubmitting(true);
-                   console.log(values);
-                   setSubmitting(false);
-                  axios.post("http://localhost:4000/users",
-                      values,
-                      // {
-                      //   headers: {
-                      //     'Access-Control-Allow-Origin': '*',
-                      //     'Content-Type': 'application/json',
-                      //   }
-                      // },
-                    ).then((resp) => {
-                      console.log(resp);
-                      setSubmitting(false);
-                    }
-                    );
-                }}
+      <Container
+        component="main"
+        border={1}
+        maxWidth="xs"
+        className={classes.container}
+      >
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Formik
+            initialValues={{
+              firstName: '', email: '', lastName: '', password: '', cpassword: ''
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(true);
+              console.log(values);
+              setSubmitting(false);
 
-                validationSchema={
+            // axios.post(contactFormEndpoint,
+            //   values,
+            //   {
+            //     headers: {
+            //       'Access-Control-Allow-Origin': '*',
+            //       'Content-Type': 'application/json',
+            //     }
+            //   },
+            // ).then((resp) => {
+            //   setSubmitionCompleted(true);
+            // }
+            // );
+            }}
+
+            validationSchema={
                   Yup.object().shape({
                     email: Yup.string()
-                      .email(),
-                      //.required('Required'),
-                    lastName: Yup.string(),
-                      //.required('Required'),
-                    firstName: Yup.string(),
-                    //.required('Required'),                    
+                      .email()
+                      .required('Required'),
+                    lastName: Yup.string()
+                      .required('Required'),
+                    firstName: Yup.string()
+                      .required('Required'),
                     password: Yup.string()
                       .min(6, 'Password should be of minimum 6 characters length')
                       .max(8, 'Password should be of maximum 8 characters length')
                       .matches(
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,8}$/,
                         // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,8})$/,
-                        "One Uppercase, One Lowercase, One Number and one special case Character"
-                      ),
-                      //.required('Required'),
+                        'One Uppercase, One Lowercase, One Number and one special case Character'
+                      )
+                      .required('Required'),
                     cpassword: Yup.string()
-                      .oneOf([Yup.ref('password'), ""], 'Passwords must match')
-                    //  .required('Password confirm is required'),
-                })}
-              >
-                {(props) => {
-                  const {
-                    values,
-                    touched,
-                    errors,
-                    dirty,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    handleReset,
-                  } = props;
-                  return (
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-            <Field
-                              component={TextField}
-                              label="First Name"
-                              id="firstName"
-                              name="firstName"
-                              value={values.firstName}
-                              error={errors.firstName && touched.firstName}
-                              helperText={(errors.firstName && touched.firstName) && errors.firstName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              variant="outlined" 
-                            />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <Field
-                              component={TextField}
-                              label="Last Name"
-                              id="lastName"
-                              name="lastName"
-                              value={values.lastName}
-                              error={errors.lastName && touched.lastName}
-                              helperText={(errors.lastName && touched.lastName) && errors.lastName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              variant="outlined" 
-                            />
-            </Grid>
-            <Grid item xs={12} sm={12}>
+                      .oneOf([Yup.ref('password'), ''], 'Passwords must match')
+                      .required('Password confirm is required'),
+                  })
+}
+          >
+            {(props) => {
+              const {
+                values,
+                touched,
+                errors,
+                dirty,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                handleReset,
+              } = props;
+              return (
+                <form className={classes.form} onSubmit={handleSubmit}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12} sm={6}>
+                      <Field
+                      component={TextField}
+                      label="First Name"
+                      id="firstName"
+                      name="firstName"
+                      value={values.firstName}
+                      error={errors.firstName && touched.firstName}
+                      helperText={(errors.firstName && touched.firstName) && errors.firstName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      variant="outlined"
+                    />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Field
+                      component={TextField}
+                      label="Last Name"
+                      id="lastName"
+                      name="lastName"
+                      value={values.lastName}
+                      error={errors.lastName && touched.lastName}
+                      helperText={(errors.lastName && touched.lastName) && errors.lastName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      variant="outlined"
+                    />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
 
-              <Field
-                  component={TextField}
-                  error={errors.email && touched.email}
-                  label="Email"
-                  name="email"
-                  id="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={(errors.email && touched.email) && errors.email}
-                  margin="normal"
-                  variant="outlined" 
-                  fullWidth
-                />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-            <Field
-                component={TextField}
-                label="Password"
-                name="password"
-                id="password"
-                error={errors.password && touched.password}
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperText={(errors.password && touched.password) && errors.password}
-                margin="normal"
-                variant="outlined" 
-                type="password"
-                maxLength="9"
-              />
-              </Grid>
-              <Grid item xs={6}>
+                      <Field
+                      component={TextField}
+                      error={errors.email && touched.email}
+                      label="Email"
+                      name="email"
+                      id="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.email && touched.email) && errors.email}
+                      margin="normal"
+                      variant="outlined"
+                      fullWidth
+                    />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <Field
+                      component={TextField}
+                      label="Password"
+                      name="password"
+                      id="password"
+                      error={errors.password && touched.password}
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.password && touched.password) && errors.password}
+                      margin="normal"
+                      variant="outlined"
+                      type="password"
+                      maxLength="9"
+                    />
+                    </Grid>
+                    <Grid item xs={6}>
 
-              <Field
-                  component={TextField}
-                  label="Confirm Password"
-                  name="cpassword"
-                  id="cpassword"
-                  error={errors.cpassword && touched.cpassword}
-                  value={values.cpassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={(errors.cpassword && touched.cpassword) && errors.cpassword}
-                  margin="normal"
-                  variant="outlined" 
-                  type="password"
-                  maxLength="9"
-                />
-              </Grid>
-            
+                      <Field
+                      component={TextField}
+                      label="Confirm Password"
+                      name="cpassword"
+                      id="cpassword"
+                      error={errors.cpassword && touched.cpassword}
+                      value={values.cpassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.cpassword && touched.cpassword) && errors.cpassword}
+                      margin="normal"
+                      variant="outlined"
+                      type="password"
+                      maxLength="9"
+                    />
+                    </Grid>
 
-          </Grid>
-          
-          <Grid container spacing={2}>
-          {isSubmitting && <LinearProgress />}
-          <Grid item xs={6}>
-          <Button
-              type="button"
-              className="outline"
-              color="secondary"
-              variant="contained"
-              onClick={handleReset}
-              disabled={!dirty || isSubmitting}
-              fullWidth
-            >
-              Reset
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-          <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
-                          Submit
-                        </Button>
-          </Grid>
+                  </Grid>
 
-          </Grid> 
-          {/* <Button
+                  <Grid container spacing={2}>
+                    {isSubmitting && <LinearProgress />}
+                    <Grid item xs={6}>
+                      <Button
+                      type="button"
+                      className="outline"
+                      color="secondary"
+                      variant="contained"
+                      onClick={handleReset}
+                      disabled={!dirty || isSubmitting}
+                      fullWidth
+                    >
+                      Reset
+                    </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
+                      Submit
+                    </Button>
+                    </Grid>
+
+                  </Grid>
+                  {/* <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -275,27 +283,26 @@ export default function TypeTwo() {
             Sign Up
           </Button> */}
 
-          <Grid container justifyContent="flex-end" spacing={4}>
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-                      );
+                  <Grid container justifyContent="flex-end" spacing={4}>
+                    <Grid item>
+                      <Link href="/login" variant="body2">
+                      Already have an account? Sign in
+                    </Link>
+                    </Grid>
+                  </Grid>
+                </form>
+              );
             }}
           </Formik>
-      </div>
-      <Box mt={5}>
-     <Copyright />
-   </Box>
-    </Container>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
 
-   </div>
+    </div>
   );
 }
-
 
 //  <Grid container spacing={2}>
 // <Grid item xs={6}>
@@ -317,7 +324,7 @@ export default function TypeTwo() {
 //                </Button>
 // </Grid>
 
-// </Grid> 
+// </Grid>
 // import React, { Fragment,useState,useEffect,useRef} from 'react';
 // import { Formik, Field, Form, ErrorMessage } from 'formik';
 // import * as Yup from 'yup';
@@ -377,123 +384,120 @@ export default function TypeTwo() {
 //       .required('firstName is required'),
 //   });
 
-
 //   return (
 //         <Card>
 //            <Grid container>
 //           <Box style={{position:"absolute",display:"flex",marginTop:"30px",backgroundColor:"#cedeff",height:"40px",width:"100px",borderRadius:"0px 10px 10px 0px"}} alignItems="center" justifyContent="flex-end">
 //           <div style={{padding:"5px",fontWeight:"bold"}}>SIGN UP</div>
 //           </Box>
-         
+
 //           <img src={imgbg} style={{width:"100%",height:"200px"}}/>
 //           </Grid>
 //           <Grid container spacing={1}>
 
-         
 //           <div style={{marginTop:"20px"}}>
-        // <Formik
-        //         initialValues={{ firstName:'',email: '', lastName: '', password: '',cpassword:'' }}
-        //         onSubmit={(values, { setSubmitting }) => {
-        //            setSubmitting(true);
-        //            console.log(values);
-        //            setSubmitting(false);
-        //           // axios.post(contactFormEndpoint,
-        //           //   values,
-        //           //   {
-        //           //     headers: {
-        //           //       'Access-Control-Allow-Origin': '*',
-        //           //       'Content-Type': 'application/json',
-        //           //     }
-        //           //   },
-        //           // ).then((resp) => {
-        //           //   setSubmitionCompleted(true);
-        //           // }
-        //           // );
-        //         }}
+// <Formik
+//         initialValues={{ firstName:'',email: '', lastName: '', password: '',cpassword:'' }}
+//         onSubmit={(values, { setSubmitting }) => {
+//            setSubmitting(true);
+//            console.log(values);
+//            setSubmitting(false);
+//           // axios.post(contactFormEndpoint,
+//           //   values,
+//           //   {
+//           //     headers: {
+//           //       'Access-Control-Allow-Origin': '*',
+//           //       'Content-Type': 'application/json',
+//           //     }
+//           //   },
+//           // ).then((resp) => {
+//           //   setSubmitionCompleted(true);
+//           // }
+//           // );
+//         }}
 
-        //         validationSchema={
-        //           Yup.object().shape({
-        //             email: Yup.string()
-        //               .email()
-        //               .required('Required'),
-        //             lastName: Yup.string()
-        //               .required('Required'),
-        //             firstName: Yup.string()
-        //             .required('Required'),                    
-        //             password: Yup.string()
-        //               .min(6, 'Password should be of minimum 6 characters length')
-        //               .max(8, 'Password should be of maximum 8 characters length')
-        //               .matches(
-        //                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,8}$/,
-        //                 // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,8})$/,
-        //                 "One Uppercase, One Lowercase, One Number and one special case Character"
-        //               )
-        //               .required('Required'),
-        //             cpassword: Yup.string()
-        //               .oneOf([Yup.ref('password'), ""], 'Passwords must match')
-        //               .required('Password confirm is required'),
-        //         })}
-        //       >
-        //         {(props) => {
-        //           const {
-        //             values,
-        //             touched,
-        //             errors,
-        //             dirty,
-        //             isSubmitting,
-        //             handleChange,
-        //             handleBlur,
-        //             handleSubmit,
-        //             handleReset,
-        //           } = props;
-        //           return (
+//         validationSchema={
+//           Yup.object().shape({
+//             email: Yup.string()
+//               .email()
+//               .required('Required'),
+//             lastName: Yup.string()
+//               .required('Required'),
+//             firstName: Yup.string()
+//             .required('Required'),
+//             password: Yup.string()
+//               .min(6, 'Password should be of minimum 6 characters length')
+//               .max(8, 'Password should be of maximum 8 characters length')
+//               .matches(
+//                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,8}$/,
+//                 // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,8})$/,
+//                 "One Uppercase, One Lowercase, One Number and one special case Character"
+//               )
+//               .required('Required'),
+//             cpassword: Yup.string()
+//               .oneOf([Yup.ref('password'), ""], 'Passwords must match')
+//               .required('Password confirm is required'),
+//         })}
+//       >
+//         {(props) => {
+//           const {
+//             values,
+//             touched,
+//             errors,
+//             dirty,
+//             isSubmitting,
+//             handleChange,
+//             handleBlur,
+//             handleSubmit,
+//             handleReset,
+//           } = props;
+//           return (
 //                     <form onSubmit={handleSubmit} className={classes.root}>
 //                        <Grid container direction="column" spacing={1}>
 //                          <Grid direction="row" item xs={12}>
-                           
-                            // <Field
-                            //   component={TextField}
-                            //   label="First Name"
-                            //   id="firstName"
-                            //   name="firstName"
-                            //   value={values.firstName}
-                            //   error={errors.firstName && touched.firstName}
-                            //   helperText={(errors.firstName && touched.firstName) && errors.firstName}
-                            //   onChange={handleChange}
-                            //   onBlur={handleBlur}
-                            //   variant="outlined" 
-                            // />
-                            
-                            //   <Field
-                            //   component={TextField}
-                            //   label="Last Name"
-                            //   id="lastName"
-                            //   name="lastName"
-                            //   value={values.lastName}
-                            //   error={errors.lastName && touched.lastName}
-                            //   helperText={(errors.lastName && touched.lastName) && errors.lastName}
-                            //   onChange={handleChange}
-                            //   onBlur={handleBlur}
-                            //   variant="outlined" 
-                            // />
-                             
+
+// <Field
+//   component={TextField}
+//   label="First Name"
+//   id="firstName"
+//   name="firstName"
+//   value={values.firstName}
+//   error={errors.firstName && touched.firstName}
+//   helperText={(errors.firstName && touched.firstName) && errors.firstName}
+//   onChange={handleChange}
+//   onBlur={handleBlur}
+//   variant="outlined"
+// />
+
+//   <Field
+//   component={TextField}
+//   label="Last Name"
+//   id="lastName"
+//   name="lastName"
+//   value={values.lastName}
+//   error={errors.lastName && touched.lastName}
+//   helperText={(errors.lastName && touched.lastName) && errors.lastName}
+//   onChange={handleChange}
+//   onBlur={handleBlur}
+//   variant="outlined"
+// />
 
 //                           </Grid>
 //                           <Grid direction="row" item xs={12}>
 //                           <Grid item xs={12}>
-                          // <Field
-                          //     component={TextField}
-                          //     error={errors.email && touched.email}
-                          //     label="Email"
-                          //     name="email"
-                          //     id="email"
-                          //     value={values.email}
-                          //     onChange={handleChange}
-                          //     onBlur={handleBlur}
-                          //     helperText={(errors.email && touched.email) && errors.email}
-                          //     margin="normal"
-                          //     variant="outlined" 
-                          //   />
+// <Field
+//     component={TextField}
+//     error={errors.email && touched.email}
+//     label="Email"
+//     name="email"
+//     id="email"
+//     value={values.email}
+//     onChange={handleChange}
+//     onBlur={handleBlur}
+//     helperText={(errors.email && touched.email) && errors.email}
+//     margin="normal"
+//     variant="outlined"
+//   />
 
 //                           {/* <TextField
 //                               error={errors.email && touched.email}
@@ -504,40 +508,40 @@ export default function TypeTwo() {
 //                               onBlur={handleBlur}
 //                               helperText={(errors.email && touched.email) && errors.email}
 //                               margin="normal"
-//                               variant="outlined" 
+//                               variant="outlined"
 //                             /> */}
 //                           </Grid>
 //                           {/* <Grid item xs={6}> */}
-                          // <Field
-                          //     component={TextField}
-                          //     label="Password"
-                          //     name="password"
-                          //     id="password"
-                          //     error={errors.password && touched.password}
-                          //     value={values.password}
-                          //     onChange={handleChange}
-                          //     onBlur={handleBlur}
-                          //     helperText={(errors.password && touched.password) && errors.password}
-                          //     margin="normal"
-                          //     variant="outlined" 
-                          //     // type="password"
-                          //     maxLength="9"
-                          //   />
-                            // <Field
-                            //   component={TextField}
-                            //   label="Confirm Password"
-                            //   name="cpassword"
-                            //   id="cpassword"
-                            //   error={errors.cpassword && touched.cpassword}
-                            //   value={values.cpassword}
-                            //   onChange={handleChange}
-                            //   onBlur={handleBlur}
-                            //   helperText={(errors.cpassword && touched.cpassword) && errors.cpassword}
-                            //   margin="normal"
-                            //   variant="outlined" 
-                            //   // type="password"
-                            //   maxLength="9"
-                            // />
+// <Field
+//     component={TextField}
+//     label="Password"
+//     name="password"
+//     id="password"
+//     error={errors.password && touched.password}
+//     value={values.password}
+//     onChange={handleChange}
+//     onBlur={handleBlur}
+//     helperText={(errors.password && touched.password) && errors.password}
+//     margin="normal"
+//     variant="outlined"
+//     // type="password"
+//     maxLength="9"
+//   />
+// <Field
+//   component={TextField}
+//   label="Confirm Password"
+//   name="cpassword"
+//   id="cpassword"
+//   error={errors.cpassword && touched.cpassword}
+//   value={values.cpassword}
+//   onChange={handleChange}
+//   onBlur={handleBlur}
+//   helperText={(errors.cpassword && touched.cpassword) && errors.cpassword}
+//   margin="normal"
+//   variant="outlined"
+//   // type="password"
+//   maxLength="9"
+// />
 //                               {/* <TextField
 //                                   label="password"
 //                                   name="password"
@@ -547,7 +551,7 @@ export default function TypeTwo() {
 //                                   onBlur={handleBlur}
 //                                   helperText={(errors.password && touched.password) && errors.password}
 //                                   margin="normal"
-//                                   variant="outlined" 
+//                                   variant="outlined"
 //                                   type="password"
 //                                 /> */}
 //                               {/* </Grid> */}
@@ -566,7 +570,7 @@ export default function TypeTwo() {
 //                         helperText={(errors.firstName && touched.firstName) && errors.firstName}
 //                         onChange={handleChange}
 //                         onBlur={handleBlur}
-//                         variant="outlined" 
+//                         variant="outlined"
 //                       />
 //                      </Grid>
 //                      <Grid item xs={4}>
@@ -579,11 +583,11 @@ export default function TypeTwo() {
 //                         helperText={(errors.name && touched.name) && errors.name}
 //                         margin="normal"
 //                         error={errors.name && touched.name}
-//                         variant="outlined" 
+//                         variant="outlined"
 //                       />
 //                        </Grid>
 //                      </Grid>
-                     
+
 //                       <TextField
 //                         error={errors.email && touched.email}
 //                         label="email"
@@ -593,9 +597,9 @@ export default function TypeTwo() {
 //                         onBlur={handleBlur}
 //                         helperText={(errors.email && touched.email) && errors.email}
 //                         margin="normal"
-//                         variant="outlined" 
+//                         variant="outlined"
 //                       />
-                      
+
 //                       <TextField
 //                         label="password"
 //                         name="password"
@@ -605,12 +609,12 @@ export default function TypeTwo() {
 //                         onBlur={handleBlur}
 //                         helperText={(errors.password && touched.password) && errors.password}
 //                         margin="normal"
-//                         variant="outlined" 
+//                         variant="outlined"
 //                       /> */}
-                    
+
 //                         {isSubmitting && <LinearProgress />}
 //                       <div>
-                    
+
 //                         <Button
 //                           type="button"
 //                           className="outline"
@@ -640,4 +644,3 @@ export default function TypeTwo() {
 // }
 
 // export default TypeTwo;
-

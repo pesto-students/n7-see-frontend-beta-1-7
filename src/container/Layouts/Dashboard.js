@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
@@ -18,10 +18,17 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-// import { mainListItems, secondaryListItems } from './listItems';
+import Avatar from '@material-ui/icons/Notifications';
+import { IconBell, IconChevronUp, IconSearch } from '@tabler/icons';
+import seelogo from '../../assets/images/seelogo.png';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
+import Home from '../Home';
+import { Outlet } from 'react-router-dom';
+import { styled } from '@material-ui/core/styles';
 
 function Copyright() {
   return (
@@ -29,9 +36,10 @@ function Copyright() {
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>
+      {' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -48,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    border: 'none',
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
@@ -101,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    backgroundColor: '#fff'
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -115,88 +125,94 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  headerAvatar: {
+    height: '10vh'
+  },
 }));
+const DashboardLayoutRoot = styled('div')(
+  ({ theme }) => ({
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    height: '100%',
+    overflow: 'hidden',
+    width: '100%'
+  })
+);
 
-export default function Dashboard() {
+const DashboardLayoutWrapper = styled('div')(
+  ({ theme }) => ({
+    display: 'flex',
+    flex: '1 1 auto',
+    overflow: 'hidden',
+    paddingTop: 64,
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: 256
+    }
+  })
+);
+
+const DashboardLayoutContainer = styled('div')({
+  display: 'flex',
+  width:"100%",
+  flex: '1 1 auto',
+  overflow: 'hidden'
+});
+
+const DashboardLayoutContent = styled('div')({
+  flex: '1 1 auto',
+  height: '100%',
+  overflow: 'auto'
+});
+export default function Dashboard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
+    console.log('hyy');
     setOpen(false);
   };
+  const handleToggleDrawer = () => {
+    // setOpen(open?false:true);
+  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
+    <Header
+        handleToggleDrawer={handleToggleDrawer}
         open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        {/* <List>{mainListItems}</List> */}
-        <Divider />
-        {/* <List>{secondaryListItems}</List> */}
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                {/* <Orders /> */}
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+      />
+    <Sidebar open={open} drawerWidth={drawerWidth} />
+
+       <main className={classes.content}>
+         <div className={classes.appBarSpacer} />
+
+         {/* {props.children} */}
+         <Outlet />
+       </main>
+      {/* <DashboardLayoutContainer>
+        <DashboardLayoutContent>
+          <Outlet />
+        </DashboardLayoutContent>
+      </DashboardLayoutContainer> */}
+
+  </div>
+    // <div className={classes.root}>
+
+    //   <Header
+    //     handleToggleDrawer={handleToggleDrawer}
+    //     open={open}
+    //   />
+    //   <Sidebar open={open} drawerWidth={drawerWidth} />
+     
+    //   <main className={classes.content}>
+    //     <div className={classes.appBarSpacer} />
+
+    //     {props.children}
+
+    //   </main>
+    // </div>
   );
 }

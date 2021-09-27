@@ -1,9 +1,11 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, { useEffect } from 'react';
+import {
+  Formik, Field, Form, ErrorMessage
+} from 'formik';
 import * as Yup from 'yup';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -14,11 +16,11 @@ import {
   CssBaseline,
   TextField,
   LinearProgress,
-  makeStyles,
   Avatar,
 } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { ToastContainer, toast } from 'material-react-toastify';
-  import 'material-react-toastify/dist/ReactToastify.css';
+import 'material-react-toastify/dist/ReactToastify.css';
 
 function Copyright() {
   return (
@@ -26,9 +28,10 @@ function Copyright() {
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>
+      {' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    
+
   },
   avatar: {
     margin: theme.spacing(1),
@@ -52,100 +55,93 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  container:{
-    backgroundColor:"#fff",
-    borderRadius:"2%",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-    opacity:".8",
-    zIndex:"1"
+  container: {
+    backgroundColor: '#fff',
+    borderRadius: '2%',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    opacity: '.8',
+    zIndex: '1'
 
   },
-  fragment:{
+  fragment: {
     // backgroundColor:"#f0f0f0",
-    backgroundColor: "rgba(255,255,255,0.7)",
-    borderRadius:"2%",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: '2%',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     // opacity:".9",
-    padding:"10px",
-    zIndex:"-1",
-    border:"1px solid secondary"
+    padding: '10px',
+    zIndex: '-1',
+    border: '1px solid secondary'
   }
-  
+
 }));
 
-
 export default function Login() {
-const classes = useStyles();
-let history = useHistory();
+  const classes = useStyles();
+  const history = useNavigate();
 
   return (
-      <div>
-            <div className="App">
-      <div className="bg">
-      <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: '100vh' }}
-          item
-          md={12}
-        >
-        <Grid item xs={3}>
-        <div className={classes.fragment}>
-    <Container component="main" 
-       border={1} maxWidth="xs"  className={classes.container}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Formik
-                initialValues={{ firstName:'',email: '', lastName: '', password: '',cpassword:'' }}
-                onSubmit={(values, { setSubmitting }) => {
-                   setSubmitting(true);
-                   console.log(values);
-                 
-                   axios.post("http://localhost:4000/users",values,
-                      // {
-                      //   headers: {
-                      //     'Access-Control-Allow-Origin': '*',
-                      //     'Content-Type': 'application/json',
-                      //   }
-                      // }, 
-                    ).then((resp) => {
-                      console.log(resp);
+    <div>
+      <div className="App">
+        <div className="bg">
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '100vh' }}
+            item
+            md={12}
+          >
+            <Grid item xs={3}>
+              <div className={classes.fragment}>
+                <Container
+                  component="main"
+                  border={1}
+                  maxWidth="xs"
+                  className={classes.container}
+                >
+                  <CssBaseline />
+                  <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                      </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign In
+                </Typography>
+                    <Formik
+                        initialValues={{ email: '', password: '' }}
+                        onSubmit={(values, { setSubmitting }) => {
+                              setSubmitting(true);
+                              console.log(values);
+                              axios.post('http://localhost:4000/users/login', values).then((resp) => {
+                                console.log('resp');
 
-                      setSubmitting(false);
-                      if(resp.status==200)
-                      {
-                        console.log(resp);
-                        toast.success(resp.data.message,{autoClose: 3000,});
-                        // history.push("/home");
-                      }
-                      else{
-                        toast.error(resp.data.message,{autoClose: 3000,});
-                        console.log(resp);
-                      }
-                      
-                    }
-                    );
-                }}
+                                setSubmitting(false);
+                                if (resp.status == 200) {
+                                  console.log('resp', resp);
+                                  // localStorage.setItem('username', values.email);
+                                  sessionStorage.setItem('email', values.email);
+                                  sessionStorage.setItem('username', values.username);
+                                  sessionStorage.setItem('u_id', resp.data.response._id);
+                                  toast.success(resp.data.message, { autoClose: 3000, });
+                                  history("/")
+                                } else {
+                                  toast.error(resp.data.message, { autoClose: 3000, });
+                                  console.log(resp);
+                                }
+                              }).catch((e) => {
+                                toast.error('Failed to login', { autoClose: 3000, });
+                              });
+                            }}
 
-                validationSchema={
+                        validationSchema={
                   Yup.object().shape({
                     email: Yup.string()
                       .email(),
-                      //.required('Required'),
-                    lastName: Yup.string(),
-                      //.required('Required'),
-                    firstName: Yup.string(),
-                    //.required('Required'),                    
-                    // password: Yup.string()
+                    // .required('Required'),
+                    password: Yup.string()
                     //   .min(6, 'Password should be of minimum 6 characters length')
                     //   .max(8, 'Password should be of maximum 8 characters length')
                     //   .matches(
@@ -157,72 +153,72 @@ let history = useHistory();
                     // cpassword: Yup.string()
                     //   .oneOf([Yup.ref('password'), ""], 'Passwords must match')
                     //  .required('Password confirm is required'),
-                })}
-              >
-                {(props) => {
-                  const {
-                    values,
-                    touched,
-                    errors,
-                    dirty,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    handleReset,
-                  } = props;
-                  return (
-        <Form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={12}>
+                  })
+}
+                      >
+                        {(props) => {
+                              const {
+                                values,
+                                touched,
+                                errors,
+                                dirty,
+                                isSubmitting,
+                                handleChange,
+                                handleBlur,
+                                handleSubmit,
+                                handleReset,
+                              } = props;
+                              return (
+                        <Form className={classes.form} onSubmit={handleSubmit}>
+                        <Grid container spacing={1}>
+                          <Grid item xs={12} sm={12}>
 
-              <Field
-                  component={TextField}
-                  error={errors.email && touched.email}
-                  label="Email"
-                  name="email"
-                  id="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={(errors.email && touched.email) && errors.email}
-                  margin="normal"
-                  variant="outlined" 
-                  fullWidth
-                />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-            <Field
-                component={TextField}
-                label="Password"
-                name="password"
-                id="password"
-                error={errors.password && touched.password}
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperText={(errors.password && touched.password) && errors.password}
-                margin="normal"
-                variant="outlined" 
-                type="password"
-                maxLength="9"
-                fullWidth
-              />
-              </Grid>
-            
+                          <Field
+                      component={TextField}
+                      error={errors.email && touched.email}
+                      label="Email"
+                      name="email"
+                      id="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.email && touched.email) && errors.email}
+                      margin="normal"
+                      variant="outlined"
+                      fullWidth
+                    />
+                        </Grid>
+                          <Grid item xs={12} sm={12}>
+                          <Field
+                      component={TextField}
+                      label="Password"
+                      name="password"
+                      id="password"
+                      error={errors.password && touched.password}
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={(errors.password && touched.password) && errors.password}
+                      margin="normal"
+                      variant="outlined"
+                      type="password"
+                      maxLength="9"
+                      fullWidth
+                    />
+                        </Grid>
 
-          </Grid>
-          
-          <Grid container spacing={2}>
-          {isSubmitting && <LinearProgress />}
-          <Grid item xs={12}>
-          <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
-                          Submit
-                        </Button>
-          </Grid>
+                        </Grid>
 
-          </Grid> 
-          {/* <Button
+                        <Grid container spacing={2}>
+                          {isSubmitting && <LinearProgress />}
+                          <Grid item xs={12}>
+                          <Button type="submit" fullWidth color="primary" variant="contained">
+                      Submit
+                    </Button>
+                        </Grid>
+
+                        </Grid>
+                        {/* <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -232,42 +228,38 @@ let history = useHistory();
             Sign Up
           </Button> */}
 
-          <Grid container justifyContent="flex-end" spacing={4}>
-            <Grid item>
-              <Link href="/" variant="body2">
-              Don't have an account? Sign up
-              </Link>
-            </Grid>
-          </Grid>
-        </Form>
-            );
-            }}
-          </Formik>
-      </div>
-      <Box mt={5}>
-     <Copyright />
-   </Box>
-    </Container>
+                        <Grid container justifyContent="flex-end" spacing={4}>
+                          <Grid item>
+                          <Link href="/register" variant="body2">
+                      Don't have an account? Sign up
+                    </Link>
+                        </Grid>
+                        </Grid>
+                      </Form>
+                              );
+                            }}
+                      </Formik>
+                  </div>
+                  <Box mt={5}>
+                    <Copyright />
+                  </Box>
+                </Container>
 
-   </div>
-  
-        </Grid>
-      
-            
-          {/* <Grid item xs={4} direction="column" alignItems="flex-center" justifyContent="center" >
+              </div>
+
+            </Grid>
+
+            {/* <Grid item xs={4} direction="column" alignItems="flex-center" justifyContent="center" >
             <TypeTwo/>
             </Grid> */}
           </Grid>
-        
+
+        </div>
+
       </div>
-     
+      {/* <NavBar/> */}
+
+      <ToastContainer />
     </div>
-        {/* <NavBar/> */}  
-       
-        <ToastContainer />
-      </div>
   );
-
 }
-
-
