@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
@@ -40,7 +40,9 @@ import { Redirect, useNavigate,Navigate } from 'react-router-dom';
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import SearchCard from './SearchCard';
 import img1 from '../../assets/images/img1.png';
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -118,14 +120,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BuyCard(props) {
   const classes = useStyles();
-  const history = useNavigate();
-  console.log(props)
+  const navigate = useNavigate();
+  const [loadingIndicator, setLoadingIndicator] = useState(false);
+  var u_id=sessionStorage.getItem('u_id');
+  // console.log(props.item.interest.length>0&&props.item.interest[0]._id)
+  // console.log(sessionStorage.getItem('u_id'));
+  var isInclude=props.item.interest.length>0?props.item.interest.some(item=>item._id===u_id):false
+  console.log(isInclude);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const getDetails = (items) => {
-    history('/user/details',{
+    navigate('/user/details',{
       state: items
     })
     // history.push({
@@ -133,6 +140,30 @@ export default function BuyCard(props) {
     //   state: items
     // });
   };
+
+  const expressInterestFunc = (r_id,u_id) => {
+    const expressInterest = async () => {
+      setLoadingIndicator(true);
+      var expressreq={
+        r_id:r_id,
+        u_id:u_id
+      }
+      await axios.post(`http://localhost:4000/request/expressinterest`,expressreq).then((resp) => {
+        console.log(resp);
+        toast.success(resp.data.response.message, { autoClose: 3000, });
+        setLoadingIndicator(false);
+        // navigate('/')
+        // window.location.reload();
+      }).catch((e) => {
+        setLoadingIndicator(false);
+        toast.error('Something Went Wrong', { autoClose: 3000, });
+      });
+      // setUser(result.data);
+    };
+    expressInterest(r_id,u_id);
+  };
+
+
   return (
 
     <Grid
@@ -186,7 +217,7 @@ export default function BuyCard(props) {
             </Typography>
             <Typography variant="h4">
               <IconButton aria-label="add to favorites">
-                <Favorite />
+                {isInclude?<Favorite color="error" onClick={() => expressInterestFunc(props.item._id,u_id)}/>:<Favorite onClick={() => expressInterestFunc(props.item._id,u_id)}/>}
               </IconButton>
             </Typography>
             <Typography variant="h4">

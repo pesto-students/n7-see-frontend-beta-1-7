@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
   headerStyle: {
     backgroundColor: '#252F3E',
-    minHeight: '20vh',
+    minHeight: '10vh',
     color: '#fff'
   }
 }));
@@ -144,19 +144,20 @@ const style = {
 };
 export default function InterestInDetail(props) {
   const classes = useStyles();
-  const [categoryData, setCategoryData] = useState([{ value: 1, label: 'category 1' }, { value: 2, label: 'category 2' }]);
-  const history = useNavigate();
-  const [historyData, setHistoryData] = useState([]);
+  const navigate = useNavigate();
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
-  const [pageEdit, setPageEdit] = useState(false);
+  const [contactData, setContactData] = useState(null);
+  const handleClose = () => {
+    props.manageViewInDetailFunc(false);
+  };
+
   useEffect(() => {
-    const getMyHistory = async () => {
+    const getMyContactDetails = async () => {
       setLoadingIndicator(true);
-      // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      const email = sessionStorage.getItem('email');
-      await axios.post('http://localhost:4000/request/history', { email }).then((resp) => {
-        console.log(resp.data.response);
-        setHistoryData(resp.data.response);
+      await axios.get(`http://localhost:4000/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
+        console.log(resp);
+        setContactData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {
         setLoadingIndicator(false);
@@ -166,24 +167,9 @@ export default function InterestInDetail(props) {
       // setUser(result.data);
     };
 
-    getMyHistory();
+    getMyContactDetails();
+
   }, []);
-  // const counter = useSelector(getCounter);
-
-  // const dispatch = useDispatch();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const categoryFunc = (value, setFieldValue) => {
-    setFieldValue('category', value);
-  };
-  const handleClick = () => {
-    console.info('You clicked the Chip.');
-    setPageEdit(true);
-  };
-
-  const handleClose = () => {
-    props.viewInDetailFunc(false);
-  };
-
   return (
     <>
       <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
@@ -201,23 +187,17 @@ export default function InterestInDetail(props) {
                 )}
                   title={(
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div style={{ fontSize: '24px' }}>Product Name</div>
-                  <div>
-                    <Chip
-                      label="Close"
-                      onClick={() => handleClose()}
-                      style={{ backgroundColor: '#f50057' }}
-                    />
-                  </div>
+                  <div style={{ fontSize: '24px' }}>{props.selectedData.productname}</div>
+
                 </div>
                 )}
                   subheader={(
-                <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Rating
                     name="simple-controlled"
                     value={2}
                   />
-                  <div style={{ color: '#fff', fontSize: '24px' }}>₹ 200</div>
+                  <div style={{ color: '#fff', fontSize: '30px' }}>₹ {props.selectedData.cost}</div>
                 </div>
                 )}
                 />
@@ -230,33 +210,7 @@ export default function InterestInDetail(props) {
 
                     </Grid>
                     <Grid item md={8}>
-                      Officia amet eiusmod eu sunt tempor
-                      voluptate laboris velit nisi amet enim proident et.
-                      Consequat laborum non eiusmod cillum eu exercitation.
-                      Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                      cupidatat pariatur mollit ad est proident reprehenderit.
-                      Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                      Officia amet eiusmod eu sunt tempor
-                      voluptate laboris velit nisi amet enim proident et.
-                      Consequat laborum non eiusmod cillum eu exercitation.
-                      Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                      cupidatat pariatur mollit ad est proident reprehenderit.
-                      Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                      Officia amet eiusmod eu sunt tempor
-                      voluptate laboris velit nisi amet enim proident et.
-                      Consequat laborum non eiusmod cillum eu exercitation.
-                      Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                      cupidatat pariatur mollit ad est proident reprehenderit.
-                      Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                      Officia amet eiusmod eu sunt tempor
-                      voluptate laboris velit nisi amet enim proident et.
-                      Consequat laborum non eiusmod cillum eu exercitation.
-                      Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                      cupidatat pariatur mollit ad est proident reprehenderit.
-                      Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
-                      Qui adipisicing est fugiat eiusmod esse. Sint aliqua
-                      cupidatat pariatur mollit ad est proident reprehenderit.
-                      Eiusmod adipisicing laborum incididunt sit aliqua ullamco.
+                      {props.selectedData.description}
 
                     </Grid>
                   </Grid>
@@ -285,7 +239,7 @@ export default function InterestInDetail(props) {
                         <b> Contact Name</b>
                       </Grid>
                         <Grid item md={12}>
-                        aa
+                        {contactData!==null?contactData.firstName+" "+contactData.lastName:""}
                         </Grid>
 
                       </Grid>
@@ -295,7 +249,7 @@ export default function InterestInDetail(props) {
                         <b> Mobile Number</b>
                       </Grid>
                         <Grid item md={12}>
-                        99999999
+                        {contactData!==null?contactData.mobno:""}
                         </Grid>
 
                       </Grid>
@@ -305,7 +259,7 @@ export default function InterestInDetail(props) {
                         <b> Email</b>
                       </Grid>
                         <Grid item md={12}>
-                        a@a.com
+                        {contactData!==null?contactData.email:""}
                         </Grid>
 
                       </Grid>
@@ -315,8 +269,7 @@ export default function InterestInDetail(props) {
                         <b> Address</b>
                       </Grid>
                         <Grid item md={12}>
-                        Ut pharetra luctus est quis sodales.
-                        Duis nisi tortor.
+                        {contactData!==null?contactData.address:"No Address Added"}
                         </Grid>
 
                       </Grid>
@@ -328,6 +281,16 @@ export default function InterestInDetail(props) {
               </Grid>
 
                 </CardContent>
+                <Divider/>
+          
+          <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
+            &nbsp;&nbsp;
+              <Chip
+                label="Close"
+                onClick={() => handleClose()}
+                style={{ backgroundColor: '#f50057',color:"#fff" }}
+              />
+            </div>
               </Card>
 
             </Grid>

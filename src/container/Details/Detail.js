@@ -8,7 +8,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -38,6 +37,7 @@ import {
   TextField,
   Input,
   LinearProgress, Chip, Modal,
+  IconButton
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import HistoryCard from '../../components/Card/HistoryCard';
@@ -146,6 +146,7 @@ export default function Detail(props) {
   const location = useLocation();
   const [itemDetails, setItemDetails] = useState(null);
   const u_id = sessionStorage.getItem('u_id');
+  const [include,setInclude]=useState(false);
   useEffect(() => {
     const getMyContactDetails = async () => {
       console.log(itemDetails);
@@ -162,6 +163,7 @@ export default function Detail(props) {
       // setUser(result.data);
     };
     if (itemDetails != null) {
+      setInclude( itemDetails.interest.length>0?itemDetails.interest.some(item=>item._id===u_id):false)
       getMyContactDetails();
     }
   }, [itemDetails]);
@@ -227,6 +229,10 @@ export default function Detail(props) {
                   title={(
                 <div style={{ display: 'flex', justifyContent: 'space-between', }}>
                   <div style={{ fontSize: '24px' }}>{itemDetails != null ? itemDetails.productname : ''}</div>
+                  {include?<IconButton aria-label="add to favorites">
+                    <Favorite color="error"/>
+                  </IconButton>:""
+                  }
                 </div>
                 )}
                   subheader={(
@@ -327,14 +333,19 @@ export default function Detail(props) {
               </Grid>
 
                 </CardContent>
-                <Divider/>
-                <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"5vh",paddingRight:"10px"}}>
-                <Chip
+                {
+                  !include?<>
+                      <Divider/>
+                 <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
+                  <Chip
                     label="Express Interest"
                     onClick={() => expressInterestFunc(itemDetails._id,u_id)}
                     style={{ backgroundColor: '#ECA909', color:"#fff"}}
                   />
                   </div>
+                  </>:""
+                }
+            
               </Card>
 
             </Grid>

@@ -119,37 +119,45 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListInterest(props) {
   const classes = useStyles();
-  const [categoryData, setCategoryData] = useState([{ value: 1, label: 'category 1' }, { value: 2, label: 'category 2' }]);
-  const history = useNavigate();
-  const [historyData, setHistoryData] = useState([]);
+  const navigate = useNavigate();
+  const [myInterestData, setMyInterestData] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [viewInDetail, setViewInDetail] = useState(false);
+
+  const getAllMyInterest = async () => {
+    setLoadingIndicator(true);
+    // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
+    const u_id = sessionStorage.getItem('u_id');
+    await axios.get(`http://localhost:4000/request/getmyinterest/${u_id}`).then((resp) => {
+      console.log(resp.data.response);
+      setMyInterestData(resp.data.response);
+      setLoadingIndicator(false);
+    }).catch((e) => {
+      setLoadingIndicator(false);
+      toast.error('Something Went Wrong', { autoClose: 3000, });
+    });
+
+    // setUser(result.data);
+  };
+
   useEffect(() => {
-    const getMyHistory = async () => {
-      setLoadingIndicator(true);
-      // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      const email = sessionStorage.getItem('email');
-      await axios.post('http://localhost:4000/request/history', { email }).then((resp) => {
-        console.log(resp.data.response);
-        setHistoryData(resp.data.response);
-        setLoadingIndicator(false);
-      }).catch((e) => {
-        setLoadingIndicator(false);
-        toast.error('Something Went Wrong', { autoClose: 3000, });
-      });
-
-      // setUser(result.data);
-    };
-
-    getMyHistory();
+    getAllMyInterest();
   }, []);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const viewInDetailFunc = (value) => {
+  const viewInDetailFunc = (value,myinterestdata) => {
     setViewInDetail(value);
+    setSelectedData(myinterestdata);
   };
+
+  const manageViewInDetailFunc=(value)=>{
+    getAllMyInterest();
+    setViewInDetail(value);
+  }
+
   return (
     <>
       <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
@@ -184,38 +192,43 @@ export default function ListInterest(props) {
             />
             <CardContent>
 
-              <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <IconButton aria-label="add to favorites">
-                    <FileCopy />
-                  </IconButton>
+                {
+                  myInterestData.length>0?myInterestData.map((myinterestdata)=>(
+                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <IconButton aria-label="add to favorites">
+                        <FileCopy />
+                      </IconButton>
+    
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={myinterestdata.productname}
+                        secondary={myinterestdata.description}
+                      />
+                      <IconButton
+                        edge="end"
+                        size="small"
+                        onClick={() => viewInDetailFunc(true,myinterestdata)}
+                      >
+                        <Visibility />
+                      </IconButton>
+    
+                    </ListItem>
+                    <Divider />
+                  </List>
+              
 
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="dfgdddddddddddddddddddg dffffffffffffffffffd fgdf sdfgdfgd
-               f dfg dfg dfg dfg dfgdfg dfgdfg dfg dfg dfgdfg dfghdfg dfg dfg dfg dfg dfg dfg
-               sdfsdfsd sdf sdf sdf sdfd s sdfsd fdsf sdfd sdf dsfsdf sdf sdfsdf df sdfsdfsdfsd
-               ffsd ffdsf"
-                    secondary="Jan 9, 2014"
-                  />
-                  <IconButton
-                    edge="end"
-                    size="small"
-                    onClick={() => viewInDetailFunc(true)}
-                  >
-                    <Visibility />
-                  </IconButton>
+                  )):<div style={{display:"flex",justifyContent:"center"}}>No Request Found</div>
 
-                </ListItem>
-                <Divider />
-              </List>
+                }
+
             </CardContent>
           </Card>
         </Grid>
-      ) : <InterestInDetail viewInDetailFunc={viewInDetailFunc} />
+      ) : <InterestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
 
     }
 

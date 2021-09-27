@@ -166,7 +166,7 @@ const CustomerListResults = ({ ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                  {complaint.from}
+                  {complaint.name}
                    
                   </TableCell>
             

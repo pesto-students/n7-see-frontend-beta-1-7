@@ -20,7 +20,7 @@ const RequestByCategory = (props) => {
   const data = {
     datasets: [
       {
-        data: [props.data[0].count, props.data[1].count, props.data[2].count],
+        data: props.data[0]!==undefined&&props.data[1]!==undefined&&props.data[2]!==undefined? [props.data[0].count, props.data[1].count, props.data[2].count]:[0,0,0],
         backgroundColor: [
           colors.indigo[500],
           colors.red[600],
@@ -31,7 +31,7 @@ const RequestByCategory = (props) => {
         hoverBorderColor: colors.common.white
       }
     ],
-    labels: [props.data[0]._id, props.data[1]._id, props.data[2]._id]
+    labels: props.data[0]!==undefined&&props.data[1]!==undefined&&props.data[2]!==undefined?[props.data[0]._id, props.data[1]._id, props.data[2]._id]:["No Category","No Category","No Category"]
   };
 
 
@@ -59,7 +59,7 @@ const RequestByCategory = (props) => {
     }
   };
 
-  const devices = [
+  const devices = props.data[0]!==undefined&&props.data[1]!==undefined&&props.data[2]!==undefined?[
     {
       title: props.data[0]._id,
       value: props.data[0].count,
@@ -75,6 +75,25 @@ const RequestByCategory = (props) => {
     {
       title: props.data[2]._id,
       value: props.data[2].count,
+      icon: PhoneIcon,
+      color: colors.orange[600]
+    }
+  ]:[
+    {
+      title: "Nil",
+      value: 0,
+      icon: LaptopMacIcon,
+      color: colors.indigo[500]
+    },
+    {
+      title: "Nil",
+      value: 0,
+      icon: TabletIcon,
+      color: colors.red[600]
+    },
+    {
+      title: "Nil",
+      value: 0,
       icon: PhoneIcon,
       color: colors.orange[600]
     }

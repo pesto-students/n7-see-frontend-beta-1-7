@@ -275,7 +275,7 @@ export default function RequestInDetail(props) {
                 </CardContent>
                 <Divider/>
           
-                <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"5vh",paddingRight:"10px"}}>
+                <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
                     <Chip
                       label="Remove"
                       onClick={() => handleClick( props.selectedData._id)}
