@@ -175,44 +175,45 @@ export default function Dashboard(props) {
     setOpen(false);
   };
   const handleToggleDrawer = () => {
-    // setOpen(open?false:true);
+    setOpen(open?false:true);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
+  //   <div className={classes.root}>
+  //   <Header
+  //       handleToggleDrawer={handleToggleDrawer}
+  //       open={open}
+  //     />
+  //   <Sidebar open={open} drawerWidth={drawerWidth} />
+
+  //      <main className={classes.content}>
+  //        <div className={classes.appBarSpacer} />
+
+  //        {/* {props.children} */}
+  //        <Outlet />
+  //      </main>
+  //     {/* <DashboardLayoutContainer>
+  //       <DashboardLayoutContent>
+  //         <Outlet />
+  //       </DashboardLayoutContent>
+  //     </DashboardLayoutContainer> */}
+
+  // </div>
+
+
     <div className={classes.root}>
-    <Header
+
+      <Header
         handleToggleDrawer={handleToggleDrawer}
         open={open}
       />
-    <Sidebar open={open} drawerWidth={drawerWidth} />
-
-       <main className={classes.content}>
-         <div className={classes.appBarSpacer} />
-
-         {/* {props.children} */}
-         <Outlet />
-       </main>
-      {/* <DashboardLayoutContainer>
-        <DashboardLayoutContent>
-          <Outlet />
-        </DashboardLayoutContent>
-      </DashboardLayoutContainer> */}
-
-  </div>
-    // <div className={classes.root}>
-
-    //   <Header
-    //     handleToggleDrawer={handleToggleDrawer}
-    //     open={open}
-    //   />
-    //   <Sidebar open={open} drawerWidth={drawerWidth} />
+      <Sidebar open={open} drawerWidth={drawerWidth} />
      
-    //   <main className={classes.content}>
-    //     <div className={classes.appBarSpacer} />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
 
-    //     {props.children}
-
-    //   </main>
-    // </div>
+        <Outlet />
+      </main>
+    </div>
   );
 }

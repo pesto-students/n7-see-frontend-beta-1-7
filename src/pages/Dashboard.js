@@ -94,7 +94,7 @@ export default function Dashboard() {
             xl={9}
             xs={12}
           >
-            <UserRequest />
+            <UserRequest data={data}/>
           </Grid>
           <Grid
             item

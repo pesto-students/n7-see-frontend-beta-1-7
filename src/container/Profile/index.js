@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState,useRef } from 'react';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -40,8 +40,6 @@ import {
   Chip, Modal
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
-import HistoryCard from '../../components/Card/HistoryCard';
-import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
@@ -56,7 +54,6 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -130,19 +127,23 @@ const style = {
 };
 export default function Profile() {
   const classes = useStyles();
-  const [categoryData, setCategoryData] = useState([{ value: 1, label: 'category 1' }, { value: 2, label: 'category 2' }]);
-  const history = useNavigate();
-  const [historyData, setHistoryData] = useState([]);
+  const navigate = useNavigate();
+
   const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [pageEdit, setPageEdit] = useState(false);
+  const [genderData,setGenderData]=useState([{value:"1",label:"Male"},{value:"1",label:"Female"}])
+  const [myProfileData,setMyProfileData]=useState(null);
+  const [cityData, setCityData] = useState([]);
+  const [cityLoading, setCityLoading] = useState(false);
+  const formRef = useRef();
   useEffect(() => {
-    const getMyHistory = async () => {
+    const getMyProfile = async () => {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      const email = sessionStorage.getItem('email');
-      await axios.post('http://localhost:4000/request/history', { email }).then((resp) => {
-        console.log(resp.data.response);
-        setHistoryData(resp.data.response);
+      const u_id = sessionStorage.getItem('u_id');
+      await axios.get(`http://localhost:4000/users/getmyprofile/${u_id}`).then((resp) => {
+        console.log(resp.data);
+        setMyProfileData(resp.data[0]);
         setLoadingIndicator(false);
       }).catch((e) => {
         setLoadingIndicator(false);
@@ -152,15 +153,26 @@ export default function Profile() {
       // setUser(result.data);
     };
 
-    getMyHistory();
+    async function getCity() {
+      setCityLoading(true);
+      axios.get("http://localhost:4000/admin/getcity").then((resp)=>{
+        const options = resp.data.response.map(function(row) {
+          return { value : row._id, label : row.city }
+       })
+        console.log(resp)
+        
+        setCityData(options)
+        setCityLoading(false);
+      })
+    }
+    getMyProfile();
+    getCity()
   }, []);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const categoryFunc = (value, setFieldValue) => {
-    setFieldValue('category', value);
-  };
+
   const handleClick = () => {
     console.info('You clicked the Chip.');
     setPageEdit(true);
@@ -169,11 +181,18 @@ export default function Profile() {
   const cancelEdit = () => {
     setPageEdit(false);
   };
-
+  const user = {
+    avatar: '/static/images/avatars/avatar_6.png',
+    city: 'Los Angeles',
+    country: 'USA',
+    jobTitle: 'Senior Developer',
+    name: 'Katarina Smith',
+    timezone: 'GTM-7'
+  };
   return (
     <>
       <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
-        <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
+        {/* <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
           <div style={{ display: 'flex', alignItems: 'center', fontSize: '24px' }}>
             <IconButton aria-label="add to favorites">
               <MenuBook />
@@ -181,14 +200,15 @@ export default function Profile() {
             {' '}
             My Profile
           </div>
-        </Grid>
+        </Grid> */}
         {
       !pageEdit ? (
+        
         <Grid item md={12}>
           <Grid container spacing={2}>
             <Grid item md={12}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardHeader
+              <Card>
+                {/* <CardHeader
                   avatar={(
                     <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe">
                       R
@@ -196,18 +216,63 @@ export default function Profile() {
                 )}
                   title={(
                     <div style={{ display: 'flex', justifyContent: 'space-between', }}>
-                      <div>My Name</div>
-                      <Chip
-                    label="Edit Profile"
-                    onClick={() => handleClick()}
-                    style={{ backgroundColor: '#ECA909' }}
-                  />
+                      <div>{myProfileData!==null?myProfileData.firstName+" "+myProfileData.lastName:""}</div>
+                   
                     </div>
                 )}
-                  subheader="Updated on September 14, 2016"
+                  // subheader={"Created on "+ myProfileData!==null?myProfileData.createddate:""}
+                /> */}
+                <CardHeader
+                  title="My Profile"
                 />
+                <Divider/>
                 <CardContent>
+                 
                   <Grid container spacing={2}>
+                  <Grid item md={4}>
+                  <Grid container justifyContent="center">
+                    <Card>
+                    <CardHeader
+                              avatar={(
+                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={user.avatar}
+                                title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
+                                subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
+                                >
+                    </Avatar>
+                      )}
+                            />
+                    <Divider/>
+                    <CardContent>
+                    <div style={{textAlign:"center"}}>
+                    <Typography
+                      color="textPrimary"
+                      gutterBottom
+                      variant="h3"
+                    >
+                   {myProfileData!==null?myProfileData.firstName+" "+myProfileData.lastName:""}
+                    </Typography>
+                    {/* <Chip
+                      label="Edit Profile"
+                      onClick={() => handleClick()}
+                      style={{ backgroundColor: '#ECA909',color:"#fff"}}
+                    /> */}
+
+                    <Button
+                      color="primary"
+                      fullWidth
+                      variant="contained"
+                      onClick={() => handleClick()}
+                    >
+                     Edit Profile
+                    </Button>
+                    </div>
+                    </CardContent>
+                    </Card>
+
+                  </Grid>
+                  
+
+                  </Grid>
                     <Grid item md={8}>
                       <Card>
                     <CardHeader
@@ -220,47 +285,16 @@ export default function Profile() {
                           <b> Gender</b>
                         </Grid>
                       <Grid item md={12}>
-                          Male
+                     { myProfileData!==null?myProfileData.gender!==undefined?myProfileData.gender:"...":"..."}
                         </Grid>
 
-                    </Grid>
-                      <br />
-                      <Grid container>
-                      <Grid item md={12}>
-                          <b> Date Of Birth</b>
-                        </Grid>
-                      <Grid item md={12}>
-                          20/10/1980
-                        </Grid>
-
-                    </Grid>
-                      <br />
-                      <Grid container>
-                      <Grid item md={12}>
-                          <b> Location</b>
-                        </Grid>
-                      <Grid item md={12}>
-                          Kerala,Thiruvanathapuram
-                        </Grid>
-
-                    </Grid>
-                    </CardContent>
-                  </Card>
-
-                    </Grid>
-                    <Grid item md={4}>
-                      <Card>
-                    <CardHeader
-                      className={classes.tabHeader}
-                      title="Contact Info"
-                    />
-                    <CardContent>
+                      </Grid>
                       <Grid container>
                       <Grid item md={12}>
                           <b> Mobile Number</b>
                         </Grid>
                       <Grid item md={12}>
-                          99999999
+                      { myProfileData!==null?myProfileData.mobno:""}
                         </Grid>
 
                     </Grid>
@@ -270,7 +304,7 @@ export default function Profile() {
                           <b> Email</b>
                         </Grid>
                       <Grid item md={12}>
-                          a@a.com
+                      { myProfileData!==null?myProfileData.email:""}
                         </Grid>
 
                     </Grid>
@@ -280,25 +314,60 @@ export default function Profile() {
                           <b> Address</b>
                         </Grid>
                       <Grid item md={12}>
-                          Ut pharetra luctus est quis sodales.
-                          Duis nisi tortor.
+                      { myProfileData!==null?myProfileData.address:""}
                         </Grid>
 
                     </Grid>
+                    <br/>
+                    <Grid container>
+                      <Grid item md={12}>
+                          <b> City</b>
+                        </Grid>
+                      <Grid item md={12}>
+                      { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"...":"..."}
+                        </Grid>
+
+                    </Grid>
+                   
+                   
+                      <br />
+
+
                     </CardContent>
                   </Card>
 
                     </Grid>
+                 
                   </Grid>
 
                 </CardContent>
+                  {/* <Divider/> */}
+
+                  {/* <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}> */}
+                  {/* <Chip
+                      label="Edit Profile"
+                      onClick={() => handleClick()}
+                      style={{ backgroundColor: '#ECA909',color:"#fff"}}
+                    /> */}
+                  &nbsp;&nbsp;
+                    {/* <Chip
+                      label="Close"
+                      onClick={() => handleClose()}
+                      style={{ backgroundColor: '#f50057',color:"#fff" }}
+                    /> */}
+                  {/* </div> */}
+
               </Card>
 
             </Grid>
+
           </Grid>
         </Grid>
-      )
-        : (
+     
+     )
+        : 
+        
+        (
           <Grid item md={12}>
             <Grid container spacing={2}>
               <Grid item md={12}>
@@ -309,25 +378,24 @@ export default function Profile() {
                   />
                   <CardContent>
                     <Formik
+                      innerRef={formRef}
                       initialValues={{
-                        firstname: '',
-                        lastname: '',
-                        gender: '',
-                        dateofbirth: '',
-                        contactno: '',
-                        emailid: '',
-                        state: '',
-                        district: ''
+                        firstName: myProfileData!==null?myProfileData.firstName:"",
+                        lastName: myProfileData!==null?myProfileData.lastName:"",
+                        gender: myProfileData!==null?genderData.filter((genderdata)=>genderdata.label==myProfileData.gender):null,
+                        mobno: myProfileData!==null?myProfileData.mobno:"",
+                        email: myProfileData!==null?myProfileData.email:"",
+                        city: myProfileData!==null?cityData.filter((citydata)=>citydata.label==myProfileData.city):null,
+                        address:myProfileData!==null?myProfileData.address:"",
                       }}
                       onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(true);
                         console.log(values);
                         const valueCopy = JSON.parse(JSON.stringify(values));
-                        valueCopy.category = values.category.label;
-                        valueCopy.email = sessionStorage.getItem('email');
-                        valueCopy.username = sessionStorage.getItem('username');
-                        console.log(valueCopy);
-                        axios.post('http://localhost:4000/request', valueCopy,
+                        valueCopy.u_id = sessionStorage.getItem('u_id');
+                        valueCopy.city = values.city!=null?values.city.label:null
+                        valueCopy.gender = values.gender!=null?values.gender.label:null
+                        axios.post('http://localhost:4000/users/updateuser', valueCopy,
                           // {
                           //   headers: {
                           //     'Access-Control-Allow-Origin': '*',
@@ -341,7 +409,9 @@ export default function Profile() {
                           if (resp.status == 200) {
                             console.log('resp', resp);
                             toast.success(resp.data.message, { autoClose: 3000, });
-                            history.push('/');
+                            navigate("/")
+                           
+                          
                           } else {
                             toast.error(resp.data.message, { autoClose: 3000, });
                             console.log(resp);
@@ -351,11 +421,14 @@ export default function Profile() {
 
                       validationSchema={
                   Yup.object().shape({
-                    productName: Yup.string(),
+                    firstname: Yup.string(),
                     // .required('Required'),
-                    category: Yup.object(),
-                    cost: Yup.string(),
-                    description: Yup.string()
+                    lastname: Yup.string(),
+                    gender: Yup.object().nullable(),
+                    mobno: Yup.string(),
+                    email:Yup.string(),
+                    city:Yup.object().nullable(),
+                    address:Yup.string(),
                     // .required('Required'),
                   })
 }
@@ -381,14 +454,14 @@ export default function Profile() {
                     <Grid item xs={6} sm={6}>
                               <Field
                                 component={TextField}
-                                error={errors.firstname && touched.firstname}
+                                error={errors.firstName && touched.firstName}
                                 label="First Name"
-                                name="firstname"
-                                id="firstname"
-                                value={values.firstname}
+                                name="firstName"
+                                id="firstName"
+                                value={values.firstName}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                helperText={(errors.firstname && touched.firstname) && errors.firstname}
+                                helperText={(errors.firstName && touched.firstName) && errors.firstName}
                                 margin="normal"
                                 variant="outlined"
                                 fullWidth
@@ -397,14 +470,14 @@ export default function Profile() {
                     <Grid item xs={6} sm={6}>
                               <Field
                                 component={TextField}
-                                error={errors.lastname && touched.lastname}
+                                error={errors.lastName && touched.lastName}
                                 label="Last Name"
-                                name="lastname"
-                                id="lastname"
-                                value={values.lastname}
+                                name="lastName"
+                                id="lastName"
+                                value={values.lastName}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                helperText={(errors.lastname && touched.lastname) && errors.lastname}
+                                helperText={(errors.lastName && touched.lastName) && errors.lastName}
                                 margin="normal"
                                 variant="outlined"
                                 fullWidth
@@ -416,58 +489,43 @@ export default function Profile() {
                                 name="gender"
                                 id="gender"
                                 value={values.gender}
-                        // onChange={ev => categoryFunc(ev, setFieldValue)}
-                                options={categoryData}
-                                placeholder="--Select--"
+                                onChange={ev => setFieldValue("gender",ev)}
+                                options={genderData}
+                                placeholder="--Select Gender--"
                                 error={errors.gender}
                                 touched={touched.gender}
                         // isLoading={categoryLoading}
                                 isClearable
                               />
                             </Grid>
-                    <Grid item xs={6} sm={6}>
+                            <Grid item xs={6} sm={6}>
                               <Field
                                 component={RSelect}
                                 name="city"
                                 id="city"
                                 value={values.city}
-                        // onChange={ev => categoryFunc(ev, setFieldValue)}
-                                options={categoryData}
-                                placeholder="--Select--"
+                                onChange={ev => setFieldValue("city",ev)}
+                                options={cityData}
+                                placeholder="--Select City--"
                                 error={errors.city}
                                 touched={touched.city}
-                        // isLoading={categoryLoading}
+                                isLoading={cityLoading}
                                 isClearable
                               />
                             </Grid>
 
+          
                     <Grid item xs={6} sm={6}>
                               <Field
                                 component={TextField}
-                                error={errors.dateofbirth && touched.dateofbirth}
-                                label="Date of Birth"
-                                name="dateofbirth"
-                                id="dateofbirth"
-                                value={values.dateofbirth}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.dateofbirth && touched.dateofbirth) && errors.dateofbirth}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.mobileno && touched.mobileno}
+                                error={errors.mobno && touched.mobno}
                                 label="Mobile No"
-                                name="mobileno"
-                                id="mobileno"
-                                value={values.mobileno}
+                                name="mobno"
+                                id="mobno"
+                                value={values.mobno}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                helperText={(errors.mobileno && touched.mobileno) && errors.mobileno}
+                                helperText={(errors.mobno && touched.mobno) && errors.mobno}
                                 margin="normal"
                                 variant="outlined"
                                 fullWidth
@@ -484,22 +542,6 @@ export default function Profile() {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 helperText={(errors.email && touched.email) && errors.email}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.job && touched.job}
-                                label="job"
-                                name="job"
-                                id="job"
-                                value={values.job}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.job && touched.job) && errors.job}
                                 margin="normal"
                                 variant="outlined"
                                 fullWidth
@@ -545,25 +587,28 @@ export default function Profile() {
                   </Grid>
 
                   </Grid>
-
+                    
                     <Grid container spacing={2} justifyContent="flex-end">
                     {isSubmitting && <LinearProgress />}
                     <Grid item xs={2}>
-                    <Button type="submit" fullWidth color="primary" variant="contained" disabled={isSubmitting}>
+
+                    <Button type="submit" fullWidth color="primary" variant="contained">
                     Update Profile
                           </Button>
                   </Grid>
                     <Grid item xs={2}>
-                    <Button type="button" fullWidth color="default" variant="contained" onClick={() => cancelEdit()}>
+                    <Button type="button" fullWidth color="secondary" variant="contained" onClick={() => cancelEdit()}>
                     Cancel
                           </Button>
                   </Grid>
 
                   </Grid>
+                 
                   </Form>
                         );
                       }}
                     </Formik>
+                 
                   </CardContent>
                 </Card>
               </Grid>
@@ -573,6 +618,8 @@ export default function Profile() {
         )
 
     }
+
+
 
       </Grid>
       <ToastContainer />

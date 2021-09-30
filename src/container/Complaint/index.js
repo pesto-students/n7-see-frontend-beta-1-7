@@ -207,6 +207,7 @@ const CustomerListResults = ({ ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
+     
       <TablePagination
         component="div"
         count={totalCount}

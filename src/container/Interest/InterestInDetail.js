@@ -172,7 +172,7 @@ export default function InterestInDetail(props) {
   }, []);
   return (
     <>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+      <Grid container style={{ marginTop: '0px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
 
         <Grid item md={12}>
           <Grid container spacing={2}>

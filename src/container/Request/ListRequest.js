@@ -37,8 +37,15 @@ import {
   TextField,
   Input,
   LinearProgress,
-  Chip
+  Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
 } from '@material-ui/core';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import makeStyles from '@material-ui/styles/makeStyles';
 import HistoryCard from '../../components/Card/HistoryCard';
 import CategoryCard from '../../components/Card/CategoryCard';
@@ -119,12 +126,47 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListRequest(props) {
   const classes = useStyles();
-  const [categoryData, setCategoryData] = useState([{ value: 1, label: 'category 1' }, { value: 2, label: 'category 2' }]);
-  const history = useNavigate();
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const [newData, setNewData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);  
+  const [loadingIndicator, setLoadingIndicator] = useState(true);
+  const [rerender, setReRender] = useState(true);
+
   const [myRequestData, setMyRequestData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [loadingIndicator, setLoadingIndicator] = useState(false);
+
   const [viewInDetail, setViewInDetail] = useState(false);
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+    setPage(1);
+    setReRender(true)
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage+1);
+    setReRender(true)
+  };
+
+
+
+  const fetchData = async () => {
+    setLoadingIndicator(true);
+    const u_id = sessionStorage.getItem('u_id');
+    await axios.post('http://localhost:4000/request/getmyrequest',{page:page,limit:limit,u_id:u_id}).then((resp) => {
+      console.log(resp);
+      setLoadingIndicator(false);
+      setNewData(resp.data.response.request);
+      setTotalCount(resp.data.response.count)
+      setReRender(false)
+    }).catch((e) => {
+      setLoadingIndicator(false);
+      toast.error('Something Went Wrong', { autoClose: 3000, });
+    });
+    // setUser(result.data);
+  };
+
   const getAllMyRequest = async () => {
     setLoadingIndicator(true);
     // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
@@ -140,6 +182,16 @@ export default function ListRequest(props) {
 
     // setUser(result.data);
   };
+
+  
+  useEffect(() => {
+    if(rerender)
+    {
+      fetchData();
+    }
+  }, [rerender]);
+
+
 
   useEffect(() => {
     getAllMyRequest();
@@ -196,7 +248,7 @@ export default function ListRequest(props) {
 
           </div>
         </Grid> */}
-        {
+        {/* {
       !viewInDetail ? (
         <Grid item md={12} style={{ minHeight: '80px'}}>
           <Card>
@@ -258,7 +310,7 @@ export default function ListRequest(props) {
                           </Typography>
 
                         </div>
-)}
+                      )}
                       secondary={myrequestdata.createddate}
                     />
                     <IconButton
@@ -276,6 +328,7 @@ export default function ListRequest(props) {
                     </IconButton>
 
                   </ListItem>
+                 
                   <Divider />
                 </List>
 
@@ -284,10 +337,115 @@ export default function ListRequest(props) {
             </CardContent>
           </Card>
         </Grid>
-      ) : <RequestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
+         ) : <RequestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
 
-    }
+        } */}
+          {!viewInDetail ? <Container maxWidth={false}>
+<Card>
+       <CardHeader
+       className={classes.tabHeader}
+                title={
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>List Request</div>
+                <div>
+                    <Chip
+                      label="Add New Request"
+                      // onClick={() => props.setAddNewRequest(true)}
+                      onClick={() => setAddNewRequest(true)}
+                      style={{ backgroundColor: '#ECA909' }}
+                    />
+                  </div>
+              </div>
+              }
+              />
+              <Divider/>
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 1050 }}>
+          <Table>
+            <TableBody>
+              {newData.length>0?newData.slice(0, limit).map((request,i) => (
+                <TableRow
+                  hover
+                  key={i}
+                >
 
+                    <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <IconButton aria-label="add to favorites">
+                          <FileCopy />
+                        </IconButton>
+
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={(
+                        <div>
+                          {request.productname}
+                          <br />
+                          <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap' }}>
+                            <Box sx={{
+                              textOverflow: 'ellipsis',
+                              // my:1,
+                              overflow: 'hidden',
+                              bgcolor: 'background.paper',
+                            }}
+                            >
+                              {request.description}
+                            </Box>
+
+                          </Typography>
+
+                        </div>
+                      )}
+                      secondary={request.createddate}
+                    />
+                    <IconButton
+                      edge="end"
+                      size="small"
+                    >
+                      <Delete onClick={()=>handleClick(request._id)}/>
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      size="small"
+                      onClick={() => viewInDetailFunc(true, request)}
+                    >
+                      <Visibility />
+                    </IconButton>
+
+                  </ListItem>
+                 
+                  {/* <TableCell>
+                  {request.category}
+                  </TableCell> */}
+
+                  <Divider />
+                </TableRow>
+              )):<TableCell>
+              <div style={{textAlign:"center"}}>
+             No Request Found
+              </div>
+              </TableCell>
+            }
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+     
+      <TablePagination
+        component="div"
+        count={totalCount}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page-1}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
+    </Card>
+    </Container>
+             :<RequestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
+         }
       </Grid>
       <ToastContainer />
     </>

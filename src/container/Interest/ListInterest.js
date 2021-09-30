@@ -37,7 +37,13 @@ import {
   TextField,
   Input,
   LinearProgress,
-  Chip
+  Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import HistoryCard from '../../components/Card/HistoryCard';
@@ -57,7 +63,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
+import PerfectScrollbar from 'react-perfect-scrollbar';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -120,10 +126,50 @@ const useStyles = makeStyles((theme) => ({
 export default function ListInterest(props) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const [newData, setNewData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);  
+  const [loadingIndicator, setLoadingIndicator] = useState(true);
+  const [rerender, setReRender] = useState(true);
+  const [myRequestData, setMyRequestData] = useState([]);
+
+
   const [myInterestData, setMyInterestData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [viewInDetail, setViewInDetail] = useState(false);
+
+
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+    setPage(1);
+    setReRender(true)
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage+1);
+    setReRender(true)
+  };
+
+
+  const fetchData = async () => {
+    setLoadingIndicator(true);
+    const u_id = sessionStorage.getItem('u_id');
+    await axios.post('http://localhost:4000/request/getmyinterest',{page:page,limit:limit,u_id:u_id}).then((resp) => {
+      console.log(resp);
+      setLoadingIndicator(false);
+      setNewData(resp.data.response.interest);
+      setTotalCount(resp.data.response.count)
+      setReRender(false)
+    }).catch((e) => {
+      setLoadingIndicator(false);
+      toast.error('Something Went Wrong', { autoClose: 3000, });
+    });
+    // setUser(result.data);
+  };
+
+
 
   const getAllMyInterest = async () => {
     setLoadingIndicator(true);
@@ -144,6 +190,13 @@ export default function ListInterest(props) {
   useEffect(() => {
     getAllMyInterest();
   }, []);
+
+  useEffect(() => {
+    if(rerender)
+    {
+      fetchData();
+    }
+  }, [rerender]);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -170,7 +223,7 @@ export default function ListInterest(props) {
             My Interest
           </div>
         </Grid> */}
-        {
+        {/* {
       !viewInDetail ? (
         <Grid item md={12} style={{ minHeight: '80px' }}>
           <Card>
@@ -230,7 +283,86 @@ export default function ListInterest(props) {
         </Grid>
       ) : <InterestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
 
-    }
+    } */}
+
+
+{!viewInDetail ? <Container maxWidth={false}>
+<Card>
+       <CardHeader
+       className={classes.tabHeader}
+                title={
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>Latest Interest</div>
+              </div>
+              }
+              />
+              <Divider/>
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 1050 }}>
+          <Table>
+            <TableBody>
+              {newData.length>0?newData.slice(0, limit).map((myinterestdata,i) => (
+                <TableRow
+                  hover
+                  key={i}
+                >
+                <ListItem>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <IconButton aria-label="add to favorites">
+                        <FileCopy />
+                      </IconButton>
+    
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={myinterestdata.productname}
+                        secondary={myinterestdata.description}
+                      />
+                      <IconButton
+                        edge="end"
+                        size="small"
+                        onClick={() => viewInDetailFunc(true,myinterestdata)}
+                      >
+                        <Visibility />
+                      </IconButton>
+    
+                    </ListItem>
+                    <Divider />
+                  {/* <TableCell>
+                  {request.category}
+                  </TableCell> */}
+
+                  <Divider />
+                </TableRow>
+              )):
+              <TableCell>
+              <div style={{textAlign:"center"}}>
+    No Interest Found
+              </div>
+              </TableCell>
+              
+            
+           
+            }
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+     
+      <TablePagination
+        component="div"
+        count={totalCount}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page-1}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
+    </Card>
+    </Container>
+             :<InterestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
+         }
 
       </Grid>
       <ToastContainer />

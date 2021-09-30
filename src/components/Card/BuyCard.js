@@ -35,7 +35,7 @@ import {
 
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
-import { collapseClasses, Chip } from '@material-ui/core';
+import { collapseClasses, Chip, Skeleton } from '@material-ui/core';
 import { Redirect, useNavigate,Navigate } from 'react-router-dom';
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import SearchCard from './SearchCard';
@@ -165,72 +165,75 @@ export default function BuyCard(props) {
 
 
   return (
+    <>
+{
+  !loadingIndicator? <Grid
+  container
+  spacing={2}
+  direction="row"
+  alignItems="center"
+    //   justifyContent="center"
+  style={{ marginBottom: '50px', borderRadius: '4px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px' }}
+  item
+  md={12}
+>
+  <Grid item md={4} lg={4}>
+    <div className={classes.image}>
+      <img src={img1} className={classes.image} />
+    </div>
 
-    <Grid
-      container
-      spacing={2}
-      direction="row"
-      alignItems="center"
-        //   justifyContent="center"
-      style={{ marginBottom: '50px', borderRadius: '4px', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px' }}
-      item
-      md={12}
-    >
-      <Grid item md={4} lg={4}>
-        <div className={classes.image}>
-          <img src={img1} className={classes.image} />
-        </div>
+  </Grid>
+  <Grid item md={8} lg={8} style={{ paddingLeft: '20px' }}>
+    <Grid item xs={12} sm container>
+      <Grid item xs container direction="column" spacing={2}>
+        <Grid item xs>
 
-      </Grid>
-      <Grid item md={8} lg={8} style={{ paddingLeft: '20px' }}>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
+          <Typography variant="body2" gutterBottom>
+            {props.item.category}
+          </Typography>
 
-              <Typography variant="body2" gutterBottom>
-                {props.item.category}
-              </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {props.item.productname}
+          </Typography>
+          <br />
+        </Grid>
+        <Grid item>
 
-              <Typography variant="body2" color="textSecondary">
-                {props.item.productname}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item>
-
-              <Rating
-                name="simple-controlled"
-                value={2}
-              />
-              <Typography variant="subtitle1">
-                Rs.
-                {props.item.cost}
-              </Typography>
-
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="h4">
-              <IconButton aria-label="settings">
-                <Visibility onClick={() => getDetails(props.item)} />
-              </IconButton>
-            </Typography>
-            <Typography variant="h4">
-              <IconButton aria-label="add to favorites">
-                {isInclude?<Favorite color="error" onClick={() => expressInterestFunc(props.item._id,u_id)}/>:<Favorite onClick={() => expressInterestFunc(props.item._id,u_id)}/>}
-              </IconButton>
-            </Typography>
-            <Typography variant="h4">
-              <IconButton aria-label="chat">
-                <Chat />
-              </IconButton>
-            </Typography>
-          </Grid>
+          <Rating
+            name="simple-controlled"
+            value={2}
+          />
+          <Typography variant="subtitle1">
+            Rs.
+            {props.item.cost}
+          </Typography>
 
         </Grid>
-
       </Grid>
+      <Grid item>
+        <Typography variant="h4">
+          <IconButton aria-label="settings">
+            <Visibility onClick={() => getDetails(props.item)} />
+          </IconButton>
+        </Typography>
+        <Typography variant="h4">
+          <IconButton aria-label="add to favorites">
+            {isInclude?<Favorite color="error" onClick={() => expressInterestFunc(props.item._id,u_id)}/>:<Favorite onClick={() => expressInterestFunc(props.item._id,u_id)}/>}
+          </IconButton>
+        </Typography>
+        <Typography variant="h4">
+          <IconButton aria-label="chat">
+            <Chat />
+          </IconButton>
+        </Typography>
+      </Grid>
+
     </Grid>
+
+  </Grid>
+</Grid>: <Skeleton animation="wave" variant="rectangular" width={40} height={40}/>
+}
+   </>
 
   );
 }

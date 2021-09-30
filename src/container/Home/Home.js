@@ -18,9 +18,18 @@ import HighlightCard from '../../components/Card/HighlightCard';
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import DividerComponent from '../../components/DividerComponent';
-
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@material-ui/core';
+import SearchCard from '../../components/Card/SearchCard';
 // import CarouselSlider from './components/CarouselSlider';
-
+import { useLocation, Redirect, useNavigate } from 'react-router-dom';
 import SearchSection from '../../components/SearchSection';
 import { fetchHomeData } from '../../redux/actions';
 
@@ -105,7 +114,7 @@ function Copyright() {
 export default function Home() {
   const classes = useStyles();
   // const counter = useSelector(getCounter);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // let loading = useSelector(state=>state.fetchDataReducer.loading);
   // let data = useSelector(state=>state.fetchDataReducer.data);
@@ -120,6 +129,12 @@ export default function Home() {
   const [highlightedListing, setHighlightedListing] = useState([]);
   const [featuredListing, setFeaturedListing] = useState([]);
   const [latestListing, setLatestListing] = useState([]);
+  const [rerender, setReRender] = useState(true);
+  const [searchData, setSearchData] = useState('');
+  const [totalCount, setTotalCount] = useState(0);  
+  const [newData, setNewData] = useState([]);
+  const [limit, setLimit] = useState(6);
+  const [page, setPage] = useState(1);
   useEffect(() => {
     // dispatch(fetchHomeData());
     const fetchData = async () => {
@@ -143,15 +158,59 @@ export default function Home() {
 
     fetchData();
   }, []);
+
+  const fetchHomeData = async () => {
+    setLoadingIndicator(true);
+    const u_id = sessionStorage.getItem('u_id');
+    await axios.post('http://localhost:4000/request/search',{page:page,limit:limit,search:searchData}).then((resp) => {
+      console.log(resp);
+      setLoadingIndicator(false);
+      setNewData(resp.data.response.result);
+      setTotalCount(resp.data.response.count)
+      setReRender(false)
+    }).catch((e) => {
+      setLoadingIndicator(false);
+      toast.error('Something Went Wrong', { autoClose: 3000, });
+    });
+    // setUser(result.data);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+    setPage(1);
+    setReRender(true)
+  };
+
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage+1);
+    setReRender(true)
+  };
+
+  useEffect(()=>{
+    if(rerender)
+    {
+      fetchHomeData();
+    }
+  },[rerender])
+
+  const reqSearch=(value)=>{
+    setSearchData(value);
+    setReRender(true)
+  }
   return (
     <>
       <Grid className={classes.container}>
         <Grid container>
           <Grid item xs={12} md={7} lg={8}>
             <Box className={classes.homeSearch}>
-              <SearchSection theme="light" />
+              <SearchSection theme="light" reqSearch={reqSearch}/>
             </Box>
-            <Box style={{ marginRight: '10px' }}>
+
+
+{
+  searchData==''?<div>
+              <Box style={{ marginRight: '10px' }}>
               {/* <CarouselSlider banner={banner} /> */}
             </Box>
             <Box style={{ paddingBottom: '20px', paddingTop: '20px' }}>
@@ -167,9 +226,6 @@ export default function Home() {
                     </Grid>
                   )) : <Skeleton animation="wave" />
                 }
-                {/* <FeatureCard/>
-                <FeatureCard/>
-                <FeatureCard/> */}
 
               </Grid>
 
@@ -190,11 +246,48 @@ export default function Home() {
               </Grid>
             </Box>
 
-            {/* <Box className={classes.grid2Col1Bottom} style={{marginTop:"20px",marginRight:"10px"}}>
-                <FeatureCard/>
-                <FeatureCard/>
-                </Box> */}
+  </div>:<div>
+  
+  <Box spacing={2}>
+            <PerfectScrollbar>
+              <Table>
+                <TableBody>
+                  {
+                  newData!==null?newData.slice(0, limit).map((newdata,i) => (
+                    <TableRow
+                      key={i}
+                    >
+                    <SearchCard data={newdata}/>
+                    {/* <Divider /> */}
+                      {/* <TableCell>
+                      {request.category}
+                      </TableCell> */}
+                    </TableRow>
+                  )):""
+                }
+                </TableBody>
+              </Table>
+              <TablePagination
+                  component="div"
+                  count={totalCount}
+                  onPageChange={handlePageChange}
+                  onRowsPerPageChange={handleLimitChange}
+                  page={page-1}
+                  rowsPerPage={limit}
+                  rowsPerPageOptions={[5, 10, 25]}
+                />
+                      </PerfectScrollbar>
+            </Box>
+
+  </div>
+}
+  
+
+
           </Grid>
+
+
+
           <Grid item xs={12} md={5} lg={4}>
 
             <Container className={classes.grid1Col2}>
@@ -212,13 +305,6 @@ export default function Home() {
                   )) : <Skeleton animation="wave" />
                 }
 
-                  {/*
-                    <BuyCard/>
-                    <BuyCard/>
-                    <BuyCard/>
-                    <BuyCard/>
-                    <BuyCard/>
-                    <BuyCard/> */}
                 </Grid>
               </Box>
               <br />

@@ -28,7 +28,8 @@ import {
   ArrowRight,
   Favorite,
   MoreVert,
-  Chat
+  Chat,
+  Visibility
 } from '@material-ui/icons';
 
 // import { increment, decrement, getCounter } from "./counterReducer";
@@ -37,7 +38,7 @@ import { collapseClasses, Chip } from '@material-ui/core';
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import SearchCard from './SearchCard';
 import img1 from '../../assets/images/img1.png';
-
+import { Redirect, useNavigate,Navigate } from 'react-router-dom';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -113,12 +114,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Search() {
+export default function Search(props) {
   const classes = useStyles();
   // const counter = useSelector(getCounter);
-
+  const navigate = useNavigate();
   // const dispatch = useDispatch();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const getDetails = (items) => {
+    navigate('/user/details',{
+      state: items
+    })
+  };
   return (
 
     <Grid
@@ -149,11 +155,11 @@ export default function Search() {
               </Typography>
 
               <Typography variant="body2" gutterBottom>
-                Nice Product
+              {props.data.productname}
               </Typography>
 
               <Typography variant="body2" color="textSecondary">
-                ID: 1030114
+                ID:   {props.data.req_id}
               </Typography>
               <br />
             </Grid>
@@ -163,14 +169,15 @@ export default function Search() {
                 name="simple-controlled"
                 value={2}
               />
-              <Typography variant="subtitle1">$19.00</Typography>
+              <Typography variant="subtitle1">₹ {props.data.cost}</Typography>
 
             </Grid>
           </Grid>
           <Grid item>
             <Typography variant="h4">
               <IconButton aria-label="settings">
-                <MoreVert />
+                
+              <Visibility onClick={() => getDetails(props.data)} />
               </IconButton>
             </Typography>
             <Typography variant="h4">

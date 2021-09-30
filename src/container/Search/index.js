@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,useEffect,useState } from 'react';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Button from '@material-ui/core/Button';
@@ -18,9 +18,17 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 // import Rating from '@material-ui/lab/Rating';
 import Rating from '@material-ui/core/Rating';
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@material-ui/core';
 import {
   Avatar,
   NotificationsIcon,
@@ -45,7 +53,9 @@ import LeafletMap from './components/LeafletMap';
 import 'leaflet/dist/leaflet.css';
 import SearchSection from '../../components/SearchSection';
 import Pagination from '@material-ui/core/Pagination';
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -132,10 +142,54 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Search() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
+  const [totalCount, setTotalCount] = useState(0);  
+  const [newData, setNewData] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(1);
+  const [loadingIndicator, setLoadingIndicator] = useState(true);
+  const [rerender, setReRender] = useState(true);
+  const [searchData, setSearchData] = useState('');
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+    setPage(1);
+    setReRender(true)
   };
+
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage+1);
+    setReRender(true)
+  };
+
+  const fetchData = async () => {
+    setLoadingIndicator(true);
+    const u_id = sessionStorage.getItem('u_id');
+    await axios.post('http://localhost:4000/request/search',{page:page,limit:limit,search:searchData}).then((resp) => {
+      console.log(resp);
+      setLoadingIndicator(false);
+      setNewData(resp.data.response.result);
+      setTotalCount(resp.data.response.count)
+      setReRender(false)
+    }).catch((e) => {
+      setLoadingIndicator(false);
+      toast.error('Something Went Wrong', { autoClose: 3000, });
+    });
+    // setUser(result.data);
+  };
+
+
+  useEffect(()=>{
+    if(rerender)
+    {
+      fetchData();
+    }
+  },[rerender])
+
+  const reqSearch=(value)=>{
+    setSearchData(value);
+    setReRender(true);
+  }
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -145,9 +199,51 @@ export default function Search() {
       <Grid className={classes.container}>
         <Grid container>
           <Grid item xs={12} md={6} lg={6} style={{ padding: '20px' }}>
-            <Box className={classes.homeSearch}>
-              <SearchSection theme="light" />
+             <Box className={classes.homeSearch}>
+              <SearchSection theme="light" reqSearch={reqSearch} />
             </Box>
+            {/* <Box style={{ padding: '10px 10px 10px 10px' }}>
+              {
+                newData.length>0?newData.map((newdata)=>(
+                  <SearchCard />
+                  )):""
+              }
+             
+            </Box> */}
+
+            
+            <Box spacing={2}>
+            <PerfectScrollbar>
+              <Table>
+                <TableBody>
+                  {
+                  newData!==null?newData.slice(0, limit).map((newdata,i) => (
+                    <TableRow
+                      key={i}
+                    >
+                    <SearchCard data={newdata}/>
+                    {/* <Divider /> */}
+                      {/* <TableCell>
+                      {request.category}
+                      </TableCell> */}
+                    </TableRow>
+                  )):""
+                }
+                </TableBody>
+              </Table>
+              <TablePagination
+                  component="div"
+                  count={totalCount}
+                  onPageChange={handlePageChange}
+                  onRowsPerPageChange={handleLimitChange}
+                  page={page-1}
+                  rowsPerPage={limit}
+                  rowsPerPageOptions={[5, 10, 25]}
+                />
+                      </PerfectScrollbar>
+            </Box>
+
+{/*      
             <Box style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '20px' }}>
               <div>
 
@@ -159,24 +255,24 @@ export default function Search() {
               <div>
                 <div className={classes.rootpagination}>
                   <Pagination
-                count={10}
-                page={page}
-                variant="outlined"
-                onChange={handleChange}
-                shape="rounded"
-              />
+                    count={totalCount}
+                    page={page-1}
+                    variant="outlined"
+                    onChange={handlePageChange}
+                    shape="rounded"
+                  />
+
+
                 </div>
               </div>
             </Box>
-            <Box style={{ padding: '10px 10px 10px 10px' }}>
-              <SearchCard />
-              <SearchCard />
-              <SearchCard />
-            </Box>
+            */}
+           
+         
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Container className={classes.grid1Col2}>
-              <LeafletMap />
+              <LeafletMap data={newData}/>
             </Container>
 
           </Grid>

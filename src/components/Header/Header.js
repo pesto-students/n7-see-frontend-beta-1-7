@@ -23,6 +23,7 @@ import seelogo from '../../assets/images/seelogo.png';
 import avatarimg from '../../assets/images/chil.png';
 // var seelogo = require('../../assets/linux_logo.jpg');
 import SearchSection from '../SearchSection';
+import ProfileSection from 'src/container/Profile/ProfileSection';
 import {Login} from '@material-ui/icons';
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -51,6 +52,27 @@ const styles = (theme) => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
+  grow: {
+    flexGrow: 1
+},
+headerAvatar: {
+    ...theme.typography.commonAvatar,
+    ...theme.typography.mediumAvatar,
+    transition: 'all .2s ease-in-out',
+    background: theme.palette.secondary.light,
+    color: theme.palette.secondary.dark,
+    '&:hover': {
+        background: theme.palette.secondary.dark,
+        color: theme.palette.secondary.light
+    }
+},
+boxContainer: {
+    width: '228px',
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+        width: 'auto'
+    }
+}
 });
 
 const Header = (props) => {
@@ -93,13 +115,14 @@ const Header = (props) => {
         ) : (
           <>
           <div className={classes.toolbarIcon}>
-          <Link to="/profile">
+          <ProfileSection/>
+          {/* <Link to="/user/profile">
             <Avatar alt="Remy Sharp" src={avatarimg} />
-          </Link>
+          </Link> */}
         </div>
-          <Button variant="contained" color="primary" onClick={() => logout()}>
+          {/* <Button variant="contained" color="primary" onClick={() => logout()}>
             Logout
-          </Button>
+          </Button> */}
           </>
         )
       }

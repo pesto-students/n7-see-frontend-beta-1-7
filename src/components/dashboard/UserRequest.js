@@ -11,10 +11,37 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { useEffect,useState } from 'react';
 
 const UserRequest = (props) => {
   const theme = useTheme();
+  const [userCount,setUserCount]=useState([]);
+  const [requestCount,setRequestCount]=useState([]);
+  const [myDate,setMyDate]=useState([]);
+  useEffect(()=>{
+    if(props.data!==null)
+    {
+     
+      var date=props.data.userCount.map((usercount)=>{
+        console.log(usercount._id)
+        return usercount._id
+      })
 
+      var countofUser=props.data.userCount.map((usercount)=>{
+        console.log(usercount._id)
+        return usercount.count
+      })
+      var countofRequest=props.data.requestCount.map((requestcount)=>{
+        console.log(requestcount)
+        return requestcount.count
+      })
+      setMyDate([...date])
+      setUserCount([...countofUser])
+      setRequestCount([...countofRequest])
+      
+    }
+  },[props.data])
+  
   const data = {
     datasets: [
       {
@@ -23,7 +50,7 @@ const UserRequest = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [18, 5, 19, 27, 29, 19, 20],
+        data: userCount,
         label: 'Users',
         maxBarThickness: 10
       },
@@ -33,12 +60,12 @@ const UserRequest = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 20, 12, 29, 30, 25, 13],
+        data:requestCount,
         label: 'Request',
         maxBarThickness: 10
       }
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
+    labels: myDate
   };
 
   const options = {
@@ -97,11 +124,11 @@ const UserRequest = (props) => {
       <CardHeader
         action={(
           <Button
-            endIcon={<ArrowDropDownIcon />}
+            // endIcon={<ArrowDropDownIcon />}
             size="small"
             variant="text"
           >
-            Last 7 days
+            Last {myDate.length} days
           </Button>
         )}
         title="User By Request"
@@ -130,11 +157,11 @@ const UserRequest = (props) => {
       >
         <Button
           color="primary"
-          endIcon={<ArrowRightIcon />}
+          // endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
         >
-          Overview
+          Overview Only
         </Button>
       </Box>
     </Card>

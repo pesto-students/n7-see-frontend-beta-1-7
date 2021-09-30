@@ -81,10 +81,14 @@ const useStyles = makeStyles((theme) => ({
 
 // ===========================|| SEARCH INPUT ||=========================== //
 
-const SearchSection = () => {
+const SearchSection = (props) => {
   const classes = useStyles();
   const [value, setValue] = useState('');
 
+  const respSearchFunc=()=>{
+    props.reqSearch(value)
+  }
+  
   return (
     <>
 
@@ -102,11 +106,11 @@ const SearchSection = () => {
                       )}
           endAdornment={(
             <InputAdornment position="end">
-              <ButtonBase sx={{ borderRadius: '7px' }}>
+              <ButtonBase sx={{ borderRadius: '7px' }} onClick={()=>respSearchFunc()}>
                 <Avatar
                   variant="rounded"
-className={classes.headerAvatar}
-style={{
+                  className={classes.headerAvatar}
+                  style={{
                       backgroundColor: '#EDE7F6', color: '#000', fontSize: '7px', width: '30px', height: '30px'
                     }}
                 >

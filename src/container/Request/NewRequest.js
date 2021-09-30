@@ -135,7 +135,7 @@ export default function NewRequest(props) {
   const [categoryLoading, setCategoryLoading] = useState(false);
   // const [categoryData, setCategoryData] = useState([{ value: 1, label: 'category 1' }, { value: 2, label: 'category 2' }]);
   const [cityData, setCityData] = useState([]);
-  const [cityLoading, setCityLoading] = useState([]);
+  const [cityLoading, setCityLoading] = useState(false);
   const history = useNavigate();
   const [historyData, setHistoryData] = useState([]);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
