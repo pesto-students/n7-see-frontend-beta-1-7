@@ -250,7 +250,8 @@ export default function Detail(props) {
                 <Grid item md={12}>
                   <Grid container>
                     <Grid item md={4}>
-                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }} />
+                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
+                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`http://localhost:4000/${itemDetails.image[0].filename}`:""} />
 
                     </Grid>
                     <Grid item md={8}>

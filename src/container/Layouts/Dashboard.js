@@ -110,7 +110,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
-    backgroundColor: '#fff'
+    backgroundColor: '#EFF1F5',
+    paddingTop:"15px"
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -207,7 +208,7 @@ export default function Dashboard(props) {
         handleToggleDrawer={handleToggleDrawer}
         open={open}
       />
-      <Sidebar open={open} drawerWidth={drawerWidth} />
+      {/* <Sidebar open={open} drawerWidth={drawerWidth} handleToggleDrawer={handleToggleDrawer} /> */}
      
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

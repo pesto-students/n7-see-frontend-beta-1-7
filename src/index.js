@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
 import './index.css';
+import './assets/autumn-in-november.regular.ttf';
 import store from './store';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';

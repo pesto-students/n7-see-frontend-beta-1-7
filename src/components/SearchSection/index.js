@@ -16,9 +16,19 @@ import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
+  notchedOutline: {
+    borderColor: "#858689 !important",
+    color:"#fff"
+  },
+  focused: {
+    "& $notchedOutline": {
+      borderColor: "yellow"
+    }
+  },
   searchControl: {
     height: '45px',
     width: '100%',
+    color:"#aeb0b2",
     // marginLeft: '16px',
     paddingRight: '16px',
     paddingLeft: '16px',
@@ -29,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   startAdornment: {
     fontSize: '1rem',
+    color:"#aeb0b2"
   },
   headerAvatar: {
     commonAvatar: {
@@ -77,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     background: '#fff',
   },
+
 }));
 
 // ===========================|| SEARCH INPUT ||=========================== //
@@ -92,13 +104,17 @@ const SearchSection = (props) => {
   return (
     <>
 
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}  style={{
+            color:"#fff !important"
+          }} >
         <OutlinedInput
           className={classes.searchControl}
+          classes={{notchedOutline: classes.notchedOutline}}
           id="input-search-header"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Search"
+         
           startAdornment={(
             <InputAdornment position="start">
               <IconSearch stroke={1.5} size="1rem" className={classes.startAdornment} />
@@ -111,7 +127,7 @@ const SearchSection = (props) => {
                   variant="rounded"
                   className={classes.headerAvatar}
                   style={{
-                      backgroundColor: '#EDE7F6', color: '#000', fontSize: '7px', width: '30px', height: '30px'
+                      backgroundColor: '#FFBC00', color: '#000', fontSize: '7px', width: '30px', height: '30px'
                     }}
                 >
                   <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
@@ -121,7 +137,8 @@ const SearchSection = (props) => {
                       )}
           aria-describedby="search-helper-text"
           inputProps={{
-            'aria-label': 'weight'
+            'aria-label': 'weight',
+            
           }}
         />
       </Box>

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HighlightCard(props) {
+export default function HighlightCardReverse(props) {
   const classes = useStyles();
   const history = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
@@ -65,25 +65,34 @@ export default function HighlightCard(props) {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={(
-          <Avatar aria-label="recipe" className={classes.avatar} style={{cursor:"pointer"}}>
-             <Visibility onClick={() => getDetails(props.item)} />
-          </Avatar>
-        )}
-        // action={(
-        //   <IconButton aria-label="settings">
-        //    <Visibility onClick={() => getDetails(props.item)} />
-        //   </IconButton>
-        // )}
-        title={props.item.category}
-        subheader={props.item.productname}
-      />
+
       <CardMedia
         className={classes.media}
         image={img2}
         title="Paella dish"
       />
+            <CardActions>
+            <Avatar aria-label="recipe" className={classes.avatar} style={{cursor:"pointer"}}>
+            <Visibility onClick={() => getDetails(props.item)} />
+          </Avatar>
+          
+         
+          <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap',paddingLeft:"10px" }}>
+          <Box sx={{
+            textOverflow: 'ellipsis',
+            my:1,
+            overflow: 'hidden',
+            bgcolor: 'background.paper',
+          }}
+          >
+           {props.item.category}
+          <br/>
+          {props.item.productname}
+          </Box>
+
+        </Typography>
+            </CardActions>
+
       {/* <CardContent>
         <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap' }}>
           <Box sx={{

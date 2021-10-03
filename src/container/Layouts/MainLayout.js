@@ -5,7 +5,7 @@ import classNames from "classnames";
 import Header from "../../components/Header"
 import Sidebar from "../../components/Sidebar";
 import { AppBar, CssBaseline, Toolbar, useMediaQuery } from '@material-ui/core';
-
+import { Outlet } from 'react-router-dom';
 import Home from '../Home/Home';
 // import MainLayouts  from "./MainLayout/index.js"
 const drawerWidth = 240;

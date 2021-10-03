@@ -215,7 +215,8 @@ export default function RequestInDetail(props) {
                 <Grid item md={8}>
                   <Grid container>
                     <Grid item md={4}>
-                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }} />
+                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
+                        src={props.selectedData.image.length>0?`http://localhost:4000/${props.selectedData.image[0].filename}`:""} />
 
                     </Grid>
                     <Grid item md={8}>

@@ -15,6 +15,7 @@ import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
 import UserDashboard from "./container/Layouts/Dashboard";
+import UserDashboardB from "./container/Layouts/DashboardB";
 import Home from './container/Home/Home';
 import Signin from './container/Login';
 import SearchItems from './container/Search';

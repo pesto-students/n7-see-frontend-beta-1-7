@@ -25,20 +25,27 @@ import avatarimg from '../../assets/images/chil.png';
 import SearchSection from '../SearchSection';
 import ProfileSection from 'src/container/Profile/ProfileSection';
 import {Login} from '@material-ui/icons';
+import '../../assets/autumn-in-november.regular.ttf'; 
 const drawerWidth = 240;
 const styles = (theme) => ({
   toolbarRoot: {
-    paddingRight: 24
+    paddingRight: 24,
+
   },
   menuButton: {
     marginLeft: 12,
     marginRight: 36
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+  },
+  titleStyle:{
+    color:"#FF8367",
+    fontSize:"24px",
+    fontFamily:"AssistantRegular"
   },
   appBar: {
-    backgroundColor: '#fff',
+    backgroundColor: '#242A37',
     border: 'none !important',
     color: '#000',
     boxShadow: 'none'
@@ -88,8 +95,8 @@ const Header = (props) => {
   return (
     <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
       <Toolbar className={classes.toolbar}>
-
-        <IconButton
+        
+        {/* <IconButton
           edge="start"
           color="inherit"
           aria-label="open drawer"
@@ -97,13 +104,21 @@ const Header = (props) => {
           className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
         >
 
-          {/* <MenuIcon /> */}
-        </IconButton>
+          <MenuIcon />
+        </IconButton> */}
 
-        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-          {/* <SearchSection theme="light" /> */}
+        
+        
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Link to="/" style={{
+           textDecoration: "none"
+            }} className={classes.titleStyle}>
           Serve End
-        </Typography>
+          </Link>
+          </Typography>
+          
+        
+        <SearchSection theme="light"/>
         {
         u_id === null ? (
           <Link to="/login">

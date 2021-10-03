@@ -34,22 +34,6 @@ export const mainListItems = (
         </Link>
       </Tooltip>
     </List>
-    {/* <Link to="/sell">
-    <ListItem button>
-      <ListItemIcon>
-      <IconBrandStripe stroke={1.5} size="1.3rem" />
-      </ListItemIcon>
-      <ListItemText primary="Sell" />
-    </ListItem>
-    </Link>
-    <Link to="/buy">
-    <ListItem button>
-      <ListItemIcon>
-      <IconBold stroke={1.5} size="1.3rem" />
-      </ListItemIcon>
-      <ListItemText primary="Buy" />
-    </ListItem>
-    </Link> */}
     <Link to="/user/request">
       <Tooltip title="My Request" placement="top-end">
         <ListItem button>
@@ -80,14 +64,6 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    {/* <Link to="/reports">
-    <ListItem button>
-      <ListItemIcon>
-      <IconAlertCircle stroke={1.5} size="1.3rem" />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    </Link> */}
     <Link to="/user/search">
       <Tooltip title="Search" placement="top-end">
         <ListItem button>
@@ -108,22 +84,6 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    {/* <Link to="/profile">
-    <ListItem button>
-      <ListItemIcon>
-      <IconBrandGravatar stroke={1.5} size="1.3rem" />
-      </ListItemIcon>
-      <ListItemText primary="Search" />
-    </ListItem>
-    </Link> */}
-    {/* <Link to="/details">
-    <ListItem button>
-      <ListItemIcon>
-      <IconBrandGravatar stroke={1.5} size="1.3rem" />
-      </ListItemIcon>
-      <ListItemText primary="Details" />
-    </ListItem>
-    </Link> */}
   </div>
 );
 

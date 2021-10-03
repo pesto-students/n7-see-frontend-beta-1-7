@@ -22,7 +22,7 @@ import {
     Typography
 } from '@material-ui/core';
 import ListItemButton from '@material-ui/core/ListItemButton';
-
+import { mainListItems, secondaryListItems } from '../../components/Sidebar/listItems';
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -216,7 +216,7 @@ const ProfileSection = () => {
                                                 {/* <Typography variant="subtitle2">Our Popular User</Typography> */}
                                             </Grid>
                                         </Grid>
-                                        <OutlinedInput
+                                        {/* <OutlinedInput
                                             className={classes.searchControl}
                                             id="input-search-profile"
                                             value={value}
@@ -231,7 +231,7 @@ const ProfileSection = () => {
                                             inputProps={{
                                                 'aria-label': 'weight'
                                             }}
-                                        />
+                                        /> */}
                                         <Divider />
                                         <PerfectScrollbar className={classes.ScrollHeight}>
                         
@@ -302,12 +302,13 @@ const ProfileSection = () => {
                                                 </CardContent>
                                             </Card>
                                             */}
+                                            <List>{mainListItems}</List>
                                             <List component="nav" className={classes.navContainer}>
                                             <Link to="/user/profile">
                                                 <ListItemButton
                                                     className={classes.listItem}
                                                     // sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    selected={selectedIndex === 4}
+                                                    // selected={selectedIndex === 4}
                                                     // onClick={handleLogout}
                                                 >
                                                     <ListItemIcon>
@@ -320,6 +321,8 @@ const ProfileSection = () => {
 
                                             <Divider />
                                             <List component="nav" className={classes.navContainer}>
+
+                                                
                                                 <ListItemButton
                                                     className={classes.listItem}
                                                     // sx={{ borderRadius: `${customization.borderRadius}px` }}

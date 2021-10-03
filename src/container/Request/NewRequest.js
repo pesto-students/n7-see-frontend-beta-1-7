@@ -23,7 +23,9 @@ import {
   Delete,
   MenuBook,
   CameraAlt,
-  ControlCamera
+  ControlCamera,
+  HighlightOffOutlined
+  
 } from '@material-ui/icons';
 import {
   Avatar, ListItem, ListItemAvatar, ListItemText,
@@ -140,6 +142,8 @@ export default function NewRequest(props) {
   const [historyData, setHistoryData] = useState([]);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [pageEdit, setPageEdit] = useState(false);
+  const [myFile,setMyFile]=useState(null);
+  const [showImage,setShowImage]=useState([]);
   useEffect(() => {
 
     async function getCategory() {
@@ -183,6 +187,66 @@ export default function NewRequest(props) {
   const cancelAddRequest = () => {
     props.setAddNewRequest(false);
   };
+  const user = {
+    avatar: '/static/images/avatars/ins.png',
+    city: 'Los Angeles',
+    country: 'USA',
+    jobTitle: 'Senior Developer',
+    name: 'Katarina Smith',
+    timezone: 'GTM-7'
+  };
+
+
+    // Create a reference to the hidden file input element
+    const hiddenFileInput = React.useRef(null);
+  
+    // Programatically click the hidden file input element
+    // when the Button component is clicked
+    const handleClick = event => {
+      hiddenFileInput.current.click();
+    };
+    // Call a function (passed as a prop from the parent component)
+    // to handle the user-selected file 
+    const handleChange = event => {
+      const fileUploaded = event.target.files[0];
+      props.handleFile(fileUploaded);
+    };
+
+
+
+  
+  const onChangeHandler=(event,setFieldValue)=>{
+    // setFieldValue("file",event.target.files[0])
+    setMyFile(event.target.files[0]);
+    console.log(event.target.files[0])
+}
+
+const onClickHandler = () => {
+  const data = new FormData()
+  console.log(myFile)
+  if(myFile!==null)
+  {
+  data.append('file', myFile)
+  axios.post("http://localhost:4000/request/upload", data)
+    .then(res => { 
+      setShowImage([...showImage,res.data]);
+      setMyFile(null)
+      console.log(`http://localhost:4000/${res.data.filename}`)
+    })
+  }
+  else{
+     toast.error("Please Upload atleast one image", { autoClose: 3000, });
+  }
+
+}
+
+const removeImageFromList=(index)=>{
+  var showImageTemp=[...showImage]
+  showImageTemp.splice(index, 1);
+  setShowImage(showImageTemp);
+    
+}
+console.log()
 
   return (
     <>
@@ -193,6 +257,7 @@ export default function NewRequest(props) {
         py: 3
       }}
     >
+      {/* <img src={`http://localhost:4000/1633271922833-info1.png`} /> */}
       <Grid container style={{ padding: '0px 30px 60px 30px' }}>
         {/* <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
           <div style={{ display: 'flex', alignItems: 'center', fontSize: '24px' }}>
@@ -214,9 +279,20 @@ export default function NewRequest(props) {
                 <CardContent>
                   <Formik
                 initialValues={{
-                  productname: '', category: null, cost: '', city: null, description: ''
+                  productname: '', category: null, cost: '', city: null, description: '',file:''
                 }}
                 onSubmit={(values, { setSubmitting }) => {
+                  // const data = new FormData() 
+                  // console.log("ADAD",myFile)
+                  // data.append('file', myFile)
+                  // data.append('category', values.category.label)
+                  // data.append('productname', values.productname)
+                  // data.append('cost', values.cost)
+                  // data.append('description', values.description)
+                  // data.append('city', values.city.label)
+                  // data.append('email', sessionStorage.getItem('email'))
+                  // data.append('username', sessionStorage.getItem('username'))
+                  // data.append('u_id', sessionStorage.getItem('u_id'))
                   setSubmitting(true);
                   console.log(values);
                   const valueCopy = JSON.parse(JSON.stringify(values));
@@ -225,6 +301,7 @@ export default function NewRequest(props) {
                   valueCopy.email = sessionStorage.getItem('email');
                   valueCopy.username = sessionStorage.getItem('username');
                   valueCopy.u_id=sessionStorage.getItem('u_id');
+                  valueCopy.image=showImage;
                   console.log(valueCopy);
                   axios.post('http://localhost:4000/request', valueCopy,
                     // {
@@ -372,15 +449,71 @@ export default function NewRequest(props) {
                       md={6}
                       xs={12}
                     >
-                      <Upload />
-                    </Grid>
+                        <Card {...props}>
+                        <CardContent>
+                          <Box
+                            sx={{
+                              alignItems: 'center',
+                              display: 'flex',
+                              flexDirection: 'column'
+                            }}
+                          >
+                            <Avatar
+                              src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
+                              variant="rounded"
+                              sx={{
+                                height: 250,
+                                width: 250
+                              }}
+                              onClick={()=>handleClick()}
+                            />
+                        
+                          
+                        {/* <Button onClick={handleClick}>
+        Upload a file
+      </Button> */}
+      {/* <input
+        type="file"
+        ref={hiddenFileInput}
+        onChange={handleChange}
+        style={{display: 'none'}} 
+      /> */}
 
-                    </Grid>
-                    <Grid container spacing={2} justifyContent="flex-end">
-                      show
+                          </Box>
+                        </CardContent>
+                        <Divider />
+                        <CardActions>
+                          <Button
+                            color="primary"
+                            fullWidth
+                            variant="text"
+                            onClick={()=>onClickHandler()}
+                          >
+                            Upload picture
+                          </Button>
+                          <input type="file" style={{display: 'none'}}  ref={hiddenFileInput} name="file" onChange={(ev)=>onChangeHandler(ev,setFieldValue)}/>
+                        </CardActions>
+                      </Card>
+                      <br/>
+                      <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
+                      {
+                        showImage.length>0? showImage.map((img,i) => (
+                          <Grid item md={3} justifyContent="center" alignContent="center" style={{
+                            // margin:"5px",
+                            border:"1px solid #000"
+                          }}>
+                          <img src={`http://localhost:4000/${img.filename}`} width="100" height="100"/>
+                          <IconButton style={{color:"red"}} onClick={()=>removeImageFromList(i)}><HighlightOffOutlined/></IconButton>
+                          </Grid>
+                        )):<Grid item md={12}>No Image Added</Grid>
+                      }
 
                       </Grid>
-                      <br/>
+                     
+                    </Grid>
+
+                    </Grid>
+                       <br/>
                       <Divider />
                       <br/>
                       <Grid item xs={12} sm={12}>

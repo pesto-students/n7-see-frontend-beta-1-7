@@ -87,6 +87,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -121,9 +122,9 @@ const Sidebar = (props) => {
       open={open}
     >
       <div className={classes.toolbarIcon}>
-        <img src={seelogo} className={classes.headerAvatar} />
+        {/* <img src={seelogo} className={classes.headerAvatar} /> */}
 
-        {/* <Avatar src={seelogo} /> */}
+        <Avatar src={seelogo} />
         {/* <img src={seelogo}/> */}
 
         {/* <IconButton onClick={handleToggleDrawer}>
