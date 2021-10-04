@@ -44,6 +44,10 @@ const styles = (theme) => ({
     fontSize:"24px",
     fontFamily:"AssistantRegular"
   },
+  loginStyle:{
+    color:"#fff",
+    paddingLeft:"10px"
+  },
   appBar: {
     backgroundColor: '#242A37',
     border: 'none !important',
@@ -121,7 +125,9 @@ const Header = (props) => {
         <SearchSection theme="light"/>
         {
         u_id === null ? (
-          <Link to="/login">
+          <Link to="/login" style={{
+            textDecoration: "none"
+             }} className={classes.loginStyle}>
             <Login/>
             {/* <ListItem button>
           <ListItemText primary="Login/Signup" />

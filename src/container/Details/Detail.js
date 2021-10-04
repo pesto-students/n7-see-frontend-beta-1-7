@@ -146,6 +146,7 @@ export default function Detail(props) {
   const location = useLocation();
   const [itemDetails, setItemDetails] = useState(null);
   const u_id = sessionStorage.getItem('u_id');
+  console.log("asdsad",u_id)
   const [include,setInclude]=useState(false);
   useEffect(() => {
     const getMyContactDetails = async () => {
@@ -335,14 +336,15 @@ export default function Detail(props) {
 
                 </CardContent>
                 {
-                  !include?<>
+                  !include&& (u_id!==undefined&&u_id!==null)?<>
                       <Divider/>
                  <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
                   <Chip
-                    label="Express Interest"
-                    onClick={() => expressInterestFunc(itemDetails._id,u_id)}
-                    style={{ backgroundColor: '#ECA909', color:"#fff"}}
-                  />
+                      label="Express Interest"
+                      onClick={() => expressInterestFunc(itemDetails._id,u_id)}
+                      style={{ backgroundColor: '#ECA909', color:"#fff"}}
+                      />
+                 
                   </div>
                   </>:""
                 }

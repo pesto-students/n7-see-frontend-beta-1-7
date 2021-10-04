@@ -74,7 +74,7 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    <Link to="/user/viewall">
+    {/* <Link to="/user/viewall">
       <Tooltip title="Dashboard" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -83,7 +83,7 @@ export const mainListItems = (
           <ListItemText primary="Search" />
         </ListItem>
       </Tooltip>
-    </Link>
+    </Link> */}
   </div>
 );
 

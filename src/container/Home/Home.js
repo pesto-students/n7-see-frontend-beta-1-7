@@ -432,7 +432,7 @@ export default function Home() {
               <Grid container direction="row" justifyContent="space-between" spacing={2}>
              
                 {
-                  !loadingIndicator && data != null ? highlightedListing.slice(3, 6).map((highlightedproduct, i) => (
+                  !loadingIndicator && data != null ? highlightedListing.slice(3,9 ).map((highlightedproduct, i) => (
                     <Grid item md={4}>
                        {/* <NameCard/> */}
                       <HighlightCard key={i} item={highlightedproduct} />
@@ -441,14 +441,15 @@ export default function Home() {
                 }
 
   
-{
+{/* {
                   !loadingIndicator && data != null ? highlightedListing.slice(6, 9).map((highlightedproduct, i) => (
                     <Grid item md={4}>
-                       {/* <NameCard/> */}
+          
                       <HighlightCardReverse key={i} item={highlightedproduct} />
                     </Grid>
                   )) : <Skeleton animation="wave" />
-                }
+                
+                } */}
 
               </Grid>
 

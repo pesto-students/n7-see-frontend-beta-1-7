@@ -302,7 +302,7 @@ const ProfileSection = () => {
                                                 </CardContent>
                                             </Card>
                                             */}
-                                            <List>{mainListItems}</List>
+                                            <List  onClick={handleToggle}>{mainListItems}</List>
                                             <List component="nav" className={classes.navContainer}>
                                             <Link to="/user/profile">
                                                 <ListItemButton

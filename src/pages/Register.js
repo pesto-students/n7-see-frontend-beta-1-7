@@ -12,14 +12,15 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const navigate = useNavigate();
-  const [loadingIndicator, setLoadingIndicator] = useState(false);
+  const [loading,setLoading]=useState(false);
   return (
     <>
       <Helmet>
@@ -40,6 +41,7 @@ const Register = () => {
               email: '',
               firstName: '',
               lastName: '',
+              mobno:'',
               password: '',
             }}
             validationSchema={
@@ -48,12 +50,13 @@ const Register = () => {
               firstName: Yup.string().max(255).required('First name is required'),
               lastName: Yup.string().max(255).required('Last name is required'),
               password: Yup.string().max(255).required('password is required'),
+              mobno:Yup.number().positive().typeError("Must be Positive number").required('Mobile Number is required'),
             })
           }
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(true);
             console.log(values);
-            setLoadingIndicator(true);
+            setLoading(true);
             axios.post('http://localhost:4000/users', values,
               // {
               //   headers: {
@@ -67,6 +70,7 @@ const Register = () => {
               setSubmitting(false);
               if (resp.status == 200) {
                 console.log(resp);
+                setLoading(false);
                 toast.success(resp.data.message, { autoClose: 3000, });
                 setInterval(() => {
                   navigate('/login', { replace: true });
@@ -76,7 +80,7 @@ const Register = () => {
                 toast.error(resp.data.message, { autoClose: 3000, });
                 console.log(resp);
               }
-              setLoadingIndicator(false);
+              setLoading(false);
             });
           }}
           >
@@ -90,6 +94,7 @@ const Register = () => {
               values
             }) => (
               <Form>
+                 {!loading?<div>
                 <Box sx={{ mb: 3 }}>
                   <Typography
                     color="textPrimary"
@@ -142,6 +147,18 @@ const Register = () => {
                   value={values.email}
                   variant="outlined"
                 />
+                   <TextField
+                  error={Boolean(touched.mobno && errors.mobno)}
+                  fullWidth
+                  helperText={touched.mobno && errors.mobno}
+                  label="Mob No"
+                  margin="normal"
+                  name="mobno"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.mobno}
+                  variant="outlined"
+                />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
@@ -155,6 +172,7 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                
                 {/* <Box
                   sx={{
                     alignItems: 'center',
@@ -212,6 +230,8 @@ const Register = () => {
                     Sign in
                   </Link>
                 </Typography>
+                </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      }
               </Form>
             )}
           </Formik>

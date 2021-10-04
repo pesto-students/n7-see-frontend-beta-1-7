@@ -1,3 +1,4 @@
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -9,7 +10,8 @@ import {
   Grid,
   Link,
   TextField,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import FacebookIcon from '../icons/Facebook';
 import GoogleIcon from '../icons/Google';
@@ -18,7 +20,7 @@ import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const navigate = useNavigate();
-
+  const [loading,setLoading]=useState(false);
   return (
     <>
       <Helmet>
@@ -45,6 +47,7 @@ const Login = () => {
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
+              setLoading(true);
               console.log(values);
               axios.post('http://localhost:4000/users/login', values).then((resp) => {
                 console.log('resp');
@@ -58,28 +61,36 @@ const Login = () => {
                     sessionStorage.setItem('email', values.email);
                     sessionStorage.setItem('username', resp.data.response.firstName);
                     sessionStorage.setItem('u_id', resp.data.response._id);
+                    setLoading(false);
                     toast.success(resp.data.message, { autoClose: 3000, });
-                    navigate('/', { replace: true });
+                    navigate('/', { replace: true })
+                    // setTimeout(() => {}, 3000);
+                    
                   }
                   if(resp.data.response.role=="admin")
                   {
                     console.log('resp', resp);
                     // localStorage.setItem('username', values.email);
                     sessionStorage.setItem('email', values.email);
-                    sessionStorage.setItem('username', values.username);
+                    sessionStorage.setItem('username', resp.data.response.firstName);
                     sessionStorage.setItem('u_id', resp.data.response._id);
+                    setLoading(false);
                     toast.success(resp.data.message, { autoClose: 3000, });
-                    navigate('/app/dashboard', { replace: true });
+                    navigate('/app/dashboard', { replace: true })
+                    // setTimeout(() => {)}, 3000);
+                    
                   }
 
 
                   // history.push('/');
                   
                 } else {
+                  setLoading(false);
                   toast.error(resp.data.message, { autoClose: 3000, });
                   console.log(resp);
                 }
               }).catch((e) => {
+                setLoading(false);
                 toast.error('Failed to login', { autoClose: 3000, });
               });
             }}
@@ -97,6 +108,8 @@ const Login = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
+
+                {!loading?<div>
                 <Box sx={{ mb: 3 }}>
                   <Typography
                     color="textPrimary"
@@ -112,7 +125,72 @@ const Login = () => {
                     Sign in on the Serve End
                   </Typography>
                 </Box>
-                {/* <Grid
+    
+                <TextField
+                  error={Boolean(touched.email && errors.email)}
+                  fullWidth
+                  helperText={touched.email && errors.email}
+                  label="Email Address"
+                  margin="normal"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="email"
+                  value={values.email}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.password && errors.password)}
+                  fullWidth
+                  helperText={touched.password && errors.password}
+                  label="Password"
+                  margin="normal"
+                  name="password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.password}
+                  variant="outlined"
+                />
+                <Box sx={{ py: 2 }}>
+                  <Button
+                    color="warning"
+                    // disabled={isSubmitting}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Sign in now
+                  </Button>
+                </Box>
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                >
+                  Don&apos;t have an account?
+                  {' '}
+                  <Link component={RouterLink} to="/register" variant="h6" underline="hover">
+                    Sign up
+                  </Link>
+                </Typography>
+                </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      }
+              </form>
+            )}
+          </Formik>
+        </Container>
+      </Box>
+      <ToastContainer />
+    </>
+  );
+};
+
+export default Login;
+
+
+
+            {/* <Grid
                   container
                   spacing={3}
                 >
@@ -163,62 +241,3 @@ const Login = () => {
                   </Typography>
                 </Box>
                 */}
-                <TextField
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  variant="outlined"
-                />
-                <Box sx={{ py: 2 }}>
-                  <Button
-                    color="warning"
-                    // disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Sign in now
-                  </Button>
-                </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link component={RouterLink} to="/register" variant="h6" underline="hover">
-                    Sign up
-                  </Link>
-                </Typography>
-              </form>
-            )}
-          </Formik>
-        </Container>
-      </Box>
-      <ToastContainer />
-    </>
-  );
-};
-
-export default Login;

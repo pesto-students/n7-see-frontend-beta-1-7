@@ -6,11 +6,11 @@ const MainNavbar = (props) => (
   <AppBar
     elevation={0}
     {...props}
-    style={{backgroundColor:"#0b0808"}}
+    style={{backgroundColor:"#242A37"}}
   >
     <Toolbar sx={{ height: 64 }}>
       <RouterLink to="/">
-        <Logo />
+        {/* <Logo /> */}
       </RouterLink>
     </Toolbar>
   </AppBar>

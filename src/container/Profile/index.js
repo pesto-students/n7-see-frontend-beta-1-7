@@ -409,7 +409,8 @@ export default function Profile() {
                           if (resp.status == 200) {
                             console.log('resp', resp);
                             toast.success(resp.data.message, { autoClose: 3000, });
-                            navigate("/")
+                            setTimeout(() => {navigate("/", { replace: true })}, 3000);
+                            // navigate("/")
                            
                           
                           } else {
@@ -612,7 +613,7 @@ export default function Profile() {
                   </CardContent>
                 </Card>
               </Grid>
-
+              <ToastContainer />
             </Grid>
           </Grid>
         )
@@ -622,7 +623,7 @@ export default function Profile() {
 
 
       </Grid>
-      <ToastContainer />
+     
     </>
   );
 }

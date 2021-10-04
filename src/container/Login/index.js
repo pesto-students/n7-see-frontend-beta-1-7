@@ -126,6 +126,9 @@ export default function Login() {
                                   sessionStorage.setItem('username', values.username);
                                   sessionStorage.setItem('u_id', resp.data.response._id);
                                   toast.success(resp.data.message, { autoClose: 3000, });
+                                  setInterval(function(){ 
+
+                                  }, 3000);
                                   history("/")
                                 } else {
                                   toast.error(resp.data.message, { autoClose: 3000, });
@@ -138,9 +141,7 @@ export default function Login() {
 
                         validationSchema={
                   Yup.object().shape({
-                    email: Yup.string()
-                      .email(),
-                    // .required('Required'),
+                    email: Yup.string().email().required('Required'),
                     password: Yup.string()
                     //   .min(6, 'Password should be of minimum 6 characters length')
                     //   .max(8, 'Password should be of maximum 8 characters length')

@@ -317,7 +317,8 @@ console.log()
                     if (resp.status == 200) {
                       console.log('resp', resp);
                       toast.success(resp.data.message, { autoClose: 3000, });
-                      history("/")
+                      setTimeout(() => {history("/")}, 3000);
+                      
                     } else {
                       toast.error(resp.data.message, { autoClose: 3000, });
                       console.log(resp);
@@ -327,12 +328,11 @@ console.log()
 
                 validationSchema={
                   Yup.object().shape({
-                    productName: Yup.string(),
-                    // .required('Required'),
-                    category: Yup.object(),
-                    cost: Yup.string(),
+                    productname: Yup.string().required('Required'),
+                    category: Yup.object().nullable().required('Required'),
+                    city: Yup.object().nullable().required('Required'),
+                    cost: Yup.number().positive().typeError("Must be positive Integer").required('Required'),
                     description: Yup.string()
-                    // .required('Required'),
                   })
 }
               >
@@ -386,6 +386,21 @@ console.log()
                     </Grid>
                      
                       <Grid item xs={6} sm={6}>
+
+                      {/* <TextField
+                  error={Boolean(touched.productname && errors.productname)}
+                  fullWidth
+                  helperText={touched.productname && errors.productname}
+                  label="Product Name"
+                  margin="normal"
+                  name="productname"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.productname}
+                  variant="outlined"
+                /> */}
+
                       <Field
                                 component={TextField}
                                 error={errors.productname && touched.productname}
@@ -540,6 +555,7 @@ console.log()
                               </Grid>
 
                     </Grid>
+                    <ToastContainer />
 
                   </Form>
              
@@ -556,8 +572,7 @@ console.log()
         </Grid>
 
       </Grid>
-      <ToastContainer />
-
+      
 
     </Box>
     </>

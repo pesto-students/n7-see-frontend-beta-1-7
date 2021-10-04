@@ -37,6 +37,7 @@ import {
   TextField,
   Input,
   LinearProgress,
+  CircularProgress,
   Chip,
   Table,
   TableBody,
@@ -49,6 +50,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import makeStyles from '@material-ui/styles/makeStyles';
 import HistoryCard from '../../components/Card/HistoryCard';
 import CategoryCard from '../../components/Card/CategoryCard';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
@@ -137,7 +139,7 @@ export default function ListRequest(props) {
   const [selectedData, setSelectedData] = useState([]);
 
   const [viewInDetail, setViewInDetail] = useState(false);
-
+  const [loading,setLoading]=useState(false);
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
     setPage(1);
@@ -152,31 +154,31 @@ export default function ListRequest(props) {
 
 
   const fetchData = async () => {
-    setLoadingIndicator(true);
+    setLoading(true);
     const u_id = sessionStorage.getItem('u_id');
     await axios.post('http://localhost:4000/request/getmyrequest',{page:page,limit:limit,u_id:u_id}).then((resp) => {
       console.log(resp);
-      setLoadingIndicator(false);
+      setLoading(false);
       setNewData(resp.data.response.request);
       setTotalCount(resp.data.response.count)
       setReRender(false)
     }).catch((e) => {
-      setLoadingIndicator(false);
+      setLoading(false);
       toast.error('Something Went Wrong', { autoClose: 3000, });
     });
     // setUser(result.data);
   };
 
   const getAllMyRequest = async () => {
-    setLoadingIndicator(true);
+    setLoading(true);
     // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
     const u_id = sessionStorage.getItem('u_id');
     await axios.get(`http://localhost:4000/request/getmyrequest/${u_id}`).then((resp) => {
-      console.log(resp.data.response);
+      console.log("ZDAS",resp.data.response);
       setMyRequestData(resp.data.response);
-      setLoadingIndicator(false);
+      setLoading(false);
     }).catch((e) => {
-      setLoadingIndicator(false);
+      setLoading(false);
       toast.error('Something Went Wrong', { autoClose: 3000, });
     });
 
@@ -217,15 +219,16 @@ export default function ListRequest(props) {
   const handleClick = (_id) => {
 
     const deleteMyRequest = async () => {
-      setLoadingIndicator(true);
+      setLoading(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       await axios.get(`http://localhost:4000/request/deleteMyRequest/${_id}`).then((resp) => {
         console.log(resp);
-        setLoadingIndicator(false);
+        // setLoading(false);
         toast.success(resp.data.message, { autoClose: 3000, });
-        getAllMyRequest()
+        setReRender(true)
+        // getAllMyRequest()
       }).catch((e) => {
-        setLoadingIndicator(false);
+        setLoading(false);
         toast.error('Something Went Wrong', { autoClose: 3000, });
       });
 
@@ -342,6 +345,7 @@ export default function ListRequest(props) {
         } */}
           {!viewInDetail ? <Container maxWidth={false}>
 <Card>
+
        <CardHeader
        className={classes.tabHeader}
                 title={
@@ -361,8 +365,10 @@ export default function ListRequest(props) {
               <Divider/>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loading?<div>
           <Table>
             <TableBody>
+
               {newData.length>0?newData.slice(0, limit).map((request,i) => (
                 <TableRow
                   hover
@@ -383,7 +389,7 @@ export default function ListRequest(props) {
                         <div>
                           {request.productname}
                           <br />
-                          <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap' }}>
+                          <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap' }} noWrap>
                             <Box sx={{
                               textOverflow: 'ellipsis',
                               // my:1,
@@ -391,16 +397,58 @@ export default function ListRequest(props) {
                               bgcolor: 'background.paper',
                             }}
                             >
-                              {request.description}
+                              {/* {request.description} */}
                             </Box>
 
                           </Typography>
-
+                          {request.description}
                         </div>
                       )}
-                      secondary={request.createddate}
+                      secondary={
+                        <div>
+                        
+                        </div>
+                      }
                     />
-                    <IconButton
+              
+
+                  </ListItem>
+                  <ListItem style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
+                  <Grid
+                      container
+                      spacing={2}
+                      sx={{ justifyContent: 'space-between' }}
+                    >
+                      <Grid
+                        item
+                        sx={{
+                          alignItems: 'center',
+                          display: 'flex'
+                        }}
+                      >
+                        <AccessTimeIcon color="action" />
+                        <Typography
+                          color="textSecondary"
+                          display="inline"
+                          sx={{ pl: 1 }}
+                          variant="body2"
+                        >
+                         { request.createddate}
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        sx={{
+                          alignItems: 'center',
+                          display: 'flex'
+                        }}
+                      >
+                      
+                      <Chip
+                         label= { request.status}
+                         style={{ backgroundColor: '#ECA909',color:"#fff"}}
+                       />
+                             <IconButton
                       edge="end"
                       size="small"
                     >
@@ -414,22 +462,35 @@ export default function ListRequest(props) {
                       <Visibility />
                     </IconButton>
 
+                      </Grid>
+                    </Grid>
+   
+
+
+        
+                      <div>
+      
+                     </div>
                   </ListItem>
-                 
                   {/* <TableCell>
                   {request.category}
                   </TableCell> */}
 
                   <Divider />
+
                 </TableRow>
               )):<TableCell>
               <div style={{textAlign:"center"}}>
-             No Request Found
+                No Request Found
               </div>
               </TableCell>
             }
-            </TableBody>
+           
+           </TableBody>
           </Table>
+          </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+    }
+        
         </Box>
       </PerfectScrollbar>
      
@@ -442,6 +503,9 @@ export default function ListRequest(props) {
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
       />
+
+      
+
     </Card>
     </Container>
              :<RequestInDetail manageViewInDetailFunc={manageViewInDetailFunc} selectedData={selectedData} />
