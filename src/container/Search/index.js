@@ -55,6 +55,8 @@ import SearchSection from '../../components/SearchSection';
 import Pagination from '@material-ui/core/Pagination';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
+import WhiteCard from '../../components/Card/WhiteCard';
+import HighlightCardReverse from '../../components/Card/HighlightCardReverse';
 import 'material-react-toastify/dist/ReactToastify.css';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -169,6 +171,7 @@ export default function Search() {
       console.log(resp);
       setLoadingIndicator(false);
       setNewData(resp.data.response.result);
+      console.log("Dsfdsfds",resp.data.response.result)
       setTotalCount(resp.data.response.count)
       setReRender(false)
     }).catch((e) => {
@@ -217,10 +220,12 @@ export default function Search() {
               <Table>
                 <TableBody>
                   {
-                  newData!==null?newData.slice(0, limit).map((newdata,i) => (
+                  newData.length>0?newData.slice(0, limit).map((newdata,i) => (
                     <TableRow
                       key={i}
                     >
+                  
+                      {/* <WhiteCard item={newdata}/> */}
                     <SearchCard data={newdata}/>
                     {/* <Divider /> */}
                       {/* <TableCell>

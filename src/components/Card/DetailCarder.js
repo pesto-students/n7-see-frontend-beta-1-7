@@ -46,6 +46,7 @@ import img11 from '../../assets/images/11.png';
 import img21 from '../../assets/images/21.png';
 import img31 from '../../assets/images/31.png';
 import { Redirect, useNavigate } from 'react-router-dom';
+import defaultimg from '../../assets/images/defaultimg.png';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -159,8 +160,13 @@ export default function DetailCarder(props) {
       
       
         </div>
- 
-      <img src={img31} width="100%"/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
+        {
+         props.item!==""&&props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+        <img src={defaultimg} width="300px" height="250px"/>
+      }
+      </div>
+      {/* <img src={img31} width="100%"/> */}
       <Typography variant="p">
       {props.item!==""?props.item.category:""}
       </Typography>

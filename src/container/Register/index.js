@@ -16,6 +16,7 @@ import {
   CssBaseline,
   TextField,
   LinearProgress,
+  CircularProgress,
   Avatar,
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -81,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles();
-  const history = useHistory();
+  const history = useNavigate();
   const [loadingIndicator, setLoadingIndicator] = useState(false);
-
+  const [loading,setLoading]=useState(false);
   return (
 
     <div>
@@ -122,7 +123,7 @@ export default function Register() {
                         onSubmit={(values, { setSubmitting }) => {
                               setSubmitting(true);
                               console.log(values);
-                              setLoadingIndicator(true);
+                              setLoading(true);
                               axios.post('http://localhost:4000/users', values,
                                 // {
                                 //   headers: {
@@ -137,14 +138,17 @@ export default function Register() {
                                 if (resp.status == 200) {
                                   console.log(resp);
                                   toast.success(resp.data.message, { autoClose: 3000, });
-                                  setInterval(() => {
-                                    history.push('/login');
-                                  }, 3000);
+                                  
+                                  // setInterval(() => {
+                                    
+                                  // }, 3000);
+                                  history('/login');
+                                  setLoading(false);
                                 } else {
                                   toast.error(resp.data.message, { autoClose: 3000, });
                                   console.log(resp);
                                 }
-                                setLoadingIndicator(false);
+                                setLoading(false);
                               });
                             }}
 
@@ -185,8 +189,10 @@ export default function Register() {
                                 handleReset,
                               } = props;
                               return (
-                        <BlockUI tag="div" blocking={loadingIndicator} loader={<Loader active type="ball-spin-fade-loader" />}>
-                        <Form className={classes.form} onSubmit={handleSubmit}>
+                       
+                        <Form className={classes.form}>
+                          {
+                            !loading?<>
                           <Grid container spacing={1}>
                           <Grid item xs={12} sm={6}>
                       <Field
@@ -310,9 +316,10 @@ export default function Register() {
                       </Link>
                     </Grid>
                         </Grid>
-
+                        </>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+                          }
+                        <ToastContainer />
                         </Form>
-                      </BlockUI>
                               );
                             }}
                       </Formik>
@@ -336,7 +343,7 @@ export default function Register() {
       </div>
       {/* <NavBar/> */}
 
-      <ToastContainer />
+     
     </div>
 
   );

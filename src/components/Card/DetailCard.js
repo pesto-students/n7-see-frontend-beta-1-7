@@ -20,6 +20,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import defaultimg from '../../assets/images/defaultimg.png';
 // import Rating from '@material-ui/lab/Rating';
 import Rating from '@material-ui/core/Rating';
 import {
@@ -129,6 +130,7 @@ export default function DetailCard(props) {
       state: items
     })
   };
+  console.log(props.item);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -158,8 +160,13 @@ export default function DetailCard(props) {
       
       
         </div>
- 
-      <img src={img31} width="100%"/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
+        {
+        props.item!==""&&props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+        <img src={defaultimg} width="300px" height="250px"/>
+        }
+        </div>
+      {/* <img src={img31} width="100%"/> */}
       <Typography variant="p">
        {props.item!==""?props.item.category:""}
       </Typography>

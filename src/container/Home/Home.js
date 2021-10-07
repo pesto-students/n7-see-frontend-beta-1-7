@@ -543,15 +543,17 @@ export default function Home() {
             Latest Products</DividerComponentLeft>
           </Grid> */}
 
-            <DetailCard item={highlightedListing.length>0?highlightedListing[0]:""}/>
+            {highlightedListing.length>0?<DetailCard item={highlightedListing[0]}/>:""}
             <br/>
-            <DividerCard item={highlightedListing.length>0?highlightedListing[0]:""}/>
+            {highlightedListing.length>0?<DividerCard item={highlightedListing[0]}/>:""}
             <br/>
-            <DetailCarder item={highlightedListing.length>0?highlightedListing[0]:""}/>
+            {highlightedListing.length>0?<DetailCarder item={highlightedListing[0]}/>:""}
             <br/>
-            <DividerCarder item={highlightedListing.length>0?highlightedListing[0]:""}/>
+            {highlightedListing.length>0?<DividerCarder item={highlightedListing[0]}/>:""}
             <br/>
-            <SmallCard item={highlightedListing.length>0?highlightedListing[0]:""}/>
+            {highlightedListing.length>0?<SmallCard item={highlightedListing[0]}/>:""}
+            <br/>
+            {highlightedListing.length>0?<DividerCarder item={highlightedListing[0]}/>:""}
             {/* <DividerComponentLeft viewAllFunc={viewAllFunc}></DividerComponentLeft> */}
               {/* <Box style={{ paddingBottom: '30px' }}>
                 <DividerComponent>Fresh Recommendations</DividerComponent>

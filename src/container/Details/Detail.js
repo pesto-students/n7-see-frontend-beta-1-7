@@ -336,7 +336,7 @@ export default function Detail(props) {
 
                 </CardContent>
                 {
-                  !include&& (u_id!==undefined&&u_id!==null)?<>
+                  !include&&(u_id!==undefined&&u_id!==null)&&(itemDetails!==null&&itemDetails.u_id!==u_id)?<>
                       <Divider/>
                  <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
                   <Chip

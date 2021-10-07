@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Formik, Field, Form, ErrorMessage
+  Formik, Field, Form, ErrorMessage, move
 } from 'formik';
 import * as Yup from 'yup';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -79,7 +79,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const history = useNavigate();
-
+ const move = ()=>{
+  history("/register",{ replace: true })
+ }
   return (
     <div>
       <div className="App">
@@ -170,7 +172,7 @@ export default function Login() {
                                 handleReset,
                               } = props;
                               return (
-                        <Form className={classes.form} onSubmit={handleSubmit}>
+                        <Form className={classes.form}>
                         <Grid container spacing={1}>
                           <Grid item xs={12} sm={12}>
 
@@ -231,7 +233,7 @@ export default function Login() {
 
                         <Grid container justifyContent="flex-end" spacing={4}>
                           <Grid item>
-                          <Link href="/register" variant="body2">
+                          <Link href="" onClick={()=>move()} variant="body2">
                       Don't have an account? Sign up
                     </Link>
                         </Grid>

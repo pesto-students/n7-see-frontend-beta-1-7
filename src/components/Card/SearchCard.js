@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import ShowMoreText from 'react-show-more-text';
 // import Rating from '@material-ui/lab/Rating';
 import Rating from '@material-ui/core/Rating';
 import {
@@ -38,7 +39,9 @@ import { collapseClasses, Chip } from '@material-ui/core';
 import dashboardimg from '../../assets/images/dashboardimg.png';
 import SearchCard from './SearchCard';
 import img1 from '../../assets/images/img1.png';
+import img2 from '../../assets/images/img2.png';
 import { Redirect, useNavigate,Navigate } from 'react-router-dom';
+import defaultimg from '../../assets/images/defaultimg.png';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -115,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Search(props) {
+  console.log("sadsd",props.data);
   const classes = useStyles();
   // const counter = useSelector(getCounter);
   const navigate = useNavigate();
@@ -139,7 +143,8 @@ export default function Search(props) {
     >
       <Grid item md={4} lg={4}>
         <div className={classes.image}>
-          <img src={img1} className={classes.image} />
+        
+          <img src={ props.data!==""&&props.data.image.length>0?`http://localhost:4000/${props.data.image[0].filename}`:img2} className={classes.image} />
         </div>
 
       </Grid>
@@ -147,21 +152,28 @@ export default function Search(props) {
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <Typography gutterBottom variant="subtitle1">
-                <Chip
-                  label="Category"
-                  color="secondary"
-                />
+            <Typography variant="body2" gutterBottom>
+              <b>{props.data.category}</b>
               </Typography>
-
               <Typography variant="body2" gutterBottom>
               {props.data.productname}
               </Typography>
-
-              <Typography variant="body2" color="textSecondary">
-                ID:   {props.data.req_id}
+              <Typography variant="body2" gutterBottom>
+              <ShowMoreText
+                lines={3}
+                more='Show more'
+                less='Show less'
+                className='content-css'
+                anchorClass='my-anchor-css-class'
+                // onClick={executeOnClick}
+                expanded={false}
+            >
+              {props.data.description}
+            </ShowMoreText>
+             
+             
               </Typography>
-              <br />
+
             </Grid>
             <Grid item>
 
@@ -180,7 +192,7 @@ export default function Search(props) {
               <Visibility onClick={() => getDetails(props.data)} />
               </IconButton>
             </Typography>
-            <Typography variant="h4">
+            {/* <Typography variant="h4">
               <IconButton aria-label="add to favorites">
                 <Favorite />
               </IconButton>
@@ -189,7 +201,7 @@ export default function Search(props) {
               <IconButton aria-label="chat">
                 <Chat />
               </IconButton>
-            </Typography>
+            </Typography> */}
           </Grid>
 
         </Grid>

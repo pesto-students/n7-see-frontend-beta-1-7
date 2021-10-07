@@ -20,7 +20,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import Chat from '@material-ui/icons/Chat';
 import { Redirect, useNavigate } from 'react-router-dom';
 import img2 from '../../assets/images/img2.png';
-
+import defaultimg from '../../assets/images/defaultimg.png';
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 320,
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+    
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -81,9 +82,14 @@ export default function HighlightCard(props) {
       />
       <CardMedia
         className={classes.media}
-        image={img2}
+        image={ props.item!==""&&props.item.image.length>0?`http://localhost:4000/${props.item.image[0].filename}`:img2}
         title="Paella dish"
       />
+
+{/* {
+        props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="400px" height="300px"/>:
+        <img src={defaultimg} width="400px" height="300px"/>
+      } */}
       {/* <CardContent>
         <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'nowrap' }}>
           <Box sx={{

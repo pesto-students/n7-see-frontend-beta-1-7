@@ -26,6 +26,7 @@ import SearchSection from '../SearchSection';
 import ProfileSection from 'src/container/Profile/ProfileSection';
 import {Login} from '@material-ui/icons';
 import '../../assets/autumn-in-november.regular.ttf'; 
+import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 const drawerWidth = 240;
 const styles = (theme) => ({
   toolbarRoot: {
@@ -83,7 +84,11 @@ boxContainer: {
     [theme.breakpoints.down('md')]: {
         width: 'auto'
     }
-}
+},
+startAdornment: {
+  fontSize: '1rem',
+  color:"#CFD0D2"
+},
 });
 
 const Header = (props) => {
@@ -122,7 +127,12 @@ const Header = (props) => {
           </Typography>
           
         
-        <SearchSection theme="light"/>
+        {/* <SearchSection theme="light"/> */}
+        <IconButton>
+           <Link to="/user/search">
+              <IconSearch stroke={1.5} size="1rem" className={classes.startAdornment} />
+              </Link>
+            </IconButton>
         {
         u_id === null ? (
           <Link to="/login" style={{

@@ -128,13 +128,14 @@ const style = {
 export default function Profile() {
   const classes = useStyles();
   const navigate = useNavigate();
-
+  const [myFile,setMyFile]=useState(null);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [pageEdit, setPageEdit] = useState(false);
   const [genderData,setGenderData]=useState([{value:"1",label:"Male"},{value:"1",label:"Female"}])
   const [myProfileData,setMyProfileData]=useState(null);
   const [cityData, setCityData] = useState([]);
   const [cityLoading, setCityLoading] = useState(false);
+  const [showImage,setShowImage]=useState(null);
   const formRef = useRef();
   useEffect(() => {
     const getMyProfile = async () => {
@@ -178,6 +179,38 @@ export default function Profile() {
     setPageEdit(true);
   };
 
+      // Create a reference to the hidden file input element
+      const hiddenFileInput = React.useRef(null);
+  
+      // Programatically click the hidden file input element
+      // when the Button component is clicked
+      const handleClickImage = event => {
+        hiddenFileInput.current.click();
+      };
+      const onClickHandler = () => {
+        const data = new FormData()
+        console.log(myFile)
+        if(myFile!==null)
+        {
+        data.append('file', myFile)
+        axios.post("http://localhost:4000/request/upload", data)
+          .then(res => { 
+            setShowImage([...res.data]);
+            console.log(`http://localhost:4000/${res.data.filename}`)
+          })
+        }
+        else{
+           toast.error("Please Upload atleast one image", { autoClose: 3000, });
+        }
+      
+      }
+
+      const onChangeHandler=(event,setFieldValue)=>{
+        // setFieldValue("file",event.target.files[0])
+        setMyFile(event.target.files[0]);
+        console.log(event.target.files[0])
+    }
+    
   const cancelEdit = () => {
     setPageEdit(false);
   };
@@ -235,7 +268,7 @@ export default function Profile() {
                     <CardHeader
                               avatar={(
                                 <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={user.avatar}
-                                title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
+                                title={<div>{myProfileData!==null?myProfileData.firstName+" "+myProfileData.lastName:""}</div>}
                                 subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
                                 >
                     </Avatar>
@@ -395,6 +428,8 @@ export default function Profile() {
                         valueCopy.u_id = sessionStorage.getItem('u_id');
                         valueCopy.city = values.city!=null?values.city.label:null
                         valueCopy.gender = values.gender!=null?values.gender.label:null
+                        valueCopy.image=showImage;
+                        console.log("image",valueCopy)
                         axios.post('http://localhost:4000/users/updateuser', valueCopy,
                           // {
                           //   headers: {
@@ -422,14 +457,13 @@ export default function Profile() {
 
                       validationSchema={
                   Yup.object().shape({
-                    firstname: Yup.string(),
-                    // .required('Required'),
-                    lastname: Yup.string(),
-                    gender: Yup.object().nullable(),
-                    mobno: Yup.string(),
-                    email:Yup.string(),
-                    city:Yup.object().nullable(),
-                    address:Yup.string(),
+                    firstname: Yup.string().required('Required'),
+                    lastname: Yup.string().required('Required'),
+                    gender: Yup.object().nullable().required('Required'),
+                    mobno: Yup.string().required('Required'),
+                    email:Yup.string().required('Required'),
+                    city:Yup.object().nullable().required('Required'),
+                    address:Yup.string().nullable().required('Required'),
                     // .required('Required'),
                   })
 }
@@ -448,7 +482,7 @@ export default function Profile() {
                           setFieldValue
                         } = props;
                         return (
-                  <Form className={classes.form} onSubmit={handleSubmit}>
+                  <Form className={classes.form}>
                     <Grid container spacing={1}>
                     <Grid item md={6}>
                     <Grid container spacing={2}>
@@ -550,23 +584,7 @@ export default function Profile() {
                             </Grid>
 
                   </Grid>
-                  </Grid>
-                    <Grid item md={6} style={{ width: '25px', height: '25px' }}>
-                    <Grid container justifyContent="center">
-                    <CardHeader
-                              avatar={(
-                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe">
-                      <IconButton aria-label="add to favorites">
-                        <CameraAlt />
-                      </IconButton>
-                    </Avatar>
-                )}
-                            />
-                  </Grid>
-
-                  </Grid>
-
-                    <Grid item xs={12} sm={12}>
+                  <Grid item xs={12} sm={12}>
                     <Field
                     component={TextField}
                     label="Address"
@@ -586,9 +604,58 @@ export default function Profile() {
                   />
 
                   </Grid>
+                  </Grid>
+                    <Grid
+                      item
+                      lg={4}
+                      md={4}
+                    >
+                        <Card {...props}>
+                        <CardContent>
+                          <Box
+                            sx={{
+                              alignItems: 'center',
+                              display: 'flex',
+                              flexDirection: 'column'
+                            }}
+                          >
+                            <Avatar
+                              src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
+                              variant="rounded"
+                              sx={{
+                                height: 250,
+                                width: 250
+                              }}
+                              onClick={()=>handleClickImage()}
+                            />
+                
+
+                          </Box>
+                        </CardContent>
+                        <Divider />
+                        <CardActions>
+                          <Button
+                            color="primary"
+                            fullWidth
+                            variant="text"
+                            onClick={()=>onClickHandler()}
+                          >
+                            Upload picture
+                          </Button>
+                          <input type="file" style={{display: 'none'}}  ref={hiddenFileInput} name="file" onChange={(ev)=>onChangeHandler(ev,setFieldValue)}/>
+                        </CardActions>
+                      </Card>
+                    
+                  
+                     
+                    </Grid>
+
+            
 
                   </Grid>
-                    
+                  <br/>
+                    <Divider/>
+                    <br/>
                     <Grid container spacing={2} justifyContent="flex-end">
                     {isSubmitting && <LinearProgress />}
                     <Grid item xs={2}>
