@@ -54,6 +54,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
+import UpdateProfile from './updateProfile';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -182,7 +183,7 @@ export default function Profile() {
     setPageEdit(false);
   };
   const user = {
-    avatar: '/static/images/avatars/avatar_6.png',
+    avatar: '/static/images/avatars/chil.png',
     city: 'Los Angeles',
     country: 'USA',
     jobTitle: 'Senior Developer',
@@ -234,7 +235,7 @@ export default function Profile() {
                     <Card>
                     <CardHeader
                               avatar={(
-                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={user.avatar}
+                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={myProfileData!==null&&myProfileData.image!==""?`http://localhost:4000/${myProfileData.image}`:user.avatar}
                                 title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
                                 subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
                                 >
@@ -371,247 +372,7 @@ export default function Profile() {
           <Grid item md={12}>
             <Grid container spacing={2}>
               <Grid item md={12}>
-                <Card>
-                  <CardHeader
-                    className={classes.tabHeader}
-                    title="Update Profile"
-                  />
-                  <CardContent>
-                    <Formik
-                      innerRef={formRef}
-                      initialValues={{
-                        firstName: myProfileData!==null?myProfileData.firstName:"",
-                        lastName: myProfileData!==null?myProfileData.lastName:"",
-                        gender: myProfileData!==null?genderData.filter((genderdata)=>genderdata.label==myProfileData.gender):null,
-                        mobno: myProfileData!==null?myProfileData.mobno:"",
-                        email: myProfileData!==null?myProfileData.email:"",
-                        city: myProfileData!==null?cityData.filter((citydata)=>citydata.label==myProfileData.city):null,
-                        address:myProfileData!==null?myProfileData.address:"",
-                      }}
-                      onSubmit={(values, { setSubmitting }) => {
-                        setSubmitting(true);
-                        console.log(values);
-                        const valueCopy = JSON.parse(JSON.stringify(values));
-                        valueCopy.u_id = sessionStorage.getItem('u_id');
-                        valueCopy.city = values.city!=null?values.city.label:null
-                        valueCopy.gender = values.gender!=null?values.gender.label:null
-                        axios.post('http://localhost:4000/users/updateuser', valueCopy,
-                          // {
-                          //   headers: {
-                          //     'Access-Control-Allow-Origin': '*',
-                          //     'Content-Type': 'application/json',
-                          //   }
-                          // },
-                        ).then((resp) => {
-                          console.log(resp);
-
-                          setSubmitting(false);
-                          if (resp.status == 200) {
-                            console.log('resp', resp);
-                            toast.success(resp.data.message, { autoClose: 3000, });
-                            setTimeout(() => {navigate("/", { replace: true })}, 3000);
-                            // navigate("/")
-                           
-                          
-                          } else {
-                            toast.error(resp.data.message, { autoClose: 3000, });
-                            console.log(resp);
-                          }
-                        });
-                      }}
-
-                      validationSchema={
-                  Yup.object().shape({
-                    firstname: Yup.string(),
-                    // .required('Required'),
-                    lastname: Yup.string(),
-                    gender: Yup.object().nullable(),
-                    mobno: Yup.string(),
-                    email:Yup.string(),
-                    city:Yup.object().nullable(),
-                    address:Yup.string(),
-                    // .required('Required'),
-                  })
-}
-                    >
-                      {(props) => {
-                        const {
-                          values,
-                          touched,
-                          errors,
-                          dirty,
-                          isSubmitting,
-                          handleChange,
-                          handleBlur,
-                          handleSubmit,
-                          handleReset,
-                          setFieldValue
-                        } = props;
-                        return (
-                  <Form className={classes.form} onSubmit={handleSubmit}>
-                    <Grid container spacing={1}>
-                    <Grid item md={6}>
-                    <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.firstName && touched.firstName}
-                                label="First Name"
-                                name="firstName"
-                                id="firstName"
-                                value={values.firstName}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.firstName && touched.firstName) && errors.firstName}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.lastName && touched.lastName}
-                                label="Last Name"
-                                name="lastName"
-                                id="lastName"
-                                value={values.lastName}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.lastName && touched.lastName) && errors.lastName}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={RSelect}
-                                name="gender"
-                                id="gender"
-                                value={values.gender}
-                                onChange={ev => setFieldValue("gender",ev)}
-                                options={genderData}
-                                placeholder="--Select Gender--"
-                                error={errors.gender}
-                                touched={touched.gender}
-                        // isLoading={categoryLoading}
-                                isClearable
-                              />
-                            </Grid>
-                            <Grid item xs={6} sm={6}>
-                              <Field
-                                component={RSelect}
-                                name="city"
-                                id="city"
-                                value={values.city}
-                                onChange={ev => setFieldValue("city",ev)}
-                                options={cityData}
-                                placeholder="--Select City--"
-                                error={errors.city}
-                                touched={touched.city}
-                                isLoading={cityLoading}
-                                isClearable
-                              />
-                            </Grid>
-
-          
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.mobno && touched.mobno}
-                                label="Mobile No"
-                                name="mobno"
-                                id="mobno"
-                                value={values.mobno}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.mobno && touched.mobno) && errors.mobno}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-                    <Grid item xs={6} sm={6}>
-                              <Field
-                                component={TextField}
-                                error={errors.email && touched.email}
-                                label="Email"
-                                name="email"
-                                id="email"
-                                value={values.email}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={(errors.email && touched.email) && errors.email}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                              />
-                            </Grid>
-
-                  </Grid>
-                  </Grid>
-                    <Grid item md={6} style={{ width: '25px', height: '25px' }}>
-                    <Grid container justifyContent="center">
-                    <CardHeader
-                              avatar={(
-                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe">
-                      <IconButton aria-label="add to favorites">
-                        <CameraAlt />
-                      </IconButton>
-                    </Avatar>
-                )}
-                            />
-                  </Grid>
-
-                  </Grid>
-
-                    <Grid item xs={12} sm={12}>
-                    <Field
-                    component={TextField}
-                    label="Address"
-                    name="address"
-                    id="address"
-                    error={errors.address && touched.address}
-                    value={values.address}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={(errors.address && touched.address) && errors.address}
-                    margin="normal"
-                    variant="outlined"
-                    type="address"
-                    maxLength="9"
-                    row={4}
-                    fullWidth
-                  />
-
-                  </Grid>
-
-                  </Grid>
-                    
-                    <Grid container spacing={2} justifyContent="flex-end">
-                    {isSubmitting && <LinearProgress />}
-                    <Grid item xs={2}>
-
-                    <Button type="submit" fullWidth color="primary" variant="contained">
-                    Update Profile
-                          </Button>
-                  </Grid>
-                    <Grid item xs={2}>
-                    <Button type="button" fullWidth color="secondary" variant="contained" onClick={() => cancelEdit()}>
-                    Cancel
-                          </Button>
-                  </Grid>
-
-                  </Grid>
-                 
-                  </Form>
-                        );
-                      }}
-                    </Formik>
-                 
-                  </CardContent>
-                </Card>
+                <UpdateProfile setPageEdit={setPageEdit} myProfileData={myProfileData}/>
               </Grid>
               <ToastContainer />
             </Grid>
