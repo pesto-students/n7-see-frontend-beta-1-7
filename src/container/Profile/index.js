@@ -143,7 +143,7 @@ export default function Profile() {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const u_id = sessionStorage.getItem('u_id');
-      await axios.get(`${myApi}users/getmyprofile/${u_id}`).then((resp) => {
+      await axios.get(`${myApi}/users/getmyprofile/${u_id}`).then((resp) => {
         console.log(resp.data);
         setMyProfileData(resp.data[0]);
         setLoadingIndicator(false);

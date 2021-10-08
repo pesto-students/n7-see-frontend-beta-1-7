@@ -72,7 +72,7 @@ const RequestListResults = ({ data, ...rest }) => {
 
 
   const manageRequestFunc = (status,request_id) => {
-    axios.post(`${myApi}admin/manageRequest`, {status:status,request_id:request_id}).then((resp) => {
+    axios.post(`${myApi}/admin/manageRequest`, {status:status,request_id:request_id}).then((resp) => {
       console.log('resp');
       if (resp.status == 200) {
         console.log('resp', resp);
