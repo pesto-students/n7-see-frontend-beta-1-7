@@ -65,7 +65,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -156,7 +156,7 @@ export default function InterestInDetail(props) {
   useEffect(() => {
     const getMyContactDetails = async () => {
       setLoadingIndicator(true);
-      await axios.get(`http://localhost:4000/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
+      await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
         console.log(resp);
         setContactData(resp.data.response);
         setLoadingIndicator(false);
@@ -208,7 +208,7 @@ export default function InterestInDetail(props) {
                   <Grid container>
                     <Grid item md={4}>
                        <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
-                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`http://localhost:4000/${props.selectedData.image[0].filename}`:""} />
+                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
 
                     </Grid>
                     <Grid item md={8}>

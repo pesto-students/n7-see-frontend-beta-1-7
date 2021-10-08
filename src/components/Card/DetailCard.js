@@ -21,6 +21,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import defaultimg from '../../assets/images/defaultimg.png';
+import { myApi } from 'src/Api';
 // import Rating from '@material-ui/lab/Rating';
 import Rating from '@material-ui/core/Rating';
 import {
@@ -162,7 +163,7 @@ export default function DetailCard(props) {
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
         {
-        props.item!==""&&props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+        props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="300px" height="250px"/>:
         <img src={defaultimg} width="300px" height="250px"/>
         }
         </div>

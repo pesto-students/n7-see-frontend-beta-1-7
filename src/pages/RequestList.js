@@ -8,13 +8,14 @@ import CustomerListResults from '../components/customer/CustomerListResults';
 import RequestListResult from '../components/List/RequestListResult';
 import RequestListToolbar from '../components/master/RequestListToolbar';
 import customers from '../__mocks__/customers';
+import { myApi } from 'src/Api';
 export default function RequestList() {
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios.post('http://localhost:4000/admin/getallrequest',{page:1,limit:10}).then((resp) => {
+      await axios.post(`${myApi}/admin/getallrequest`,{page:1,limit:10}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setData(resp.data.response);

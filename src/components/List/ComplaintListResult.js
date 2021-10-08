@@ -25,6 +25,7 @@ import {
   Reply,
 } from '@material-ui/icons';
 import AddReply from '../../components/master/AddReply';
+import { myApi } from 'src/Api';
 const CustomerListResults = ({ ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -50,7 +51,7 @@ const CustomerListResults = ({ ...rest }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios.post('http://localhost:4000/admin/getallcomplaints',{page:page,limit:limit}).then((resp) => {
+      await axios.post(`${myApi}/admin/getallcomplaints`,{page:page,limit:limit}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.complaints);

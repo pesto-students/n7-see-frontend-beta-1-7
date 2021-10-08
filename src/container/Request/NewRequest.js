@@ -39,7 +39,7 @@ import {
   CssBaseline,
   TextField,
   Input,
-  LinearProgress,
+  LinearProgress,CircularProgress,
   Chip, Modal
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -60,6 +60,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
 import Upload from './Upload';
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -141,6 +142,7 @@ export default function NewRequest(props) {
   const history = useNavigate();
   const [historyData, setHistoryData] = useState([]);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
+  const [loading,setLoading]=useState(false);
   const [pageEdit, setPageEdit] = useState(false);
   const [myFile,setMyFile]=useState(null);
   const [showImage,setShowImage]=useState([]);
@@ -148,7 +150,7 @@ export default function NewRequest(props) {
 
     async function getCategory() {
       setCategoryLoading(true);
-      axios.get("http://localhost:4000/admin/getcategory").then((resp)=>{
+      axios.get(`${myApi}/admin/getcategory`).then((resp)=>{
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.category }
        })
@@ -160,7 +162,7 @@ export default function NewRequest(props) {
 
     async function getCity() {
       setCityLoading(true);
-      axios.get("http://localhost:4000/admin/getcity").then((resp)=>{
+      axios.get(`${myApi}/admin/getcity`).then((resp)=>{
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
@@ -227,11 +229,11 @@ const onClickHandler = () => {
   if(myFile!==null)
   {
   data.append('file', myFile)
-  axios.post("http://localhost:4000/request/upload", data)
+  axios.post(`${myApi}/request/upload`, data)
     .then(res => { 
       setShowImage([...showImage,res.data]);
       setMyFile(null)
-      console.log(`http://localhost:4000/${res.data.filename}`)
+      console.log(`${myApi}/${res.data.filename}`)
     })
   }
   else{
@@ -250,6 +252,7 @@ console.log()
 
   return (
     <>
+      {!loading?<div>
     <Box
       sx={{
         backgroundColor: 'background.default',
@@ -257,7 +260,7 @@ console.log()
         py: 3
       }}
     >
-      {/* <img src={`http://localhost:4000/1633271922833-info1.png`} /> */}
+      {/* <img src={`${myApi}/1633271922833-info1.png`} /> */}
       <Grid container style={{ padding: '0px 30px 60px 30px' }}>
         {/* <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
           <div style={{ display: 'flex', alignItems: 'center', fontSize: '24px' }}>
@@ -293,6 +296,7 @@ console.log()
                   // data.append('email', sessionStorage.getItem('email'))
                   // data.append('username', sessionStorage.getItem('username'))
                   // data.append('u_id', sessionStorage.getItem('u_id'))
+                  setLoading(true)
                   setSubmitting(true);
                   console.log(values);
                   const valueCopy = JSON.parse(JSON.stringify(values));
@@ -303,7 +307,7 @@ console.log()
                   valueCopy.u_id=sessionStorage.getItem('u_id');
                   valueCopy.image=showImage;
                   console.log(valueCopy);
-                  axios.post('http://localhost:4000/request', valueCopy,
+                  axios.post(`${myApi}/request`, valueCopy,
                     // {
                     //   headers: {
                     //     'Access-Control-Allow-Origin': '*',
@@ -316,13 +320,16 @@ console.log()
                     setSubmitting(false);
                     if (resp.status == 200) {
                       console.log('resp', resp);
+                      setLoading(false)
                       toast.success(resp.data.message, { autoClose: 3000, });
-                      setTimeout(() => {history("/")}, 3000);
+                      setTimeout(() => {history("/")}, 2000);
                       
                     } else {
+                      setLoading(false)
                       toast.error(resp.data.message, { autoClose: 3000, });
                       console.log(resp);
                     }
+                    
                   });
                 }}
 
@@ -351,6 +358,7 @@ console.log()
                   } = props;
                   return (
                     <Form className={classes.form} onSubmit={handleSubmit}>
+                      
                     <Grid container spacing={1} justifyContent="space-between">
                       <Grid item md={6}>
                       <Grid container spacing={2}>
@@ -517,7 +525,7 @@ console.log()
                             // margin:"5px",
                             border:"1px solid #000"
                           }}>
-                          <img src={`http://localhost:4000/${img.filename}`} width="100" height="100"/>
+                          <img src={`${myApi}/${img.filename}`} width="100" height="100"/>
                           <IconButton style={{color:"red"}} onClick={()=>removeImageFromList(i)}><HighlightOffOutlined/></IconButton>
                           </Grid>
                         )):<Grid item md={12}>No Image Added</Grid>
@@ -556,7 +564,7 @@ console.log()
 
                     </Grid>
                     <ToastContainer />
-
+                    
                   </Form>
              
                 );
@@ -575,6 +583,8 @@ console.log()
       
 
     </Box>
+    </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      }
     </>
   );
 }

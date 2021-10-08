@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Rating from '@material-ui/core/Rating';
 // import Rating from '@material-ui/lab/Rating';
-
+import { myApi } from 'src/Api';
 import {
   Avatar,
   NotificationsIcon,
@@ -148,7 +148,7 @@ export default function BuyCard(props) {
         r_id:r_id,
         u_id:u_id
       }
-      await axios.post(`http://localhost:4000/request/expressinterest`,expressreq).then((resp) => {
+      await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
         console.log(resp);
         toast.success(resp.data.response.message, { autoClose: 3000, });
         setLoadingIndicator(false);

@@ -22,6 +22,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import { myApi } from 'src/Api';
 const AddCategory = (props) => {
   const navigate = useNavigate();
   return(
@@ -42,7 +43,7 @@ const AddCategory = (props) => {
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
               // navigate('/app/dashboard', { replace: true });
-              axios.post('http://localhost:4000/admin/addcategory', values).then((resp) => {
+              axios.post(`${myApi}/admin/addcategory`, values).then((resp) => {
                 console.log('resp');
 
                 setSubmitting(false);

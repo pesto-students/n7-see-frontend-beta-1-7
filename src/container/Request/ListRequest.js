@@ -66,7 +66,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -156,7 +156,7 @@ export default function ListRequest(props) {
   const fetchData = async () => {
     setLoading(true);
     const u_id = sessionStorage.getItem('u_id');
-    await axios.post('http://localhost:4000/request/getmyrequest',{page:page,limit:limit,u_id:u_id}).then((resp) => {
+    await axios.post(`${myApi}/request/getmyrequest`,{page:page,limit:limit,u_id:u_id}).then((resp) => {
       console.log(resp);
       setLoading(false);
       setNewData(resp.data.response.request);
@@ -173,7 +173,7 @@ export default function ListRequest(props) {
     setLoading(true);
     // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
     const u_id = sessionStorage.getItem('u_id');
-    await axios.get(`http://localhost:4000/request/getmyrequest/${u_id}`).then((resp) => {
+    await axios.get(`${myApi}/request/getmyrequest/${u_id}`).then((resp) => {
       console.log("ZDAS",resp.data.response);
       setMyRequestData(resp.data.response);
       setLoading(false);
@@ -221,7 +221,7 @@ export default function ListRequest(props) {
     const deleteMyRequest = async () => {
       setLoading(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      await axios.get(`http://localhost:4000/request/deleteMyRequest/${_id}`).then((resp) => {
+      await axios.get(`${myApi}/request/deleteMyRequest/${_id}`).then((resp) => {
         console.log(resp);
         // setLoading(false);
         toast.success(resp.data.message, { autoClose: 3000, });

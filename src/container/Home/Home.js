@@ -53,7 +53,7 @@ import {
   ArrowDropDownCircleOutlined
 } from '@material-ui/icons';
 import FeaturePlusCard from 'src/components/Card/FeaturePlusCard';
-
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -175,12 +175,13 @@ export default function Home() {
   const [newData, setNewData] = useState([]);
   const [limit, setLimit] = useState(6);
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     // dispatch(fetchHomeData());
     const fetchData = async () => {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      await axios('http://localhost:4000/request/getHomeRequest').then((resp) => {
+      await axios(`${myApi}/request/getHomeRequest`).then((resp) => {
         console.log(resp);
         setData(resp.data.response);
         // setDataByCategory(resp,data.response.highlightedlisting);
@@ -201,7 +202,7 @@ export default function Home() {
 
     const fetchCategory = async () => {
       setCategoryLoading(true)
-      await axios.get('http://localhost:4000/admin/getcategory').then((resp) => {
+      await axios.get(`${myApi}/admin/getcategory`).then((resp) => {
         setCategory([...category,...resp.data.response]);
         setCategoryLoading(false)
         // console.log(resp.data.banner);
@@ -220,7 +221,7 @@ export default function Home() {
   const fetchDataByCategory = async (selectedCategory) => {
     console.log(selectedCategory);
     // setLoadingIndicator(true);
-    await axios.get(`http://localhost:4000/request/getRequestByCategory/${selectedCategory}`).then((resp) => {
+    await axios.get(`${myApi}/request/getRequestByCategory/${selectedCategory}`).then((resp) => {
       // console.log(resp);
       
       setDataByCategory(resp.data.response);
@@ -239,7 +240,7 @@ export default function Home() {
   const fetchHomeData = async () => {
     setLoadingIndicator(true);
     const u_id = sessionStorage.getItem('u_id');
-    await axios.post('http://localhost:4000/request/search',{page:page,limit:limit,search:searchData}).then((resp) => {
+    await axios.post(`${myApi}/request/search`,{page:page,limit:limit,search:searchData}).then((resp) => {
       console.log(resp);
      
       setNewData(resp.data.response.result);
@@ -290,7 +291,7 @@ export default function Home() {
   }
   
   const viewAllFunc=()=>{
-    console.log("helo");
+    console.log("helodddd");
   }
   return (
     <>

@@ -24,6 +24,8 @@ import getInitials from '../../utils/getInitials';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import defaultimg from '../../assets/images/defaultimg.png';
+import { myApi } from 'src/Api';
 const RequestListResults = ({ data, ...rest }) => {
   console.log(data);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
@@ -47,7 +49,7 @@ const RequestListResults = ({ data, ...rest }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios.post('http://localhost:4000/admin/getallrequest',{page:page,limit:limit}).then((resp) => {
+      await axios.post(`${myApi}/admin/getallrequest`,{page:page,limit:limit}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.request);
@@ -70,7 +72,7 @@ const RequestListResults = ({ data, ...rest }) => {
 
 
   const manageRequestFunc = (status,request_id) => {
-    axios.post('http://localhost:4000/admin/manageRequest', {status:status,request_id:request_id}).then((resp) => {
+    axios.post(`${myApi}admin/manageRequest`, {status:status,request_id:request_id}).then((resp) => {
       console.log('resp');
       if (resp.status == 200) {
         console.log('resp', resp);
@@ -100,6 +102,9 @@ const RequestListResults = ({ data, ...rest }) => {
               <TableRow>
                 <TableCell>
                   Sl No
+                </TableCell>
+                <TableCell>
+                  Image
                 </TableCell>
                 <TableCell>
                   Category
@@ -133,6 +138,9 @@ const RequestListResults = ({ data, ...rest }) => {
                 >
                   <TableCell>
                     {++i}
+                  </TableCell>
+                  <TableCell>
+                   <img src={request.image.length>0?`${myApi}/${request.image[0].filename}`:defaultimg} width="100px" height="100px"/>
                   </TableCell>
                   <TableCell>
                     <Box

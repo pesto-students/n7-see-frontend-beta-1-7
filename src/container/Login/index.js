@@ -21,7 +21,7 @@ import {
 import makeStyles from '@material-ui/styles/makeStyles';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
-
+import { myApi } from 'src/Api';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -117,7 +117,7 @@ export default function Login() {
                         onSubmit={(values, { setSubmitting }) => {
                               setSubmitting(true);
                               console.log(values);
-                              axios.post('http://localhost:4000/users/login', values).then((resp) => {
+                              axios.post(`${myApi}/users/login`, values).then((resp) => {
                                 console.log('resp');
 
                                 setSubmitting(false);

@@ -65,7 +65,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -155,7 +155,7 @@ export default function RequestInDetail(props) {
     const deleteMyRequest = async () => {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
-      await axios.get(`http://localhost:4000/request/deleteMyRequest/${_id}`).then((resp) => {
+      await axios.get(`${myApi}/request/deleteMyRequest/${_id}`).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         toast.success(resp.data.message, { autoClose: 3000, });
@@ -216,7 +216,7 @@ export default function RequestInDetail(props) {
                   <Grid container>
                     <Grid item md={4}>
                       <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
-                        src={props.selectedData.image.length>0?`http://localhost:4000/${props.selectedData.image[0].filename}`:""} />
+                        src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
 
                     </Grid>
                     <Grid item md={8}>

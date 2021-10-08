@@ -83,9 +83,7 @@
     "redux-saga": "^1.1.3",
     "uuid": "^8.3.0",
     "web-vitals": "^1.1.2",
-    "yup": "^0.32.9"
-  },
-  "devDependencies": {
+    "yup": "^0.32.9",
     "eslint-plugin-disable": "^2.0.1"
   }
 }

@@ -60,7 +60,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
-
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -152,7 +152,7 @@ export default function Detail(props) {
     const getMyContactDetails = async () => {
       console.log(itemDetails);
       setLoadingIndicator(true);
-      await axios.get(`http://localhost:4000/users/getcontactinfo/${itemDetails.u_id}`).then((resp) => {
+      await axios.get(`${myApi}/users/getcontactinfo/${itemDetails.u_id}`).then((resp) => {
         console.log(resp);
         setContactData(resp.data.response);
         setLoadingIndicator(false);
@@ -190,7 +190,7 @@ export default function Detail(props) {
         r_id:r_id,
         u_id:u_id
       }
-      await axios.post(`http://localhost:4000/request/expressinterest`,expressreq).then((resp) => {
+      await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
         console.log(resp);
         toast.success(resp.data.response.message, { autoClose: 3000, });
         setLoadingIndicator(false);
@@ -252,7 +252,7 @@ export default function Detail(props) {
                   <Grid container>
                     <Grid item md={4}>
                       <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
-                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`http://localhost:4000/${itemDetails.image[0].filename}`:""} />
+                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""} />
 
                     </Grid>
                     <Grid item md={8}>

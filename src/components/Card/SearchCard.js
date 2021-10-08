@@ -42,6 +42,7 @@ import img1 from '../../assets/images/img1.png';
 import img2 from '../../assets/images/img2.png';
 import { Redirect, useNavigate,Navigate } from 'react-router-dom';
 import defaultimg from '../../assets/images/defaultimg.png';
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -144,7 +145,7 @@ export default function Search(props) {
       <Grid item md={4} lg={4}>
         <div className={classes.image}>
         
-          <img src={ props.data!==""&&props.data.image.length>0?`http://localhost:4000/${props.data.image[0].filename}`:img2} className={classes.image} />
+          <img src={ props.data!==""&&props.data.image.length>0?`${myApi}/${props.data.image[0].filename}`:img2} className={classes.image} />
         </div>
 
       </Grid>

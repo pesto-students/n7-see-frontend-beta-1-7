@@ -29,6 +29,7 @@ import {
 } from '@material-ui/icons';
 import AddView from './AddView';
 import View from './View';
+import { myApi } from 'src/Api';
 const CustomerListResults = ({ ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -56,7 +57,7 @@ const CustomerListResults = ({ ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       const u_id = sessionStorage.getItem('u_id');
-      await axios.post('http://localhost:4000/complaint/getallmycomplaints',{page:page,limit:limit,u_id:u_id}).then((resp) => {
+      await axios.post(`${myApi}/complaint/getallmycomplaints`,{page:page,limit:limit,u_id:u_id}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.complaints);

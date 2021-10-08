@@ -40,6 +40,7 @@ import {
   CircularProgress,
   Chip, Modal
 } from '@material-ui/core';
+import { myApi } from 'src/Api';
 import makeStyles from '@material-ui/styles/makeStyles';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
@@ -141,7 +142,7 @@ export default function UpdateProfile(props) {
   useEffect(() => {
     async function getCity() {
       setCityLoading(true);
-      axios.get("http://localhost:4000/admin/getcity").then((resp)=>{
+      axios.get(`${myApi}/admin/getcity`).then((resp)=>{
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
@@ -183,10 +184,10 @@ const onClickHandler = () => {
   if(myFile!==null)
   {
   data.append('file', myFile)
-  axios.post("http://localhost:4000/request/upload", data)
+  axios.post(`${myApi}/request/upload`, data)
     .then(res => { 
       setShowImage(res.data);
-      console.log(`http://localhost:4000/${res.data.filename}`)
+      console.log(`${myApi}/${res.data.filename}`)
     })
   }
   else{
@@ -252,7 +253,7 @@ const onClickHandler = () => {
                         valueCopy.city = values.city!=null?values.city.label:null
                         valueCopy.gender = values.gender!=null?values.gender.label:null
                         valueCopy.image=showImage.filename
-                        axios.post('http://localhost:4000/users/updateuser', valueCopy,
+                        axios.post(`${myApi}/users/updateuser`, valueCopy,
                         ).then((resp) => {
                           console.log(resp);
 
@@ -402,7 +403,7 @@ const onClickHandler = () => {
                                 className={classes.headerAvatar} 
                                 aria-label="recipe"
                                 // src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
-                                src={myFile!==null?URL.createObjectURL(myFile):showImage!==null?`http://localhost:4000/${showImage}`:user.avatar}
+                                src={myFile!==null?URL.createObjectURL(myFile):showImage!==null?`${myApi}/${showImage}`:user.avatar}
                                 onClick={()=>handleClick()}
                                 >
                         </Avatar>    

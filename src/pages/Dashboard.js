@@ -12,7 +12,7 @@ import RequestByCategory from '../components/dashboard/RequestByCategory';
 import Skeleton from '@material-ui/core/Skeleton';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
-
+import { myApi } from 'src/Api';
 
 export default function Dashboard() {
   const [loadingIndicator, setLoadingIndicator] = useState(true);
@@ -20,7 +20,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios('http://localhost:4000/admin/getadmindashboard').then((resp) => {
+      await axios(`${myApi}/admin/getadmindashboard`).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setData(resp.data.response);

@@ -46,6 +46,7 @@ import img11 from '../../assets/images/11.png';
 import img21 from '../../assets/images/21.png';
 import img31 from '../../assets/images/31.png';
 import defaultimg from '../../assets/images/defaultimg.png';
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -164,7 +165,7 @@ export default function WhiteCard(props) {
         {/* <img src={img31} width="100%"/> */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
       {
-         props.item!==""&&props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+         props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="300px" height="250px"/>:
         <img src={defaultimg} width="300px" height="250px"/>
       }
     </div>

@@ -26,6 +26,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import { myApi } from 'src/Api';
 import moment from 'moment';
 const AddReply = (props) => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const AddReply = (props) => {
               // navigate('/app/dashboard', { replace: true });
               console.log("hyy")
               values.c_id=props.showSelectedData._id
-              axios.post('http://localhost:4000/admin/reply', values).then((resp) => {
+              axios.post(`${myApi}/admin/reply`, values).then((resp) => {
                 setSubmitting(false);
                 if (resp.status == 200) {
                   console.log('resp', resp);

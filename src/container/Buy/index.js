@@ -44,7 +44,7 @@ import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
-
+import { myApi } from 'src/Api';
 import 'material-react-toastify/dist/ReactToastify.css';
 
 const drawerWidth = 240;
@@ -125,7 +125,7 @@ export default function BuyProducts() {
                 setSubmitting(true);
                 console.log(values);
 
-                axios.post('http://localhost:4000/users', values,
+                axios.post(`${myApi}/users`, values,
                   // {
                   //   headers: {
                   //     'Access-Control-Allow-Origin': '*',

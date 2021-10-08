@@ -18,6 +18,7 @@ import GoogleIcon from '../icons/Google';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import { myApi } from 'src/Api';
 const Login = () => {
   const navigate = useNavigate();
   const [loading,setLoading]=useState(false);
@@ -49,7 +50,7 @@ const Login = () => {
               setSubmitting(true);
               setLoading(true);
               console.log(values);
-              axios.post('http://localhost:4000/users/login', values).then((resp) => {
+              axios.post(`${myApi}/users/login`, values).then((resp) => {
                 console.log('resp');
 
                 setSubmitting(false);

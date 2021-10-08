@@ -21,7 +21,7 @@ export const mainListItems = (
   <div>
     <List>
       <Tooltip title="Dashboard" placement="top">
-        <Link to="/">
+        <Link to="/" style={{ textDecoration: 'none',color:"#000" }}>
           <ListItem button>
             <ListItemIcon>
 
@@ -34,7 +34,7 @@ export const mainListItems = (
         </Link>
       </Tooltip>
     </List>
-    <Link to="/user/request">
+    <Link to="/user/request" style={{ textDecoration: 'none', color:"#000" }}>
       <Tooltip title="My Request" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -44,7 +44,7 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    <Link to="/user/interest">
+    <Link to="/user/interest" style={{ textDecoration: 'none', color:"#000"}}>
       <Tooltip title="My Interest" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -54,7 +54,7 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    <Link to="/user/complaint">
+    <Link to="/user/complaint" style={{ textDecoration: 'none', color:"#000"}}>
       <Tooltip title="Complaint" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -64,7 +64,7 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    <Link to="/user/search">
+    <Link to="/user/search" style={{ textDecoration: 'none', color:"#000" }}>
       <Tooltip title="Search" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -74,7 +74,7 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    {/* <Link to="/user/viewall">
+    <Link to="/user/viewall" style={{ textDecoration: 'none', color:"#000" }}>
       <Tooltip title="Dashboard" placement="top-end">
         <ListItem button>
           <ListItemIcon>
@@ -83,7 +83,7 @@ export const mainListItems = (
           <ListItemText primary="Search" />
         </ListItem>
       </Tooltip>
-    </Link> */}
+    </Link>
   </div>
 );
 

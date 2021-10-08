@@ -54,7 +54,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import { Redirect, useNavigate } from 'react-router-dom';
-
+import { myApi } from 'src/Api';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
@@ -143,7 +143,7 @@ export default function NewRequest(props) {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const email = sessionStorage.getItem('email');
-      await axios.post('http://localhost:4000/request/history', { email }).then((resp) => {
+      await axios.post(`${myApi}/request/history`, { email }).then((resp) => {
         console.log(resp.data.response);
         setHistoryData(resp.data.response);
         setLoadingIndicator(false);
@@ -202,7 +202,7 @@ export default function NewRequest(props) {
                   valueCopy.email = sessionStorage.getItem('email');
                   valueCopy.username = sessionStorage.getItem('username');
                   console.log(valueCopy);
-                  axios.post('http://localhost:4000/request', valueCopy,
+                  axios.post(`${myApi}/request`, valueCopy,
                     // {
                     //   headers: {
                     //     'Access-Control-Allow-Origin': '*',

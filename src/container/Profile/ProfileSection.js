@@ -304,7 +304,7 @@ const ProfileSection = () => {
                                             */}
                                             <List  onClick={handleToggle}>{mainListItems}</List>
                                             <List component="nav" className={classes.navContainer}>
-                                            <Link to="/user/profile">
+                                            <Link to="/user/profile" style={{ textDecoration: 'none', color:"#000" }}>
                                                 <ListItemButton
                                                     className={classes.listItem}
                                                     // sx={{ borderRadius: `${customization.borderRadius}px` }}

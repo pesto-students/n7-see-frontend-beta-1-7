@@ -25,7 +25,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 import BlockUI from 'react-block-ui';
 import Loader from 'react-loaders';
 import RSelect from '../../components/Select/RSelect';
-
+import { myApi } from 'src/Api';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -124,7 +124,7 @@ export default function Register() {
                               setSubmitting(true);
                               console.log(values);
                               setLoading(true);
-                              axios.post('http://localhost:4000/users', values,
+                              axios.post(`${myApi}/users`, values,
                                 // {
                                 //   headers: {
                                 //     'Access-Control-Allow-Origin': '*',

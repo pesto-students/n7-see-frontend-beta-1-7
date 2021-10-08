@@ -55,6 +55,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
 import UpdateProfile from './updateProfile';
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -142,7 +143,7 @@ export default function Profile() {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const u_id = sessionStorage.getItem('u_id');
-      await axios.get(`http://localhost:4000/users/getmyprofile/${u_id}`).then((resp) => {
+      await axios.get(`${myApi}users/getmyprofile/${u_id}`).then((resp) => {
         console.log(resp.data);
         setMyProfileData(resp.data[0]);
         setLoadingIndicator(false);
@@ -156,7 +157,7 @@ export default function Profile() {
 
     async function getCity() {
       setCityLoading(true);
-      axios.get("http://localhost:4000/admin/getcity").then((resp)=>{
+      axios.get(`${myApi}/admin/getcity`).then((resp)=>{
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
@@ -235,7 +236,7 @@ export default function Profile() {
                     <Card>
                     <CardHeader
                               avatar={(
-                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={myProfileData!==null&&myProfileData.image!==""?`http://localhost:4000/${myProfileData.image}`:user.avatar}
+                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={myProfileData!==null&&myProfileData.image!==""?`${myApi}/${myProfileData.image}`:user.avatar}
                                 title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
                                 subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
                                 >

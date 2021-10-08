@@ -22,6 +22,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import { myApi } from 'src/Api';
 const AddCity = (props) => {
   const navigate = useNavigate();
   return(
@@ -46,7 +47,7 @@ const AddCity = (props) => {
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
               // navigate('/app/dashboard', { replace: true });
-              axios.post('http://localhost:4000/admin/addcity', values).then((resp) => {
+              axios.post(`${myApi}/admin/addcity`, values).then((resp) => {
                 console.log('resp');
 
                 setSubmitting(false);

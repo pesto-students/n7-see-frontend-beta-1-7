@@ -24,6 +24,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import AddCategory from '../../components/master/AddCategory';
+import { myApi } from 'src/Api';
 const CategoryListResults = ({ ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -46,7 +47,7 @@ const CategoryListResults = ({ ...rest }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios.post('http://localhost:4000/admin/getallcategory',{page:page,limit:limit}).then((resp) => {
+      await axios.post(`${myApi}/admin/getallcategory`,{page:page,limit:limit}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.category);
@@ -72,7 +73,7 @@ const CategoryListResults = ({ ...rest }) => {
 
   const deleteCategoryFunc = (values) => {
     
-    axios.get(`http://localhost:4000/admin/deleteCategory/${values}`).then((resp) => {
+    axios.get(`${myApi}/admin/deleteCategory/${values}`).then((resp) => {
       console.log('resp');
       if (resp.status == 200) {
         console.log('resp', resp);

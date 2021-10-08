@@ -18,7 +18,7 @@ const DividerComponentLeft = ({ children, ...props }) => (
     {/* <Grid item xs>
       <MuiDivider />
     </Grid> */}
-    <Grid item onClick={props.viewAllFunc()} style={{
+    <Grid item onClick={()=>props.viewAllFunc()} style={{
       cursor:"pointer",
       fontSize:"12px"
     }}>See All

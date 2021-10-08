@@ -27,6 +27,7 @@ import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
+import { myApi } from 'src/Api';
 const AddView = (props) => {
   const navigate = useNavigate();
   const u_id = sessionStorage.getItem('u_id');
@@ -56,7 +57,7 @@ const AddView = (props) => {
               values.from=u_id;
               values.email=email;
               values.name=username;
-              axios.post('http://localhost:4000/complaint', values).then((resp) => {
+              axios.post(`${myApi}/complaint`, values).then((resp) => {
                 setSubmitting(false);
                 if (resp.status == 200) {
                   console.log('resp', resp);

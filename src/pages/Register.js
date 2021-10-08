@@ -3,7 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-
+import { myApi } from 'src/Api';
 import {
   Box,
   Button,
@@ -57,7 +57,7 @@ const Register = () => {
             setSubmitting(true);
             console.log(values);
             setLoading(true);
-            axios.post('http://localhost:4000/users', values,
+            axios.post(`${myApi}/users`, values,
               // {
               //   headers: {
               //     'Access-Control-Allow-Origin': '*',

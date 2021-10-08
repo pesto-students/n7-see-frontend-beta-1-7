@@ -56,6 +56,7 @@ import Pagination from '@material-ui/core/Pagination';
 import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import { myApi } from 'src/Api';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -165,7 +166,7 @@ export default function ViewAll() {
   const fetchData = async () => {
     setLoadingIndicator(true);
     const u_id = sessionStorage.getItem('u_id');
-    await axios.post('http://localhost:4000/request/search',{page:page,limit:limit,search:searchData}).then((resp) => {
+    await axios.post(`${myApi}/request/search`,{page:page,limit:limit,search:searchData}).then((resp) => {
       console.log(resp);
       setLoadingIndicator(false);
       setNewData(resp.data.response.result);

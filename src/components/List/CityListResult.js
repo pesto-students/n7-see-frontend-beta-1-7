@@ -24,6 +24,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import AddCity from '../../components/master/AddCity';
+import { myApi } from 'src/Api';
 const CityListResults = ({ ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -46,7 +47,7 @@ const CityListResults = ({ ...rest }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoadingIndicator(true);
-      await axios.post('http://localhost:4000/admin/getallcity',{page:page,limit:limit}).then((resp) => {
+      await axios.post(`${myApi}/admin/getallcity`,{page:page,limit:limit}).then((resp) => {
         console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.city);
@@ -67,7 +68,7 @@ const CityListResults = ({ ...rest }) => {
 
   const deleteCityFunc = (values) => {
     
-    axios.get(`http://localhost:4000/admin/deleteCity/${values}`).then((resp) => {
+    axios.get(`${myApi}/admin/deleteCity/${values}`).then((resp) => {
       console.log('resp');
       if (resp.status == 200) {
         console.log('resp', resp);

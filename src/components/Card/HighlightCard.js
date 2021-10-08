@@ -21,6 +21,7 @@ import Chat from '@material-ui/icons/Chat';
 import { Redirect, useNavigate } from 'react-router-dom';
 import img2 from '../../assets/images/img2.png';
 import defaultimg from '../../assets/images/defaultimg.png';
+import { myApi } from 'src/Api';
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 320,
@@ -82,12 +83,12 @@ export default function HighlightCard(props) {
       />
       <CardMedia
         className={classes.media}
-        image={ props.item!==""&&props.item.image.length>0?`http://localhost:4000/${props.item.image[0].filename}`:img2}
+        image={ props.item!==""&&props.item.image.length>0?`${myApi}/${props.item.image[0].filename}`:img2}
         title="Paella dish"
       />
 
 {/* {
-        props.item.image.length>0? <img src={`http://localhost:4000/${props.item.image[0].filename}`} width="400px" height="300px"/>:
+        props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="400px" height="300px"/>:
         <img src={defaultimg} width="400px" height="300px"/>
       } */}
       {/* <CardContent>
