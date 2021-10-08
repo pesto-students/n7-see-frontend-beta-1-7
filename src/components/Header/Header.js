@@ -133,11 +133,7 @@ const Header = (props) => {
               <IconSearch stroke={1.5} size="1rem" className={classes.startAdornment} />
               </Link>
             </IconButton>
-            <IconButton>
-           <Link to="/user/interest" >
-           <IconHeart stroke={1.5} size="1.3rem" className={classes.startAdornment} />
-              </Link>
-            </IconButton>
+          
         {
         u_id === null ? (
           <Link to="/login" style={{
@@ -150,6 +146,11 @@ const Header = (props) => {
           </Link>
         ) : (
           <>
+            <IconButton>
+           <Link to="/user/interest" >
+           <IconHeart stroke={1.5} size="1.3rem" className={classes.startAdornment} />
+              </Link>
+            </IconButton>
           <div className={classes.toolbarIcon}>
           <ProfileSection/>
           {/* <Link to="/user/profile">
