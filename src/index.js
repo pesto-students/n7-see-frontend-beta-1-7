@@ -12,6 +12,12 @@ import App from './App';
 ReactDOM.render(
   (
     // <React.StrictMode>
+    // "scripts": {
+    //   "start": "react-scripts start",
+    //   "build": "react-scripts build",
+    //   "test": "react-scripts test",
+    //   "eject": "react-scripts eject"
+    // },
     <BrowserRouter>
       <Provider store={store}>
         <CssBaseline />
