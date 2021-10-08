@@ -32,7 +32,7 @@ export default function RequestList() {
     <>
 
 <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>Dashboard | Serve End</title>
     </Helmet>
     <Box
       sx={{

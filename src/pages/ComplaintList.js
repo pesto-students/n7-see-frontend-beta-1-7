@@ -14,7 +14,7 @@ export default function ComplaintList() {
     <>
 
 <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>Dashboard | Serve End</title>
     </Helmet>
     <Box
       sx={{

@@ -37,7 +37,7 @@ export default function Dashboard() {
     <>
 
 <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>Dashboard | Serve End</title>
     </Helmet>
     <Box
       sx={{
