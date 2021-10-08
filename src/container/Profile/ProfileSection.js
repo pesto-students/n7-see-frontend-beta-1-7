@@ -128,7 +128,7 @@ const ProfileSection = () => {
     const u_id = sessionStorage.getItem('u_id');
     const username = sessionStorage.getItem('username');
     const navigate = useNavigate();
-    console.log(open);
+    //console.log(open);
     const logout = () => {
       sessionStorage.removeItem('u_id');
       sessionStorage.clear();
@@ -136,7 +136,7 @@ const ProfileSection = () => {
     };
 
     const handleLogout = async () => {
-        console.error('Logout');
+        //console.error('Logout');
     };
 
     const handleToggle = () => {

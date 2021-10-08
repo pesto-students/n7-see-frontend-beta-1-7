@@ -7,7 +7,8 @@ import {
   Box,
   Hidden,
   IconButton,
-  Toolbar
+  Toolbar,
+  Typography
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Logout} from '@material-ui/icons';
@@ -30,8 +31,19 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
       style={{backgroundColor:"#0b0808"}}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
+        <RouterLink to="/app/dashboard">
+        {/* <Logo /> */}
+        <Typography component="h1" variant="h6" color="inherit" noWrap>
+          <div style={{
+            color:"#FF8367",
+            fontSize:"24px",
+            fontFamily:"AssistantRegular"
+          }}
+            >
+          Serve End
+          </div>
+          </Typography>
+          
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden xlDown>

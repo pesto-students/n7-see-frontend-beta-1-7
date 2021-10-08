@@ -48,24 +48,28 @@ const AddReply = (props) => {
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
               // navigate('/app/dashboard', { replace: true });
-              console.log("hyy")
+              props.setLoadingIndicator(true)
+              // console.log("hyy")
               values.c_id=props.showSelectedData._id
               axios.post(`${myApi}/admin/reply`, values).then((resp) => {
                 setSubmitting(false);
                 if (resp.status == 200) {
-                  console.log('resp', resp);
+                  //console.log('resp', resp);
                   toast.success(resp.data.message, { autoClose: 3000, });
                   resetForm();
+                  props.setLoadingIndicator(false)
                   props.setShowReplyComponent(false)
                   props.setReRender(true);
                   // history.push('/');
                   // navigate('/app/dashboard', { replace: true });
                 } else {
                   toast.error(resp.data.message, { autoClose: 3000, });
-                  console.log(resp);
+                  //console.log(resp);
+                  props.setLoadingIndicator(false)
                 }
               }).catch((e) => {
                 toast.error('Failed to login', { autoClose: 3000, });
+                props.setLoadingIndicator(false)
               });
              
             }}

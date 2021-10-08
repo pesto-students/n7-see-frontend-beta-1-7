@@ -13,7 +13,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import {
   Delete,
@@ -48,7 +49,7 @@ const CityListResults = ({ ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallcity`,{page:page,limit:limit}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.city);
         setTotalCount(resp.data.response.count)
@@ -67,32 +68,36 @@ const CityListResults = ({ ...rest }) => {
   }, [rerender]);
 
   const deleteCityFunc = (values) => {
-    
+    setLoadingIndicator(true);
     axios.get(`${myApi}/admin/deleteCity/${values}`).then((resp) => {
-      console.log('resp');
+      //console.log('resp');
       if (resp.status == 200) {
-        console.log('resp', resp);
+        //console.log('resp', resp);
         toast.success(resp.data.message, { autoClose: 3000, });
         setReRender(true)
+        setLoadingIndicator(false);
         // history.push('/');
         // navigate('/app/dashboard', { replace: true });
       } else {
         toast.error(resp.data.message, { autoClose: 3000, });
-        console.log(resp);
+        //console.log(resp);
+        setLoadingIndicator(false);
       }
     }).catch((e) => {
       toast.error('Failed..!!', { autoClose: 3000, });
+      setLoadingIndicator(false);
     });
   };
   
 
   return (
     <>
-    <AddCity setReRender={setReRender}/>
+    <AddCity setReRender={setReRender} setLoadingIndicator={setLoadingIndicator}/>
     <Box sx={{ pt: 3 }}>
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loadingIndicator?
           <Table>
             <TableHead>
               <TableRow>
@@ -185,7 +190,9 @@ const CityListResults = ({ ...rest }) => {
               ))}
             </TableBody>
           </Table>
-        </Box>
+      :<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      }
+     </Box>
       </PerfectScrollbar>
       <TablePagination
         component="div"

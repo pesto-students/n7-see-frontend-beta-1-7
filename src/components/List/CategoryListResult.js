@@ -13,7 +13,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import {
@@ -48,7 +49,7 @@ const CategoryListResults = ({ ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallcategory`,{page:page,limit:limit}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.category);
         setTotalCount(resp.data.response.count)
@@ -72,31 +73,34 @@ const CategoryListResults = ({ ...rest }) => {
 
 
   const deleteCategoryFunc = (values) => {
-    
+    setLoadingIndicator(true);
     axios.get(`${myApi}/admin/deleteCategory/${values}`).then((resp) => {
-      console.log('resp');
+      //console.log('resp');
       if (resp.status == 200) {
-        console.log('resp', resp);
+        //console.log('resp', resp);
         toast.success(resp.data.message, { autoClose: 3000, });
         setReRender(true)
         // history.push('/');
         // navigate('/app/dashboard', { replace: true });
       } else {
         toast.error(resp.data.message, { autoClose: 3000, });
-        console.log(resp);
+        //console.log(resp);
       }
+      setLoadingIndicator(false);
     }).catch((e) => {
       toast.error('Failed..!!', { autoClose: 3000, });
+      setLoadingIndicator(false);
     });
   };
 
   return (
     <>
-    <AddCategory setReRender={setReRender} />
+    <AddCategory setReRender={setReRender} setLoadingIndicator={setLoadingIndicator} />
     <Box sx={{ pt: 3 }}>
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loadingIndicator?
           <Table>
             <TableHead>
               <TableRow>
@@ -155,6 +159,8 @@ const CategoryListResults = ({ ...rest }) => {
               )):""}
             </TableBody>
           </Table>
+         :<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+        }
         </Box>
       </PerfectScrollbar>
       <TablePagination

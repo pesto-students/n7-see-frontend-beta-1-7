@@ -16,7 +16,7 @@ export default function RequestList() {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallrequest`,{page:1,limit:10}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setData(resp.data.response);
       }).catch((e) => {

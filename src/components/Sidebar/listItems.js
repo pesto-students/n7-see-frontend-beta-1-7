@@ -74,16 +74,16 @@ export const mainListItems = (
         </ListItem>
       </Tooltip>
     </Link>
-    <Link to="/user/viewall" style={{ textDecoration: 'none', color:"#000" }}>
+    {/* <Link to="/user/viewall" style={{ textDecoration: 'none', color:"#000" }}>
       <Tooltip title="Dashboard" placement="top-end">
         <ListItem button>
           <ListItemIcon>
             <IconFilter stroke={1.5} size="1.3rem" />
           </ListItemIcon>
-          <ListItemText primary="Search" />
+          <ListItemText primary="View All" />
         </ListItem>
       </Tooltip>
-    </Link>
+    </Link> */}
   </div>
 );
 

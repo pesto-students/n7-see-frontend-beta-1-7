@@ -172,7 +172,7 @@ export default function Dashboard(props) {
     setOpen(true);
   };
   const handleDrawerClose = () => {
-    console.log('hyy');
+    //console.log('hyy');
     setOpen(false);
   };
   const handleToggleDrawer = () => {

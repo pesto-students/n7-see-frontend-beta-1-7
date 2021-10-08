@@ -46,24 +46,28 @@ const AddCity = (props) => {
               longitude: Yup.string().max(255).required('Longitude is required')
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
+              props.setLoadingIndicator(true)
               // navigate('/app/dashboard', { replace: true });
               axios.post(`${myApi}/admin/addcity`, values).then((resp) => {
-                console.log('resp');
+                //console.log('resp');
 
                 setSubmitting(false);
                 if (resp.status == 200) {
-                  console.log('resp', resp);
+                  //console.log('resp', resp);
                   toast.success(resp.data.message, { autoClose: 3000, });
                   resetForm();
+                  props.setLoadingIndicator(false)
                   props.setReRender(true);
                   // history.push('/');
                   // navigate('/app/dashboard', { replace: true });
                 } else {
                   toast.error(resp.data.message, { autoClose: 3000, });
-                  console.log(resp);
+                  //console.log(resp);
+                  props.setLoadingIndicator(false)
                 }
               }).catch((e) => {
                 toast.error('Failed to login', { autoClose: 3000, });
+                props.setLoadingIndicator(false)
               });
             }}
           >

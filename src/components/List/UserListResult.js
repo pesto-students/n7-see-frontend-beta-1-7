@@ -17,6 +17,7 @@ import {
   TableRow,
   Typography,
   ButtonGroup,
+  CircularProgress,
   Button,
   Chip
 } from '@material-ui/core';
@@ -49,7 +50,7 @@ const UserListResults = ({ ...rest }) => {
   };
 
   const handlePageChange = (event, newPage) => {
-    console.log(newPage)
+    //console.log(newPage)
     setPage(newPage+1);
     setRerender(true)
   };
@@ -59,7 +60,7 @@ const UserListResults = ({ ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallusers`,{page:page,limit:limit}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.users);
         setTotalCount(resp.data.response.count)
@@ -80,20 +81,23 @@ const UserListResults = ({ ...rest }) => {
 
 
   const manageUserFunc = (status,user_id) => {
+    setLoadingIndicator(true);
     axios.post(`${myApi}/admin/manageUser`, {status:status,user_id:user_id}).then((resp) => {
-      console.log('resp');
+      //console.log('resp');
       if (resp.status == 200) {
-        console.log('resp', resp);
+        //console.log('resp', resp);
         toast.success(resp.data.message, { autoClose: 3000, });
         setRerender(true)
         // history.push('/');
         // navigate('/app/users', { replace: true });
       } else {
         toast.error(resp.data.message, { autoClose: 3000, });
-        console.log(resp);
+        //console.log(resp);
       }
+      setLoadingIndicator(false);
     }).catch((e) => {
       toast.error('Failed to login', { autoClose: 3000, });
+      setLoadingIndicator(false);
     });
   };
   
@@ -102,7 +106,7 @@ const UserListResults = ({ ...rest }) => {
   //   const fetchData = async () => {
   //     setLoadingIndicator(true);
   //     await axios.post('${myApi}/admin/getallusers',{page:page,limit:limit}).then((resp) => {
-  //       console.log(resp);
+  //       //console.log(resp);
   //       setLoadingIndicator(false);
   //       setNewData(resp.data.response.users);
   //       setTotalCount(resp.data.response.count)
@@ -125,6 +129,7 @@ const UserListResults = ({ ...rest }) => {
               <Divider/>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loadingIndicator?
           <Table>
             <TableHead>
               <TableRow>
@@ -169,6 +174,7 @@ const UserListResults = ({ ...rest }) => {
                 </TableCell>
               </TableRow>
             </TableHead>
+           
             <TableBody>
               {newData.slice(0, limit).map((user,i) => (
                 <TableRow
@@ -238,7 +244,10 @@ const UserListResults = ({ ...rest }) => {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
+         
+         </Table>
+         :<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+        }
         </Box>
       </PerfectScrollbar>
       <TablePagination

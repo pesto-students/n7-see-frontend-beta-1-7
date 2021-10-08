@@ -42,24 +42,28 @@ const AddCategory = (props) => {
               category: Yup.string().max(255).required('Category is required')
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
+              props.setLoadingIndicator(true)
               // navigate('/app/dashboard', { replace: true });
               axios.post(`${myApi}/admin/addcategory`, values).then((resp) => {
-                console.log('resp');
+                //console.log('resp');
 
                 setSubmitting(false);
                 if (resp.status == 200) {
-                  console.log('resp', resp);
+                  //console.log('resp', resp);
                   toast.success(resp.data.message, { autoClose: 3000, });
                   resetForm();
+                  props.setLoadingIndicator(false)
                   props.setReRender(true)
                   // history.push('/');
                   // navigate('/app/dashboard', { replace: true });
                 } else {
                   toast.error(resp.data.message, { autoClose: 3000, });
-                  console.log(resp);
+                  props.setLoadingIndicator(false)
+                  //console.log(resp);
                 }
               }).catch((e) => {
                 toast.error('Failed to login', { autoClose: 3000, });
+                props.setLoadingIndicator(false)
               });
             }}
           >

@@ -58,7 +58,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-            <TotalUser data={data!=null?data.totalUser:""}/>
+            {data!=null?<TotalUser data={data.totalUser}/>:<Skeleton variant="rectangular" width={300} height={118} />}
           </Grid>
           <Grid
             item
@@ -67,7 +67,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-            <TotalRequest data={data!=null?data.totalRequest:""}/>
+            {data!=null?<TotalRequest data={data.totalRequest}/>:<Skeleton variant="rectangular" width={300} height={118} />}
           </Grid>
           <Grid
             item
@@ -76,7 +76,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-             <PendingRequest sx={{ height: '100%' }} data={data!=null?data.requestPending:""}/>  
+             {data!=null?<PendingRequest sx={{ height: '100%' }} data={data.requestPending}/> :<Skeleton variant="rectangular" width={300} height={118} />}
           </Grid>
           <Grid
             item
@@ -85,7 +85,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-            <RequestApproved data={data!=null?data.requestApproved:""}/>
+            {data!=null?<RequestApproved data={data!=null?data.requestApproved:""}/>:<Skeleton variant="rectangular" width={300} height={118} />}
           </Grid>
           <Grid
             item
@@ -94,7 +94,7 @@ export default function Dashboard() {
             xl={9}
             xs={12}
           >
-            <UserRequest data={data}/>
+           {data!=null? <UserRequest data={data}/>:<Skeleton animation="wave" width={900} height="300px"/>}
           </Grid>
           <Grid
             item
@@ -103,7 +103,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-            {data!=null&&data.topCategory.length>0?<RequestByCategory sx={{ height: '100%' }} data={data.topCategory} total={data.totalRequest} />:<Skeleton animation="wave"/>}
+            {data!=null&&data.topCategory.length>0?<RequestByCategory sx={{ height: '100%' }} data={data.topCategory} total={data.totalRequest} />:<Skeleton animation="wave" width={300} height="100%"/>}
           </Grid>
           <Grid
             item
@@ -112,7 +112,7 @@ export default function Dashboard() {
             xl={3}
             xs={12}
           >
-            {data!=null?<LatestCategory sx={{ height: '100%' }} data={data.latestCategory}/>:<Skeleton animation="wave"/>}
+            {data!=null?<LatestCategory sx={{ height: '100%' }} data={data.latestCategory}/>:<Skeleton animation="wave" width={300} height={300}/>}
           </Grid>
           <Grid
             item
@@ -121,7 +121,7 @@ export default function Dashboard() {
             xl={9}
             xs={12}
           >
-            <LatestRequest data={data!=null?data.latestRequest:[]}/>
+            {data!=null?<LatestRequest data={data!=null?data.latestRequest:[]}/>:<Skeleton animation="wave" width={300} height={300}/>}
           </Grid>
         </Grid>
       </Container>

@@ -18,7 +18,8 @@ import {
   Typography,
   ButtonGroup,
   Button,
-  Chip
+  Chip,
+  CircularProgress
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
@@ -27,7 +28,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 import defaultimg from '../../assets/images/defaultimg.png';
 import { myApi } from 'src/Api';
 const RequestListResults = ({ data, ...rest }) => {
-  console.log(data);
+  //console.log(data);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -50,7 +51,7 @@ const RequestListResults = ({ data, ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallrequest`,{page:page,limit:limit}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.request);
         setTotalCount(resp.data.response.count)
@@ -72,20 +73,23 @@ const RequestListResults = ({ data, ...rest }) => {
 
 
   const manageRequestFunc = (status,request_id) => {
+    setLoadingIndicator(true);
     axios.post(`${myApi}/admin/manageRequest`, {status:status,request_id:request_id}).then((resp) => {
-      console.log('resp');
+      //console.log('resp');
       if (resp.status == 200) {
-        console.log('resp', resp);
+        //console.log('resp', resp);
         toast.success(resp.data.message, { autoClose: 3000, });
         setRerender(true)
         // history.push('/');
         // navigate('/app/users', { replace: true });
       } else {
         toast.error(resp.data.message, { autoClose: 3000, });
-        console.log(resp);
+        //console.log(resp);
       }
+      setLoadingIndicator(false);
     }).catch((e) => {
       toast.error('Failed to login', { autoClose: 3000, });
+      setLoadingIndicator(false);
     });
   };
 
@@ -97,6 +101,7 @@ const RequestListResults = ({ data, ...rest }) => {
               <Divider/>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loadingIndicator?
           <Table>
             <TableHead>
               <TableRow>
@@ -201,6 +206,8 @@ const RequestListResults = ({ data, ...rest }) => {
               ))}
             </TableBody>
           </Table>
+         :<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+        }
         </Box>
       </PerfectScrollbar>
       <TablePagination

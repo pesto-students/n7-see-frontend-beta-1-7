@@ -182,7 +182,7 @@ export default function Home() {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       await axios(`${myApi}/request/getHomeRequest`).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setData(resp.data.response);
         // setDataByCategory(resp,data.response.highlightedlisting);
         setBanner(resp.data.response.banner);
@@ -219,7 +219,7 @@ export default function Home() {
   }, []);
 
   const fetchDataByCategory = async (selectedCategory) => {
-    console.log(selectedCategory);
+    //console.log(selectedCategory);
     // setLoadingIndicator(true);
     await axios.get(`${myApi}/request/getRequestByCategory/${selectedCategory}`).then((resp) => {
       // console.log(resp);
@@ -241,7 +241,7 @@ export default function Home() {
     setLoadingIndicator(true);
     const u_id = sessionStorage.getItem('u_id');
     await axios.post(`${myApi}/request/search`,{page:page,limit:limit,search:searchData}).then((resp) => {
-      console.log(resp);
+      //console.log(resp);
      
       setNewData(resp.data.response.result);
       setTotalCount(resp.data.response.count)
@@ -291,7 +291,7 @@ export default function Home() {
   }
   
   const viewAllFunc=()=>{
-    console.log("helodddd");
+    //console.log("helodddd");
   }
   return (
     <>

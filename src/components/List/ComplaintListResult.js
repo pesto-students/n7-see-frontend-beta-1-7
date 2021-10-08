@@ -15,7 +15,8 @@ import {
   TableRow,
   Typography,
   CardHeader,
-  Divider
+  Divider,
+  CircularProgress
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
@@ -52,7 +53,7 @@ const CustomerListResults = ({ ...rest }) => {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios.post(`${myApi}/admin/getallcomplaints`,{page:page,limit:limit}).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.complaints);
         setTotalCount(resp.data.response.count)
@@ -79,7 +80,7 @@ const CustomerListResults = ({ ...rest }) => {
   return (
     <>
    { showReplyComponent&&
-   <AddReply setReRender={setReRender} setShowReplyComponent={setShowReplyComponent} showSelectedData={showSelectedData}/>
+   <AddReply setReRender={setReRender} setLoadingIndicator={setLoadingIndicator} setShowReplyComponent={setShowReplyComponent} showSelectedData={showSelectedData}/>
    }
     
     <br/>
@@ -90,6 +91,7 @@ const CustomerListResults = ({ ...rest }) => {
               <Divider/>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
+        {!loadingIndicator?
           <Table>
             <TableHead>
               <TableRow>
@@ -188,7 +190,9 @@ const CustomerListResults = ({ ...rest }) => {
               ))}
             </TableBody>
           </Table>
-        </Box>
+         :<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+        }
+       </Box>
       </PerfectScrollbar>
       <TablePagination
         component="div"
