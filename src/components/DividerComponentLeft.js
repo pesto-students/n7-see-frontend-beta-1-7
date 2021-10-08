@@ -21,7 +21,8 @@ const DividerComponentLeft = ({ children, ...props }) => (
     <Grid item onClick={()=>props.viewAllFunc()} style={{
       cursor:"pointer",
       fontSize:"12px"
-    }}>See All
+    }}>
+      {/* See All */}
      <IconButton aria-label="add to favorites">
               <ArrowForwardOutlined />
             </IconButton>

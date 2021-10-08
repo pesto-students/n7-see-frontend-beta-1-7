@@ -383,7 +383,7 @@ export default function Home() {
               </List>
              
               <Typography>
-              See all
+              {/* See all */}
             <IconButton aria-label="add to favorites">
               <ArrowForwardOutlined />
             </IconButton>
