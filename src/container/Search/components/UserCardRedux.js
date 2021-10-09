@@ -1,5 +1,9 @@
-import React,{ Fragment,useState,useEffect,useRef} from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, {
+  Fragment, useState, useEffect, useRef
+} from 'react';
+import {
+  Formik, Field, Form, ErrorMessage
+} from 'formik';
 import * as Yup from 'yup';
 import {
   Container,
@@ -21,7 +25,6 @@ import {
   Dialog,
   DialogActions,
   Card,
-  makeStyles,
   Avatar,
   Checkbox,
   withTheme,
@@ -30,59 +33,56 @@ import {
   CardActionArea,
   CardActions,
   CardHeader,
-  Collapse 
+  Collapse
 } from '@material-ui/core';
-import avatarimg from '../../../assets/images/chil.png';
+import makeStyles from '@material-ui/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useSelector,useDispatch } from 'react-redux';
-import {fetchData} from '../../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import avatarimg from '../../../assets/images/chil.png';
+import { fetchData } from '../../../redux/actions';
 import UserCard from './UserCard';
+
 export default function UserCardRedux() {
-
   const dispatch = useDispatch();
-  let user = useSelector(state=>state.fetchDataReducer.user);
-  let loading = useSelector(state=>state.fetchDataReducer.loading);
-  console.log("user",user);
+  const user = useSelector((state) => state.fetchDataReducer.user);
+  const loading = useSelector((state) => state.fetchDataReducer.loading);
+  //console.log('user', user);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchData());
-  },[])
-  
-  return (<Fragment>
-           <Grid
-          container
-          spacing={2}
-          direction="row"
-          alignItems="center"
+  }, []);
+
+  return (
+    <>
+      <Grid
+        container
+        spacing={2}
+        direction="row"
+        alignItems="center"
         //   justifyContent="center"
-          style={{ minHeight: '100vh'}}
-          item
-          md={12}
-        >
-  
-           {
-              user!==undefined&&user.length>0?user.map((newuser,i)=>{
-                return <Grid 
-                            container
-                            item xs={2} 
-                            key={i}  
-                            direction="column"
-                            alignItems="center"
-                            justifyContent="center"
-                            >
-                            <UserCard data={newuser}/>
-                        </Grid>
-              }):"No User"
+        style={{ minHeight: '100vh' }}
+        item
+        md={12}
+      >
+
+        {
+              user !== undefined && user.length > 0 ? user.map((newuser, i) => (
+                <Grid
+                  container
+                  item
+                  xs={2}
+                  key={i}
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <UserCard data={newuser} />
+                </Grid>
+              )) : 'No User'
            }
 
-
-        
-      
-            
-          </Grid>
-  </Fragment>);
+      </Grid>
+    </>
+  );
 }
-
-
-

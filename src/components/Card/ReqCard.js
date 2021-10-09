@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -9,26 +9,29 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import avatarimg from '../../assets/images/avatar.jpg';
 import {
-    Box,
-    Button,
-    Card,
-    Chip,
-    CardHeader,
-    Divider,
-    IconButton,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText
-  } from '@material-ui/core';
-import { IconAdjustmentsHorizontal, IconSearch, IconX,IconBrandHipchat } from '@tabler/icons';
+  Box,
+  Button,
+  Card,
+  Chip,
+  CardHeader,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText
+} from '@material-ui/core';
+import {
+  IconAdjustmentsHorizontal, IconSearch, IconX, IconBrandHipchat
+} from '@tabler/icons';
+import avatarimg from '../../assets/images/avatar.jpg';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    maxWidth:'100%',
-    marginTop:"10px",
+    maxWidth: '100%',
+    marginTop: '10px',
     // border:"1px solid #000"
   },
   details: {
@@ -47,25 +50,25 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
-  action:{
-      alignItems:'flex-end'
+  action: {
+    alignItems: 'flex-end'
   },
-  chat:{
+  chat: {
     backgroundColor: '#343287',
   },
-  item:{
-    fontSize:"8px",
-    paddingLeft:"10px"
+  item: {
+    fontSize: '8px',
+    paddingLeft: '10px'
   },
-  primaryText:{
-      fontSize:"10px"
+  primaryText: {
+    fontSize: '10px'
   },
-  secondaryText:{
-    fontSize:"14px"
+  secondaryText: {
+    fontSize: '14px'
   },
-  amtText:{
-    fontSize:"14px",
-    padding:"10px"
+  amtText: {
+    fontSize: '14px',
+    padding: '10px'
   }
 }));
 
@@ -76,36 +79,39 @@ export default function ReqCard(props) {
   return (
 
     <List>
-    <Card className={classes.root}>
-    <ListItem>
-         <Avatar alt="Remy Sharp" src={avatarimg}/>
-        <ListItemText
-          primary={
-            <Typography color="textSecondary" variant="body1" className={classes.primaryText}>
-            {props.historydata.productname}
+      <Card className={classes.root}>
+        <ListItem>
+          <Avatar alt="Remy Sharp" src={avatarimg} />
+          <ListItemText
+            primary={(
+              <Typography color="textSecondary" variant="body1" className={classes.primaryText}>
+                {props.historydata.productname}
+              </Typography>
+          )}
+            secondary={(
+              <Typography variant="body1" className={classes.secondaryText}>
+                {props.historydata.description}
+              </Typography>
+          )}
+            className={classes.item}
+          />
+          <Typography className={classes.amtText}>
+            Rs.
+            {props.historydata.cost}
           </Typography>
-          }
-          secondary={
-            <Typography variant="body1" className={classes.secondaryText}>
-              {props.historydata.description}
-          </Typography>
-          }
-          className={classes.item}
-        />
-          <Typography className={classes.amtText}>Rs. {props.historydata.cost}</Typography>
           <Avatar className={classes.chat}>
-          <IconBrandHipchat stroke={1.5} size="1.3rem" />
-                    </Avatar>
-        <IconButton
-          edge="end"
-          size="small"
-        >
-          <MoreVertIcon />
-        </IconButton>
+            <IconBrandHipchat stroke={1.5} size="1.3rem" />
+          </Avatar>
+          <IconButton
+            edge="end"
+            size="small"
+          >
+            <MoreVertIcon />
+          </IconButton>
 
-      </ListItem>
-    </Card>
-    {/* <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-disqus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fd0061" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        </ListItem>
+      </Card>
+      {/* <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-disqus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fd0061" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
   <path d="M11.847 21c-2.259 0 -4.323 -.667 -5.919 -2h-3.928l1.708 -3.266c-.545 -1.174 -.759 -2.446 -.758 -3.734c0 -4.97 3.84 -9 8.898 -9c5.052 0 9.152 4.03 9.152 9c0 4.972 -4.098 9 -9.153 9z" />
   <path d="M11.485 15h-1.485v-6h1.485c2.112 0 3.515 .823 3.515 2.981v.035c0 2.18 -1.403 2.984 -3.515 2.984z" />
@@ -117,7 +123,7 @@ export default function ReqCard(props) {
             <Avatar alt="Remy Sharp" src={avatarimg}/>
         }
         action={
-            
+
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
@@ -125,8 +131,8 @@ export default function ReqCard(props) {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       /> */}
-       
-        {/* <CardContent className={classes.content}>
+
+      {/* <CardContent className={classes.content}>
             <Grid container direction="row" justify="flex-start" alignItems="center">
                 <Grid item xs={12} md={2} lg={2}>
                 <Avatar alt="Remy Sharp" src={avatarimg}/>
@@ -147,15 +153,14 @@ export default function ReqCard(props) {
                     <MoreVertIcon />
                 </IconButton>
                 </Grid>
-            
+
             </Grid>
 
         </CardContent>
       */}
-     {/* </div> */}
-    {/* </Card> */}
-  </List>
+      {/* </div> */}
+      {/* </Card> */}
+    </List>
 
-   
   );
 }

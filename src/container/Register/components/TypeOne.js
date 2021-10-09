@@ -1,5 +1,9 @@
-import React, { Fragment,useState,useEffect,useRef} from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, {
+  Fragment, useState, useEffect, useRef
+} from 'react';
+import {
+  Formik, Field, Form, ErrorMessage
+} from 'formik';
 import * as Yup from 'yup';
 import {
   Container,
@@ -20,7 +24,6 @@ import {
 } from '@material-ui/core';
 // import { TextField, Checkbox, Radio, Select } from 'final-form-material-ui';
 function TypeOne() {
-
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -44,37 +47,35 @@ function TypeOne() {
   //   return errors;
   // };
 
-
   // function to handle modal open
 
-  const setValue=(type,value)=>{
-    switch(type) {
-      case "firstName":
+  const setValue = (type, value) => {
+    switch (type) {
+      case 'firstName':
         setFirstName(value);
         break;
-      case "lastName":
+      case 'lastName':
         setLastName(value);
         break;
-      case "email":
+      case 'email':
         setEmail(value);
         break;
-      case "password":
+      case 'password':
         setPassword(value);
         break;
       default:
         // code block
     }
-
-  }
-  const handleSubmit = e => {
+  };
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
+    // console.log(firstName, lastName, email, password);
   };
   return (
-      <div>
-        <Container maxWidth="lg" className="App">
-         
-          {/* <Formik  
+    <div>
+      <Container maxWidth="lg" className="App">
+
+        {/* <Formik
            initialValues={{ employed: true, stooge: 'larry' }}
            validationSchema={validate}
            onSubmit={onSubmit}
@@ -90,62 +91,58 @@ function TypeOne() {
           setFieldTouched,
         }) => ( */}
 
-             <Paper>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Create React App + Material-UI
-            </Typography>
-            <form>
-            <TextField 
-                label="First Name"
-                variant="filled" 
-                required 
-                value={firstName}
-                onChange={e => setValue("firstName",e.target.value)}
-                />
+        <Paper>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Create React App + Material-UI
+          </Typography>
+          <form>
             <TextField
-               label="Last Name" 
-               variant="filled" 
-               required 
-               onChange={e => setValue("lastName",e.target.value)}/>
-            <TextField 
-                label="Email" 
-                variant="filled" 
-                type="email"
-                required 
-                onChange={e => setValue("email",e.target.value)}/>
-            <TextField 
-                label="Password" 
-                variant="filled" 
-                type="password" 
-                required 
-                onChange={e => setValue("password",e.target.value)}/>
+              label="First Name"
+              variant="filled"
+              required
+              value={firstName}
+              onChange={(e) => setValue('firstName', e.target.value)}
+            />
+            <TextField
+              label="Last Name"
+              variant="filled"
+              required
+              onChange={(e) => setValue('lastName', e.target.value)}
+            />
+            <TextField
+              label="Email"
+              variant="filled"
+              type="email"
+              required
+              onChange={(e) => setValue('email', e.target.value)}
+            />
+            <TextField
+              label="Password"
+              variant="filled"
+              type="password"
+              required
+              onChange={(e) => setValue('password', e.target.value)}
+            />
             <div>
-            <Button variant="contained">
-              Cancel
-            </Button>
-            <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
-              Signup
-            </Button>
-          </div>
+              <Button variant="contained">
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+                Signup
+              </Button>
+            </div>
 
-           </form>
+          </form>
 
-            
-           
-            </Paper>
-
+        </Paper>
 
         {/* // )}
         // </Formik> */}
-    
 
-          
-        </Container>
-        
-      </div>
+      </Container>
+
+    </div>
   );
-
 }
 
 export default TypeOne;
-

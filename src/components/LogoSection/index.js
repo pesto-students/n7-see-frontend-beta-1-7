@@ -11,10 +11,10 @@ import Logo from '../ui-component/Logo';
 // ===========================|| MAIN LOGO ||=========================== //
 
 const LogoSection = () => (
-    <Logo />
-    // <ButtonBase disableRipple component={Link} to={config.defaultPath}>
-    //     <Logo />
-    // </ButtonBase>
+  <Logo />
+  // <ButtonBase disableRipple component={Link} to={config.defaultPath}>
+  //     <Logo />
+  // </ButtonBase>
 );
 
 export default LogoSection;
