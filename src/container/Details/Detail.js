@@ -191,15 +191,14 @@ export default function Detail(props) {
         r_id:r_id,
         u_id:u_id
       }
+
       await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
         // console.log(resp);
         
         setLoadingIndicator(false);
         toast.success(resp.data.message, { autoClose: 3000, });
-        setTimeout(() => {
-          navigate('/user/home')
-        }, 2000);
-       
+        setTimeout(() => {}, 2000);
+        navigate('/user/home')
 
        
 
