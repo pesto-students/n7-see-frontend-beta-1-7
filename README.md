@@ -107,6 +107,6 @@ page
 -Admin has control over user and user request.
 -Admin can provide master data content such as category,city etc and privilage to block and activate user and reject or approve request as well.
 
-
+https://see-frontend.herokuapp.com/
 
  
