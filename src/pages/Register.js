@@ -73,14 +73,15 @@ const Register = () => {
                 setLoading(false);
                 toast.success(resp.data.message, { autoClose: 3000, });
                 setInterval(() => {
-                  navigate('/login', { replace: true });
                   // history.push('/login');
-                }, 3000);
+                }, 1000);
+                navigate('/login', { replace: true });
               } else {
+                setLoading(false);
                 toast.error(resp.data.message, { autoClose: 3000, });
                 //console.log(resp);
               }
-              setLoading(false);
+              
             });
           }}
           >
