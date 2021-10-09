@@ -13,7 +13,7 @@ export default function CategoryList() {
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [rerender,setRerender]=useState(true);
   const setRerenderFunc=(value)=>{
-    console.log("value",value);
+    //console.log("value",value);
     setRerender(value);
   }
   return (

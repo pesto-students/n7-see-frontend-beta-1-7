@@ -58,7 +58,7 @@ const CustomerListResults = ({ ...rest }) => {
       setLoadingIndicator(true);
       const u_id = sessionStorage.getItem('u_id');
       await axios.post(`${myApi}/complaint/getallmycomplaints`,{page:page,limit:limit,u_id:u_id}).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         setLoadingIndicator(false);
         setNewData(resp.data.response.complaints);
         setTotalCount(resp.data.response.count)

@@ -144,7 +144,7 @@ export default function Profile() {
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const u_id = sessionStorage.getItem('u_id');
       await axios.get(`${myApi}/users/getmyprofile/${u_id}`).then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         setMyProfileData(resp.data[0]);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -161,7 +161,7 @@ export default function Profile() {
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
-        console.log(resp)
+        // console.log(resp)
         
         setCityData(options)
         setCityLoading(false);
@@ -176,7 +176,7 @@ export default function Profile() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const handleClick = () => {
-    console.info('You clicked the Chip.');
+    // console.info('You clicked the Chip.');
     setPageEdit(true);
   };
 

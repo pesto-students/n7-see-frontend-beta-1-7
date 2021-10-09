@@ -15,7 +15,7 @@ const fetchDataReducer = (state = initialState, action) => {
         loading: true
       };
     case types.SEND_REQUEST_SUCCESS:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         loading: true,
@@ -30,13 +30,13 @@ const fetchDataReducer = (state = initialState, action) => {
         error: action.error
       };
     case types.SEND_HOMEPAGE_REQUEST:
-      console.log('actiongiven request');
+      //console.log('actiongiven request');
       return {
         ...state,
         loading: true
       };
     case types.SEND_HOMEPAGE_REQUEST_SUCCESS:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -44,7 +44,7 @@ const fetchDataReducer = (state = initialState, action) => {
         error: {}
       };
     case types.SEND_HOMEPAGE_REQUEST_FAILURE:
-      console.log('action');
+      //console.log('action');
       return {
         ...state,
         loading: false,

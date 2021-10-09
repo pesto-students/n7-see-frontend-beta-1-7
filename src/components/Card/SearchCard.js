@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Search(props) {
-  console.log("sadsd",props.data);
+  // console.log("sadsd",props.data);
   const classes = useStyles();
   // const counter = useSelector(getCounter);
   const navigate = useNavigate();

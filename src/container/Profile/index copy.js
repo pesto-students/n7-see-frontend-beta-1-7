@@ -143,7 +143,7 @@ export default function Profile() {
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const u_id = sessionStorage.getItem('u_id');
       await axios.get(`http://localhost:4000/users/getmyprofile/${u_id}`).then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         setMyProfileData(resp.data[0]);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -160,7 +160,7 @@ export default function Profile() {
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
-        console.log(resp)
+        // console.log(resp)
         
         setCityData(options)
         setCityLoading(false);
@@ -175,7 +175,7 @@ export default function Profile() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const handleClick = () => {
-    console.info('You clicked the Chip.');
+    // console.info('You clicked the Chip.');
     setPageEdit(true);
   };
 
@@ -189,7 +189,7 @@ export default function Profile() {
       };
       const onClickHandler = () => {
         const data = new FormData()
-        console.log("asdasd",myFile)
+        // console.log("asdasd",myFile)
         if(myFile!==null)
         {
           // console.log("asdasdbajdbabhdbasdbhjasbd")
@@ -197,7 +197,7 @@ export default function Profile() {
         axios.post("http://localhost:4000/request/upload", data)
           .then(res => { 
             setShowImage(res.data.filename);
-            console.log(`http://localhost:4000/${res.data.filename}`)
+            // console.log(`http://localhost:4000/${res.data.filename}`)
           })
         }
         else{
@@ -209,7 +209,7 @@ export default function Profile() {
       const onChangeHandler=(event,setFieldValue)=>{
         // setFieldValue("file",event.target.files[0])
         setMyFile(event.target.files[0]);
-        console.log(event.target.files[0])
+        // console.log(event.target.files[0])
     }
     
   const cancelEdit = () => {
@@ -437,13 +437,13 @@ export default function Profile() {
                       onSubmit={(values, { setSubmitting }) => {
                         // console.log("helloooooooo")
                         setSubmitting(true);
-                        console.log("asdasd",values);
+                        // console.log("asdasd",values);
                         const valueCopy = JSON.parse(JSON.stringify(values));
                         valueCopy.u_id = sessionStorage.getItem('u_id');
                         valueCopy.city = values.city!=null?values.city.label:null
                         valueCopy.gender = values.gender!=null?values.gender.label:null
                         valueCopy.image=showImage;
-                        console.log("image",valueCopy)
+                        // console.log("image",valueCopy)
                         axios.post('http://localhost:4000/users/updateuser', valueCopy,
                           // {
                           //   headers: {
@@ -452,11 +452,11 @@ export default function Profile() {
                           //   }
                           // },
                         ).then((resp) => {
-                          console.log(resp);
+                          // console.log(resp);
 
                           setSubmitting(false);
                           if (resp.status == 200) {
-                            console.log('resp', resp);
+                            // console.log('resp', resp);
                             toast.success(resp.data.message, { autoClose: 3000, });
                             setTimeout(() => {navigate("/", { replace: true })}, 3000);
                             // navigate("/")
@@ -464,7 +464,7 @@ export default function Profile() {
                           
                           } else {
                             toast.error(resp.data.message, { autoClose: 3000, });
-                            console.log(resp);
+                            // console.log(resp);
                           }
                         });
                       }}

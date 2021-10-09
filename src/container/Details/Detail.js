@@ -146,15 +146,15 @@ export default function Detail(props) {
   const location = useLocation();
   const [itemDetails, setItemDetails] = useState(null);
   const u_id = sessionStorage.getItem('u_id');
-  console.log("asdsad",u_id)
+  // console.log("asdsad",u_id)
   
   const [include,setInclude]=useState(false);
   useEffect(() => {
     const getMyContactDetails = async () => {
-      console.log(itemDetails);
+      // console.log(itemDetails);
       setLoadingIndicator(true);
       await axios.get(`${myApi}/users/getcontactinfo/${itemDetails.u_id}`).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         setContactData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -183,16 +183,16 @@ export default function Detail(props) {
     setFieldValue('category', value);
   };
   const expressInterestFunc = (r_id,u_id) => {
-    console.info('You clicked the Chip.');
+    // console.info('You clicked the Chip.');
     const expressInterest = async () => {
-      console.log(itemDetails);
+      // console.log(itemDetails);
       setLoadingIndicator(true);
       var expressreq={
         r_id:r_id,
         u_id:u_id
       }
       await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         
         setLoadingIndicator(false);
         toast.success(resp.data.message, { autoClose: 3000, });

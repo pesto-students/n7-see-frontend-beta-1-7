@@ -123,7 +123,7 @@ export default function SellProducts() {
                   initialValues={{ productName: '', category: '' }}
                   onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log(values);
+                //console.log(values);
 
                 axios.post(`${myApi}/users`, values,
                   // {
@@ -133,16 +133,16 @@ export default function SellProducts() {
                   //   }
                   // },
                 ).then((resp) => {
-                  console.log(resp);
+                  //console.log(resp);
 
                   setSubmitting(false);
                   if (resp.status == 200) {
-                    console.log(resp);
+                    //console.log(resp);
                     toast.success(resp.data.message, { autoClose: 3000, });
                     // history.push("/home");
                   } else {
                     toast.error(resp.data.message, { autoClose: 3000, });
-                    console.log(resp);
+                    //console.log(resp);
                   }
                 });
               }}

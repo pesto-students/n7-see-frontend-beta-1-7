@@ -49,20 +49,20 @@ const Login = () => {
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
               setLoading(true);
-              console.log(values);
+              //console.log(values);
               axios.post(`${myApi}/users/login`, values, {
                 headers: {
                   'Access-Control-Allow-Origin': '*',
                   'Content-Type': 'application/json',
                 }
               }).then((resp) => {
-                console.log('resp');
+                //console.log('resp');
 
                 setSubmitting(false);
                 if (resp.status == 200) {
                   if(resp.data.response.role=="user")
                   {
-                    console.log('resp', resp);
+                    //console.log('resp', resp);
                     // localStorage.setItem('username', values.email);
                     sessionStorage.setItem('email', values.email);
                     sessionStorage.setItem('username', resp.data.response.firstName);
@@ -76,7 +76,7 @@ const Login = () => {
                   }
                   if(resp.data.response.role=="admin")
                   {
-                    console.log('resp', resp);
+                    //console.log('resp', resp);
                     // localStorage.setItem('username', values.email);
                     sessionStorage.setItem('email', values.email);
                     sessionStorage.setItem('username', resp.data.response.firstName);
@@ -94,7 +94,7 @@ const Login = () => {
                 } else {
                   setLoading(false);
                   toast.error(resp.data.message, { autoClose: 3000, });
-                  console.log(resp);
+                  //console.log(resp);
                 }
               }).catch((e) => {
                 setLoading(false);

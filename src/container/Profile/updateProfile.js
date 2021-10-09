@@ -139,7 +139,7 @@ export default function UpdateProfile(props) {
   const [imageUpload, setImageUpload] = useState(false);
   const [myFile,setMyFile]=useState(null);
   const [showImage,setShowImage]=useState(props.myProfileData!==null&&props.myProfileData.image!==undefined&&props.myProfileData.image!==""?props.myProfileData.image:"");
-  console.log("img",props.myProfileData)
+  // console.log("img",props.myProfileData)
   const formRef = useRef();
   useEffect(() => {
     async function getCity() {
@@ -178,13 +178,13 @@ export default function UpdateProfile(props) {
 const onChangeHandler=(event,setFieldValue)=>{
   // setFieldValue("file",event.target.files[0])
   setMyFile(event.target.files[0]);
-  console.log("myfile",event.target.files[0])
+  // console.log("myfile",event.target.files[0])
 }
 
 const onClickHandler = () => {
   setImageUpload(true)
   const data = new FormData()
-  console.log(myFile)
+  // console.log(myFile)
   if(myFile!==null)
   {
   data.append('file', myFile)
@@ -193,7 +193,7 @@ const onClickHandler = () => {
       setImageUpload(false)
       toast.success("Image Uploaded", { autoClose: 3000, });
       setShowImage(res.data.filename);
-      console.log(`${myApi}/${res.data.filename}`)
+      // console.log(`${myApi}/${res.data.filename}`)
     })
   }
   else{
@@ -252,10 +252,10 @@ const onClickHandler = () => {
                         })
                       }
                       onSubmit={(values, { setSubmitting }) => {
-                        console.log(values.city)
+                        // console.log(values.city)
                         setLoading(true)
                         setSubmitting(true);
-                        console.log("showImage",showImage);
+                        // console.log("showImage",showImage);
                         const valueCopy = JSON.parse(JSON.stringify(values));
                         valueCopy.u_id = sessionStorage.getItem('u_id');
                         valueCopy.city = values.city!=null?values.city.label:null
@@ -263,11 +263,11 @@ const onClickHandler = () => {
                         valueCopy.image=showImage
                         axios.post(`${myApi}/users/updateuser`, valueCopy,
                         ).then((resp) => {
-                          console.log(resp);
+                          // console.log(resp);
 
                           setSubmitting(false);
                           if (resp.status == 200) {
-                            console.log('resp', resp);
+                            // console.log('resp', resp);
                             setLoading(false)
                             toast.success("Updated Successfully", { autoClose: 3000, });
                             setTimeout(() => {navigate("/", { replace: true })}, 3000);
@@ -277,7 +277,7 @@ const onClickHandler = () => {
                           } else {
                             setLoading(false)
                             toast.error("Updation Failed", { autoClose: 3000, });
-                            console.log(resp);
+                            // console.log(resp);
                           }
                         });
     

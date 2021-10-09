@@ -156,7 +156,7 @@ export default function RequestInDetail(props) {
       setLoadingIndicator(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       await axios.get(`${myApi}/request/deleteMyRequest/${_id}`).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         toast.success(resp.data.message, { autoClose: 3000, });
         navigate('/user/request', { replace: true });

@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HistoryCard(props) {
-  console.log(props);
+  // console.log(props);
   const classes = useStyles();
   // const counter = useSelector(getCounter);
 

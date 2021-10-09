@@ -112,7 +112,7 @@ export default function TypeTwo() {
             }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
-              console.log(values);
+              // console.log(values);
               setSubmitting(false);
 
             // axios.post(contactFormEndpoint,

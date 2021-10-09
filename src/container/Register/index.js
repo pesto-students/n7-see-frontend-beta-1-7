@@ -122,7 +122,7 @@ export default function Register() {
                             }}
                         onSubmit={(values, { setSubmitting }) => {
                               setSubmitting(true);
-                              console.log(values);
+                              // console.log(values);
                               setLoading(true);
                               axios.post(`${myApi}/users`, values,
                                 // {
@@ -132,11 +132,11 @@ export default function Register() {
                                 //   }
                                 // },
                               ).then((resp) => {
-                                console.log(resp.status);
+                                // console.log(resp.status);
 
                                 setSubmitting(false);
                                 if (resp.status == 200) {
-                                  console.log(resp);
+                                  // console.log(resp);
                                   toast.success(resp.data.message, { autoClose: 3000, });
                                   
                                   // setInterval(() => {
@@ -146,7 +146,7 @@ export default function Register() {
                                   setLoading(false);
                                 } else {
                                   toast.error(resp.data.message, { autoClose: 3000, });
-                                  console.log(resp);
+                                  // console.log(resp);
                                 }
                                 setLoading(false);
                               });

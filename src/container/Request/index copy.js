@@ -118,7 +118,7 @@ export default function RequestProducts() {
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const email = sessionStorage.getItem('email');
       await axios.post('http://localhost:4000/request/history', { email }).then((resp) => {
-        console.log(resp.data.response);
+        // console.log(resp.data.response);
         setHistoryData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -155,12 +155,12 @@ export default function RequestProducts() {
               }}
                   onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log(values);
+                // console.log(values);
                 const valueCopy = JSON.parse(JSON.stringify(values));
                 valueCopy.category = values.category.label;
                 valueCopy.email = sessionStorage.getItem('email');
                 valueCopy.username = sessionStorage.getItem('username');
-                console.log(valueCopy);
+                // console.log(valueCopy);
                 axios.post('http://localhost:4000/request', valueCopy,
                   // {
                   //   headers: {
@@ -169,16 +169,16 @@ export default function RequestProducts() {
                   //   }
                   // },
                 ).then((resp) => {
-                  console.log(resp);
+                  // console.log(resp);
 
                   setSubmitting(false);
                   if (resp.status == 200) {
-                    console.log('resp', resp);
+                    // console.log('resp', resp);
                     toast.success(resp.data.message, { autoClose: 3000, });
                     history.push('/');
                   } else {
                     toast.error(resp.data.message, { autoClose: 3000, });
-                    console.log(resp);
+                    // console.log(resp);
                   }
                 });
               }}

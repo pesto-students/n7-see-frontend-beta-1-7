@@ -10,7 +10,7 @@ const position = [8.5241, 76.9366];
 const mapStyle = { height: '90vh' };
 
 const LeafletMap = (props) => {
-  console.log(props.data);
+  //console.log(props.data);
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [markers, setMarkers] = useState([]);
   // const [data, setData] = useState(props.data);

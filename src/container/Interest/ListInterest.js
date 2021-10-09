@@ -158,7 +158,7 @@ export default function ListInterest(props) {
     setLoadingIndicator(true);
     const u_id = sessionStorage.getItem('u_id');
     await axios.post(`${myApi}/request/getmyinterest`,{page:page,limit:limit,u_id:u_id}).then((resp) => {
-      console.log(resp);
+      // console.log(resp);
       setLoadingIndicator(false);
       setNewData(resp.data.response.interest);
       setTotalCount(resp.data.response.count)
@@ -177,7 +177,7 @@ export default function ListInterest(props) {
     // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
     const u_id = sessionStorage.getItem('u_id');
     await axios.get(`${myApi}/request/getmyinterest/${u_id}`).then((resp) => {
-      console.log(resp.data.response);
+      // console.log(resp.data.response);
       setMyInterestData(resp.data.response);
       setLoadingIndicator(false);
     }).catch((e) => {

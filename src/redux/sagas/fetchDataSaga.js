@@ -4,28 +4,28 @@ import { types } from '../types';
 import { fetchDataSuccess, fetchHomeDataSuccess } from '../actions';
 
 function* ayscFetchRequest(action) {
-  console.log(action);
+  //console.log(action);
   try {
     const url = 'https://jsonplaceholder.typicode.com/users';
     // const url= `https://regres.in/api/users/${action.payload}`
     const response = yield call(() => axios.get(url));
-    console.log(response);
+    //console.log(response);
     yield put(fetchDataSuccess(response.data));
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
 function* asyncFetchHomeRequest(action) {
-  console.log(action);
+  //console.log(action);
   try {
     const url = 'https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43';
     // const url= `https://regres.in/api/users/${action.payload}`
     const response = yield call(() => axios.get(url));
-    console.log(response);
+    //console.log(response);
     yield put(fetchHomeDataSuccess(response.data));
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 

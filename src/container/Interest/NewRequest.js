@@ -144,7 +144,7 @@ export default function NewRequest(props) {
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       const email = sessionStorage.getItem('email');
       await axios.post(`${myApi}/request/history`, { email }).then((resp) => {
-        console.log(resp.data.response);
+      //  / console.log(resp.data.response);
         setHistoryData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -196,12 +196,12 @@ export default function NewRequest(props) {
                 }}
                 onSubmit={(values, { setSubmitting }) => {
                   setSubmitting(true);
-                  console.log(values);
+                  // console.log(values);
                   const valueCopy = JSON.parse(JSON.stringify(values));
                   valueCopy.category = values.category.label;
                   valueCopy.email = sessionStorage.getItem('email');
                   valueCopy.username = sessionStorage.getItem('username');
-                  console.log(valueCopy);
+                  // console.log(valueCopy);
                   axios.post(`${myApi}/request`, valueCopy,
                     // {
                     //   headers: {
@@ -210,16 +210,16 @@ export default function NewRequest(props) {
                     //   }
                     // },
                   ).then((resp) => {
-                    console.log(resp);
+                    // console.log(resp);
 
                     setSubmitting(false);
                     if (resp.status == 200) {
-                      console.log('resp', resp);
+                      // console.log('resp', resp);
                       toast.success(resp.data.message, { autoClose: 3000, });
                       history.push('/');
                     } else {
                       toast.error(resp.data.message, { autoClose: 3000, });
-                      console.log(resp);
+                      // console.log(resp);
                     }
                   });
                 }}

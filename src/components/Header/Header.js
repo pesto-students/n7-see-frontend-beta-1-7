@@ -95,7 +95,7 @@ const Header = (props) => {
   const { classes, handleToggleDrawer, open } = props;
   const u_id = sessionStorage.getItem('u_id');
   const navigate = useNavigate();
-  console.log(open);
+  // console.log(open);
   const logout = () => {
     sessionStorage.removeItem('u_id');
     sessionStorage.clear();

@@ -18,7 +18,7 @@ import {
 import getInitials from '../../utils/getInitials';
 
 const CustomerListResults = ({ data, ...rest }) => {
-  console.log(data);
+  // console.log(data);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);

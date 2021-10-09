@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FeaturePlusCard(props) {
-  console.log(props);
+  // console.log(props);
   const classes = useStyles();
   // const counter = useSelector(getCounter);
 

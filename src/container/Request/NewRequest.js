@@ -155,7 +155,7 @@ export default function NewRequest(props) {
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.category }
        })
-        console.log(resp)
+        //console.log(resp)
         setCategoryData(options)
         setCategoryLoading(false);
       })
@@ -167,7 +167,7 @@ export default function NewRequest(props) {
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
-        console.log(resp)
+        //console.log(resp)
         setCityData(options)
         setCityLoading(false);
       })
@@ -221,13 +221,13 @@ export default function NewRequest(props) {
   const onChangeHandler=(event,setFieldValue)=>{
     // setFieldValue("file",event.target.files[0])
     setMyFile(event.target.files[0]);
-    console.log(event.target.files[0])
+    //console.log(event.target.files[0])
 }
 
 const onClickHandler = () => {
   setLoadingIndicator(true)
   const data = new FormData()
-  console.log(myFile)
+  //console.log(myFile)
   if(myFile!==null)
   {
   data.append('file', myFile)
@@ -235,7 +235,7 @@ const onClickHandler = () => {
     .then(res => { 
       setShowImage([...showImage,res.data]);
       setMyFile(null)
-      console.log(`${myApi}/${res.data.filename}`)
+      //console.log(`${myApi}/${res.data.filename}`)
       setLoadingIndicator(false)
     })
   }
@@ -252,7 +252,7 @@ const removeImageFromList=(index)=>{
   setShowImage(showImageTemp);
     
 }
-console.log()
+//console.log()
 
   return (
     <>
@@ -290,7 +290,7 @@ console.log()
                 }}
                 onSubmit={(values, { setSubmitting }) => {
                   // const data = new FormData() 
-                  // console.log("ADAD",myFile)
+                  // //console.log("ADAD",myFile)
                   // data.append('file', myFile)
                   // data.append('category', values.category.label)
                   // data.append('productname', values.productname)
@@ -302,7 +302,7 @@ console.log()
                   // data.append('u_id', sessionStorage.getItem('u_id'))
                   setLoading(true)
                   setSubmitting(true);
-                  console.log(values);
+                  //console.log(values);
                   const valueCopy = JSON.parse(JSON.stringify(values));
                   valueCopy.category = values.category.label;
                   valueCopy.city = values.city.label;
@@ -310,7 +310,7 @@ console.log()
                   valueCopy.username = sessionStorage.getItem('username');
                   valueCopy.u_id=sessionStorage.getItem('u_id');
                   valueCopy.image=showImage;
-                  console.log(valueCopy);
+                  //console.log(valueCopy);
                   axios.post(`${myApi}/request`, valueCopy,
                     // {
                     //   headers: {
@@ -319,11 +319,11 @@ console.log()
                     //   }
                     // },
                   ).then((resp) => {
-                    console.log(resp);
+                    //console.log(resp);
 
                     setSubmitting(false);
                     if (resp.status == 200) {
-                      console.log('resp', resp);
+                      //console.log('resp', resp);
                       setLoading(false)
                       toast.success(resp.data.message, { autoClose: 3000, });
                       setTimeout(() => {history("/")}, 2000);
@@ -331,7 +331,7 @@ console.log()
                     } else {
                       setLoading(false)
                       toast.error(resp.data.message, { autoClose: 3000, });
-                      console.log(resp);
+                      //console.log(resp);
                     }
                     
                   });

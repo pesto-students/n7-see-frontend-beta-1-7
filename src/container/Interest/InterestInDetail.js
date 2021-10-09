@@ -143,7 +143,7 @@ const style = {
   p: 4,
 };
 export default function InterestInDetail(props) {
-  console.log(props.selectedData)
+  // console.log(props.selectedData)
   const classes = useStyles();
   const navigate = useNavigate();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -157,7 +157,7 @@ export default function InterestInDetail(props) {
     const getMyContactDetails = async () => {
       setLoadingIndicator(true);
       await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         setContactData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {

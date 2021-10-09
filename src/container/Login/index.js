@@ -116,13 +116,13 @@ export default function Login() {
                         initialValues={{ email: '', password: '' }}
                         onSubmit={(values, { setSubmitting }) => {
                               setSubmitting(true);
-                              console.log(values);
+                              // console.log(values);
                               axios.post(`${myApi}/users/login`, values).then((resp) => {
-                                console.log('resp');
+                                // console.log('resp');
 
                                 setSubmitting(false);
                                 if (resp.status == 200) {
-                                  console.log('resp', resp);
+                                  // console.log('resp', resp);
                                   // localStorage.setItem('username', values.email);
                                   sessionStorage.setItem('email', values.email);
                                   sessionStorage.setItem('username', values.username);
@@ -134,7 +134,7 @@ export default function Login() {
                                   history("/")
                                 } else {
                                   toast.error(resp.data.message, { autoClose: 3000, });
-                                  console.log(resp);
+                                  // console.log(resp);
                                 }
                               }).catch((e) => {
                                 toast.error('Failed to login', { autoClose: 3000, });

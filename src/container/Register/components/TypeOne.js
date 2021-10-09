@@ -69,7 +69,7 @@ function TypeOne() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
+    // console.log(firstName, lastName, email, password);
   };
   return (
     <div>

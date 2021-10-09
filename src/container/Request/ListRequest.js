@@ -157,7 +157,7 @@ export default function ListRequest(props) {
     setLoading(true);
     const u_id = sessionStorage.getItem('u_id');
     await axios.post(`${myApi}/request/getmyrequest`,{page:page,limit:limit,u_id:u_id}).then((resp) => {
-      console.log(resp);
+      // console.log(resp);
       setLoading(false);
       setNewData(resp.data.response.request);
       setTotalCount(resp.data.response.count)
@@ -174,7 +174,7 @@ export default function ListRequest(props) {
     // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
     const u_id = sessionStorage.getItem('u_id');
     await axios.get(`${myApi}/request/getmyrequest/${u_id}`).then((resp) => {
-      console.log("ZDAS",resp.data.response);
+      // console.log("ZDAS",resp.data.response);
       setMyRequestData(resp.data.response);
       setLoading(false);
     }).catch((e) => {
@@ -222,7 +222,7 @@ export default function ListRequest(props) {
       setLoading(true);
       // https://run.mocky.io/v3/e79f1d99-c66f-4713-9586-d495562b1b43
       await axios.get(`${myApi}/request/deleteMyRequest/${_id}`).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         // setLoading(false);
         toast.success(resp.data.message, { autoClose: 3000, });
         setReRender(true)

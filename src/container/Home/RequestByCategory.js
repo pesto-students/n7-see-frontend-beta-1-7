@@ -14,7 +14,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import TabletIcon from '@material-ui/icons/Tablet';
 
 const RequestByCategory = (props) => {
-  console.log(props);
+  // console.log(props);
   const theme = useTheme();
 
   return (

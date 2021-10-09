@@ -128,7 +128,7 @@ const ProfileSection = () => {
     const u_id = sessionStorage.getItem('u_id');
     const username = sessionStorage.getItem('username');
     const profileimage = sessionStorage.getItem('profileimage');
-    console.log(profileimage)
+    // console.log(profileimage)
     const navigate = useNavigate();
     //console.log(open);
     const logout = () => {

@@ -131,7 +131,7 @@ export default function DividerCarder(props) {
       state: items
     })
   };
-  console.log("adasd",props.item.category)
+  // console.log("adasd",props.item.category)
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();

@@ -23,16 +23,16 @@ const UserRequest = (props) => {
     {
      
       var date=props.data.userCount.map((usercount)=>{
-        console.log(usercount._id)
+        // console.log(usercount._id)
         return usercount._id
       })
 
       var countofUser=props.data.userCount.map((usercount)=>{
-        console.log(usercount._id)
+        // console.log(usercount._id)
         return usercount.count
       })
       var countofRequest=props.data.requestCount.map((requestcount)=>{
-        console.log(requestcount)
+        // console.log(requestcount)
         return requestcount.count
       })
       setMyDate([...date])

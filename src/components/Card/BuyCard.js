@@ -126,7 +126,7 @@ export default function BuyCard(props) {
   // console.log(props.item.interest.length>0&&props.item.interest[0]._id)
   // console.log(sessionStorage.getItem('u_id'));
   var isInclude=props.item.interest.length>0?props.item.interest.some(item=>item._id===u_id):false
-  console.log(isInclude);
+  // console.log(isInclude);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
@@ -149,7 +149,7 @@ export default function BuyCard(props) {
         u_id:u_id
       }
       await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         toast.success(resp.data.response.message, { autoClose: 3000, });
         setLoadingIndicator(false);
         // navigate('/')

@@ -113,7 +113,7 @@ export default function TypeTwo() {
             }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
-              console.log(values);
+              // console.log(values);
               setSubmitting(false);
               axios.post('http://localhost:4000/users',
                 values,
@@ -124,7 +124,7 @@ export default function TypeTwo() {
               //   }
               // },
               ).then((resp) => {
-                console.log(resp);
+                // console.log(resp);
                 setSubmitting(false);
               });
             }}

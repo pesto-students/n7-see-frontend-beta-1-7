@@ -111,7 +111,7 @@ export default function MyRequest() {
   const classes = useStyles();
   const [addNewRequest, setAddNewRequest] = useState(false);
   const setAddNewRequestFunc=(value)=>{
-    console.log(value)
+    // console.log(value)
     setAddNewRequest(true);
   }
   return (

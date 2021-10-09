@@ -169,10 +169,10 @@ export default function Search() {
     setLoadingIndicator(true);
     const u_id = sessionStorage.getItem('u_id');
     await axios.post(`${myApi}/request/search`,{page:page,limit:limit,search:searchData}).then((resp) => {
-      console.log(resp);
+      //console.log(resp);
       setLoadingIndicator(false);
       setNewData(resp.data.response.result);
-      console.log("Dsfdsfds",resp.data.response.result)
+      //console.log("Dsfdsfds",resp.data.response.result)
       setTotalCount(resp.data.response.count)
       setReRender(false)
     }).catch((e) => {

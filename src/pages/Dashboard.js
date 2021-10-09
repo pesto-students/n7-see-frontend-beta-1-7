@@ -21,7 +21,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       setLoadingIndicator(true);
       await axios(`${myApi}/admin/getadmindashboard`).then((resp) => {
-        console.log(resp);
+        //console.log(resp);
         setLoadingIndicator(false);
         setData(resp.data.response);
       }).catch((e) => {

@@ -131,7 +131,7 @@ export default function DetailCard(props) {
       state: items
     })
   };
-  console.log(props.item);
+  // console.log(props.item);
   // const counter = useSelector(getCounter);
 
   // const dispatch = useDispatch();
