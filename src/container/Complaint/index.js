@@ -154,7 +154,9 @@ const CustomerListResults = ({ ...rest }) => {
             </TableHead>
             {
               !loadingIndicator? <TableBody>
-              {newData.slice(0, limit).map((complaint,i) => (
+              {
+              newData.length>0?
+                newData.slice(0, limit).map((complaint,i) => (
                 <TableRow
                   hover
                   key={i}
@@ -208,7 +210,11 @@ const CustomerListResults = ({ ...rest }) => {
                    
                   </TableCell>
                 </TableRow>
-              ))}
+              )):<TableRow><TableCell colSpan={6}>
+                <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>No Complaints
+                </div>
+                </TableCell></TableRow>
+              }
             </TableBody>
             :<TableBody><TableRow><TableCell colSpan={6}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>

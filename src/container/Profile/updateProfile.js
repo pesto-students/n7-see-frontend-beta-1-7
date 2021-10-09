@@ -192,7 +192,7 @@ const onClickHandler = () => {
     .then(res => { 
       setImageUpload(false)
       toast.success("Image Uploaded", { autoClose: 3000, });
-      setShowImage(res.data);
+      setShowImage(res.data.filename);
       console.log(`${myApi}/${res.data.filename}`)
     })
   }

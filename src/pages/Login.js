@@ -50,7 +50,12 @@ const Login = () => {
               setSubmitting(true);
               setLoading(true);
               console.log(values);
-              axios.post(`${myApi}/users/login`, values).then((resp) => {
+              axios.post(`${myApi}/users/login`, values, {
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Content-Type': 'application/json',
+                }
+              }).then((resp) => {
                 console.log('resp');
 
                 setSubmitting(false);
