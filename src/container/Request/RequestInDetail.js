@@ -178,7 +178,7 @@ export default function RequestInDetail(props) {
 
   return (
     <>
-     {!loadingIndicator&&props.selectedData.productname!==""?<div>
+     {!loadingIndicator&&props.selectedData.productname!==""?<Fragment>
       <Grid container style={{ marginTop: '30px', padding: '0px 30px 60px 30px' }}>
 
         <Grid item md={12}>
@@ -213,69 +213,79 @@ export default function RequestInDetail(props) {
                 />
                 <CardContent>
                   <Grid container spacing={2}>
-                <Grid item md={8}>
+                  <Grid item md={12}>
                   <Grid container>
-                    <Grid item md={6}>
-                      {/* <Avatar variant="rounded" 
-                        /> */}
-                        <img style={{ height: '400px', width: '500px' }}
-                        src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""}
+
+
+
+                    <Grid item md={8}>
+                      <Grid container>
+                        <Grid item md={6}>
+            
+                            <img style={{ height: '400px', width: '500px' }}
+                            src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""}
+                              />
+
+                        </Grid>
+                        <Grid item md={6}>
+                          {props.selectedData.description}
+
+                        </Grid>
+                      </Grid>
+
+                    </Grid>
+                    <Grid item md={4}>
+                      <Card>
+                        <CardHeader
+                          className={classes.tabHeader}
+                          title={(
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div>Interest Received</div>
+                          </div>
+                        )}
+                        />
+                        <CardContent style={{overflowY:"scroll"}}>
+                        {props.selectedData.interest.length>0?props.selectedData.interest.map((interested)=>(
+                          <>
+                            <ListItem>
+                            <Avatar alt="Remy Sharp" src={avatarimg} />
+                            <ListItemText
+                            primary={(
+                                <Typography color="textSecondary" variant="body1" className={classes.primaryText}>
+                                  {interested.firstName+" "+interested.lastName}
+                                </Typography>
+                            )}
+                            secondary={(
+                                <Typography variant="body1" className={classes.secondaryText}>
+                                {interested.mobno}
+                                </Typography>
+                            )}
+                            className={classes.item}
+                            style={{paddingLeft:"5px"}}
                           />
+                            <Avatar className={classes.chat}>
+                            <IconBrandHipchat stroke={1.5} size="1.3rem" />
+                          </Avatar>
+
+                          </ListItem>
+                          <Divider />
+                          </>
+                        )):<div style={{textAlign:"center"}}>Didnt Received any Interest</div>
+                        }
+                          
+                        
+
+                        </CardContent>
+                      </Card>
 
                     </Grid>
-                    <Grid item md={6}>
-                      {props.selectedData.description}
-
+                
                     </Grid>
+
+                </Grid>
+
+
                   </Grid>
-
-                </Grid>
-                <Grid item md={4}>
-                  <Card>
-                    <CardHeader
-                      className={classes.tabHeader}
-                      title={(
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Interest Received</div>
-                      </div>
-                    )}
-                    />
-                    <CardContent style={{overflowY:"scroll"}}>
-                    {props.selectedData.interest.length>0?props.selectedData.interest.map((interested)=>(
-                      <>
-                        <ListItem>
-                        <Avatar alt="Remy Sharp" src={avatarimg} />
-                        <ListItemText
-                        primary={(
-                            <Typography color="textSecondary" variant="body1" className={classes.primaryText}>
-                              {interested.firstName+" "+interested.lastName}
-                            </Typography>
-                        )}
-                        secondary={(
-                            <Typography variant="body1" className={classes.secondaryText}>
-                             {interested.mobno}
-                            </Typography>
-                        )}
-                        className={classes.item}
-                        style={{paddingLeft:"5px"}}
-                      />
-                        <Avatar className={classes.chat}>
-                        <IconBrandHipchat stroke={1.5} size="1.3rem" />
-                      </Avatar>
-
-                      </ListItem>
-                      <Divider />
-                      </>
-                     )):<div style={{textAlign:"center"}}>Didnt Received any Interest</div>
-                    }
-                      
-                    
-
-                    </CardContent>
-                  </Card>
-
-                </Grid>
-              </Grid>
 
                 </CardContent>
                 <Divider/>
@@ -301,7 +311,7 @@ export default function RequestInDetail(props) {
 
       </Grid>
       <ToastContainer />
-      </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      </Fragment>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
       }
     </>
   );

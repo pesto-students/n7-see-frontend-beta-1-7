@@ -264,6 +264,7 @@ export default function Detail(props) {
                   <Grid container spacing={2}>
                 <Grid item md={12}>
                   <Grid container>
+
                     <Grid item md={6}>
                     <img style={{ height: '400px', width: '500px' }}
                         src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""}
@@ -277,6 +278,8 @@ export default function Detail(props) {
                       {itemDetails != null ? itemDetails.description : ''}
 
                     </Grid>
+                  
+                  
                   </Grid>
 
                 </Grid>
