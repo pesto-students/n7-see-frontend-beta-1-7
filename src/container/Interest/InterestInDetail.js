@@ -173,7 +173,7 @@ export default function InterestInDetail(props) {
   }, []);
   return (
     <>
-      <Grid container style={{ marginTop: '0px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+      <Grid container style={{ marginTop: '0px', padding: '0px 30px 60px 30px' }}>
 
         <Grid item md={12}>
           <Grid container spacing={2}>
@@ -206,12 +206,15 @@ export default function InterestInDetail(props) {
                   <Grid container spacing={2}>
                 <Grid item md={8}>
                   <Grid container>
-                    <Grid item md={4}>
-                       <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
+                    <Grid item md={6}>
+                       {/* <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
-
+                      */}
+                      <img style={{ height: '400px', width: '500px' }}
+                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} 
+                          />
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item md={6}>
                       {props.selectedData.description}
 
                     </Grid>
@@ -235,6 +238,7 @@ export default function InterestInDetail(props) {
                       </div>
                     )}
                     />
+                   { contactData!==null?
                     <CardContent>
                       <Grid container>
                         <Grid item md={12}>
@@ -275,7 +279,11 @@ export default function InterestInDetail(props) {
                         </Grid>
 
                       </Grid>
+                    </CardContent>:
+                    <CardContent>
+                      <Skeleton animation="wave" width="100%" height={100}/>
                     </CardContent>
+                    }
                   </Card>
 
                 </Grid>

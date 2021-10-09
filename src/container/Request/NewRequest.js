@@ -146,6 +146,7 @@ export default function NewRequest(props) {
   const [pageEdit, setPageEdit] = useState(false);
   const [myFile,setMyFile]=useState(null);
   const [showImage,setShowImage]=useState([]);
+  
   useEffect(() => {
 
     async function getCategory() {
@@ -224,6 +225,7 @@ export default function NewRequest(props) {
 }
 
 const onClickHandler = () => {
+  setLoadingIndicator(true)
   const data = new FormData()
   console.log(myFile)
   if(myFile!==null)
@@ -234,12 +236,14 @@ const onClickHandler = () => {
       setShowImage([...showImage,res.data]);
       setMyFile(null)
       console.log(`${myApi}/${res.data.filename}`)
+      setLoadingIndicator(false)
     })
   }
   else{
      toast.error("Please Upload atleast one image", { autoClose: 3000, });
+     setLoadingIndicator(false)
   }
-
+ 
 }
 
 const removeImageFromList=(index)=>{
@@ -481,7 +485,8 @@ console.log()
                               flexDirection: 'column'
                             }}
                           >
-                            <Avatar
+                            {
+                              !loadingIndicator? <Avatar
                               src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
                               variant="rounded"
                               sx={{
@@ -489,7 +494,9 @@ console.log()
                                 width: 250
                               }}
                               onClick={()=>handleClick()}
-                            />
+                            />:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+                            }
+                  
                         
                           
                         {/* <Button onClick={handleClick}>
@@ -521,7 +528,7 @@ console.log()
                       <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
                       {
                         showImage.length>0? showImage.map((img,i) => (
-                          <Grid item md={3} justifyContent="center" alignContent="center" style={{
+                          <Grid item md={3} key={i} justifyContent="center" alignContent="center" style={{
                             // margin:"5px",
                             border:"1px solid #000"
                           }}>
@@ -542,7 +549,7 @@ console.log()
                       <Grid item xs={12} sm={12}>
                       
                       <Grid container spacing={2} justifyContent="flex-end">
-                                {isSubmitting && <LinearProgress />}
+                            
                                 <Grid item xs={2}>
                                   <Button type="submit" fullWidth color="primary" variant="contained">
                                   Submit New Request

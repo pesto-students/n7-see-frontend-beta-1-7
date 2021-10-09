@@ -27,7 +27,7 @@ import {
   TableCell,
   TableHead,
   TablePagination,
-  TableRow,
+  TableRow,Skeleton
 } from '@material-ui/core';
 import {
   Avatar,
@@ -152,7 +152,7 @@ export default function Search() {
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [rerender, setReRender] = useState(true);
   const [searchData, setSearchData] = useState('');
-
+  var dummy=[1,2,3];
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
     setPage(1);
@@ -219,7 +219,8 @@ export default function Search() {
             <Box spacing={2}>
             <PerfectScrollbar>
               <Table>
-                <TableBody>
+                {
+                  !loadingIndicator?  <TableBody>
                   {
                   newData.length>0?newData.slice(0, limit).map((newdata,i) => (
                     <TableRow
@@ -233,10 +234,27 @@ export default function Search() {
                       {request.category}
                       </TableCell> */}
                     </TableRow>
-                  )):""
+                  )):"No Item Found"
                 }
                 </TableBody>
-              </Table>
+                :<TableBody>
+                  {
+                    dummy.map((dm,i)=>(
+                      <TableRow
+                      key={i}
+                     >
+                    <TableCell colSpan={6}>
+                    <Skeleton animation="wave" width="100%" height={300}/>
+                    </TableCell>
+                      </TableRow>
+                    ))
+                  }
+                  
+
+                </TableBody>
+                }
+              
+             </Table>
               <TablePagination
                   component="div"
                   count={totalCount}

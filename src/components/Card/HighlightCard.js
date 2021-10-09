@@ -11,6 +11,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
@@ -81,11 +82,16 @@ export default function HighlightCard(props) {
         title={props.item.category}
         subheader={props.item.productname}
       />
-      <CardMedia
+      <Divider/>
+      <div style={{display:"flex",justifyContent:"center"}} >
+      <img src={props.item!==""&&props.item.image.length>0?`${myApi}/${props.item.image[0].filename}`:img2} width="300px" height="200px" />
+        </div>
+      
+      {/* <CardMedia
         className={classes.media}
         image={ props.item!==""&&props.item.image.length>0?`${myApi}/${props.item.image[0].filename}`:img2}
         title="Paella dish"
-      />
+      /> */}
 
 {/* {
         props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="400px" height="300px"/>:

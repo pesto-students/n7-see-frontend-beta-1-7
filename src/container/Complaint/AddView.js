@@ -1,3 +1,4 @@
+import { useState,useEffect } from 'react';
 import {
   Box,
   Button,
@@ -12,8 +13,8 @@ import {
   FormControlLabel,
   Grid,
   Input,
-  Typography
-
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { Search as SearchIcon } from 'react-feather';
@@ -33,9 +34,10 @@ const AddView = (props) => {
   const u_id = sessionStorage.getItem('u_id');
   const email = sessionStorage.getItem('email');
   const username = sessionStorage.getItem('username');
+  const [loadingIndicator, setLoadingIndicator] = useState(false);
   return(
   <Box {...props}>
-    <Box
+  <Box
       sx={{
         display: 'flex',
         justifyContent: 'flex-start'
@@ -53,6 +55,7 @@ const AddView = (props) => {
             })}
             onSubmit={(values,{setSubmitting,resetForm}) => {
               // navigate('/app/dashboard', { replace: true });
+              setLoadingIndicator(true);
               console.log("hyy")
               values.from=u_id;
               values.email=email;
@@ -61,6 +64,7 @@ const AddView = (props) => {
                 setSubmitting(false);
                 if (resp.status == 200) {
                   console.log('resp', resp);
+                  setLoadingIndicator(false);
                   toast.success(resp.data.message, { autoClose: 3000, });
                   resetForm();
                   props.setShowComponent(false)
@@ -68,6 +72,7 @@ const AddView = (props) => {
                   // history.push('/');
                   // navigate('/app/dashboard', { replace: true });
                 } else {
+                  setLoadingIndicator(false);
                   toast.error(resp.data.message, { autoClose: 3000, });
                   console.log(resp);
                 }
@@ -94,6 +99,8 @@ const AddView = (props) => {
                 title={props.showComponentType=="add"?"Register New Complaint":"View"}
               />
               <Divider />
+              {
+      !loadingIndicator?<div>
               <CardContent>
               <Grid
                 container
@@ -192,7 +199,12 @@ const AddView = (props) => {
         </Button>
         </Grid>
       </Grid>
+      
     </Box>
+  
+      </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+    }
+
   
 
     </Card>
@@ -200,7 +212,8 @@ const AddView = (props) => {
     )}
     </Formik>
     <ToastContainer />
-  </Box>
+  
+    </Box>
     )
 };
 

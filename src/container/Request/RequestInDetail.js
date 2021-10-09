@@ -42,7 +42,7 @@ import {
   CssBaseline,
   TextField,
   Input,
-  LinearProgress,
+  LinearProgress,CircularProgress,
   Chip, Modal,
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -178,7 +178,8 @@ export default function RequestInDetail(props) {
 
   return (
     <>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+     {!loadingIndicator&&props.selectedData.productname!==""?<div>
+      <Grid container style={{ marginTop: '30px', padding: '0px 30px 60px 30px' }}>
 
         <Grid item md={12}>
           <Grid container spacing={2}>
@@ -214,12 +215,15 @@ export default function RequestInDetail(props) {
                   <Grid container spacing={2}>
                 <Grid item md={8}>
                   <Grid container>
-                    <Grid item md={4}>
-                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
-                        src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
+                    <Grid item md={6}>
+                      {/* <Avatar variant="rounded" 
+                        /> */}
+                        <img style={{ height: '400px', width: '500px' }}
+                        src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""}
+                          />
 
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item md={6}>
                       {props.selectedData.description}
 
                     </Grid>
@@ -297,6 +301,8 @@ export default function RequestInDetail(props) {
 
       </Grid>
       <ToastContainer />
+      </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+      }
     </>
   );
 }

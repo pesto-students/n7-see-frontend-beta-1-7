@@ -17,7 +17,7 @@ import {
   CardHeader,
   Divider,
   Container,
-  Button
+  Button,CircularProgress
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
@@ -36,7 +36,7 @@ const CustomerListResults = ({ ...rest }) => {
   const [page, setPage] = useState(1);
   const [newData, setNewData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);  
-  const [loadingIndicator, setLoadingIndicator] = useState(true);
+  const [loadingIndicator, setLoadingIndicator] = useState(false);
   const [rerender, setReRender] = useState(true);
   const [showComponentType, setShowComponentType] = useState('');
   const [showComponent, setShowComponent] = useState(false);
@@ -103,7 +103,8 @@ const CustomerListResults = ({ ...rest }) => {
         setReRender={setReRender} 
         setShowComponent={setShowComponent} 
         showComponentType={showComponentType} 
-        showSelectedData={showSelectedData}/>:
+        showSelectedData={showSelectedData}
+        />:
         showComponentType=='view'?<View 
         setReRender={setReRender} 
         setShowComponent={setShowComponent} 
@@ -118,7 +119,10 @@ const CustomerListResults = ({ ...rest }) => {
                 title={
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>Complaint List</div>
-                <div><Button color="success" variant="contained" onClick={()=>AddFunc()}>Register New Complaint</Button></div>
+                {
+                  !showComponent&&<div><Button color="success" variant="contained" onClick={()=>AddFunc()}>Register New Complaint</Button></div>
+                }
+                
               </div>
               }
               />
@@ -148,7 +152,8 @@ const CustomerListResults = ({ ...rest }) => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {
+              !loadingIndicator? <TableBody>
               {newData.slice(0, limit).map((complaint,i) => (
                 <TableRow
                   hover
@@ -205,7 +210,12 @@ const CustomerListResults = ({ ...rest }) => {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
+            :<TableBody><TableRow><TableCell colSpan={6}>
+              <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+              </TableCell></TableRow></TableBody>
+            }
+           
+         </Table>
         </Box>
       </PerfectScrollbar>
      

@@ -156,6 +156,8 @@ export default function Home() {
   // let highlightedProduct=!loading?data.highlightedProduct:[];
   // console.log(loading);
   // console.log(!loading?data.banner:[]);
+  var dummy=[1,2,3];
+  var dummytwo=[1,2,3,4,5,6];
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [data, setData] = useState(null);
@@ -400,7 +402,18 @@ export default function Home() {
                        {/* <NameCard/> */}
                        <WhiteCard key={i} item={shortdata}/>
                     </Grid>
-                  )) : <Skeleton animation="wave" />
+                  )) :  <Grid container spacing={2}>
+
+                    {
+                      dummy.map((dm)=>(
+                        <Grid item md={4}>
+                            <Skeleton animation="wave" width={300} height={300}/>
+                            </Grid>
+                      ))
+                    }
+                   
+                    
+                    </Grid>
                 }
 
               </Grid>
@@ -419,7 +432,18 @@ export default function Home() {
                        {/* <NameCard/> */}
                        <NameCard key={i} item={shortdata}/>
                     </Grid>
-                  )) : <Skeleton animation="wave" />
+                  )) : <Grid container spacing={2}>
+
+                  {
+                    dummy.map((dm)=>(
+                      <Grid item md={4}>
+                          <Skeleton animation="wave" width={300} height={118}/>
+                          </Grid>
+                    ))
+                  }
+                 
+                  
+                  </Grid>
                 }
 
     
@@ -438,7 +462,18 @@ export default function Home() {
                        {/* <NameCard/> */}
                       <HighlightCard key={i} item={highlightedproduct} />
                     </Grid>
-                  )) : <Skeleton animation="wave" />
+                  )) : <Grid container spacing={2}>
+
+                  {
+                    dummy.map((dm)=>(
+                      <Grid item md={4}>
+                          <Skeleton animation="wave" width={300} height={300}/>
+                          </Grid>
+                    ))
+                  }
+                 
+                  
+                  </Grid>
                 }
 
   
@@ -543,7 +578,8 @@ export default function Home() {
            
             Latest Products</DividerComponentLeft>
           </Grid> */}
-
+            {
+              !loadingIndicator&&highlightedListing.length>0 ?<div>
             {highlightedListing.length>0?<DetailCard item={highlightedListing[0]}/>:""}
             <br/>
             {highlightedListing.length>0?<DividerCard item={highlightedListing[0]}/>:""}
@@ -555,6 +591,19 @@ export default function Home() {
             {highlightedListing.length>0?<SmallCard item={highlightedListing[0]}/>:""}
             <br/>
             {highlightedListing.length>0?<DividerCarder item={highlightedListing[0]}/>:""}
+                </div>:<div>
+                {
+                    dummytwo.map((dm)=>(
+                      <Grid item md={4}>
+                          <Skeleton animation="wave" width={500} height={200}/>
+                          </Grid>
+                    ))
+                  }
+
+                </div>
+
+            }
+            
             {/* <DividerComponentLeft viewAllFunc={viewAllFunc}></DividerComponentLeft> */}
               {/* <Box style={{ paddingBottom: '30px' }}>
                 <DividerComponent>Fresh Recommendations</DividerComponent>

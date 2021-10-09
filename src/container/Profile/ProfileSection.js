@@ -32,8 +32,8 @@ import Transitions from '../../components/ui-component/extended/Transitions';
 
 // assets
 import { IconLogout, IconSearch, IconSettings,IconUser } from '@tabler/icons';
-import User1 from '../../assets/images/user-round.svg'
-
+import User1 from '../../assets/images/chil.png'
+import { myApi } from 'src/Api';
 // style const
 const useStyles = makeStyles((theme) => ({
     navContainer: {
@@ -127,6 +127,8 @@ const ProfileSection = () => {
     const anchorRef = React.useRef(null);
     const u_id = sessionStorage.getItem('u_id');
     const username = sessionStorage.getItem('username');
+    const profileimage = sessionStorage.getItem('profileimage');
+    console.log(profileimage)
     const navigate = useNavigate();
     //console.log(open);
     const logout = () => {
@@ -165,7 +167,7 @@ const ProfileSection = () => {
                 className={classes.profileChip}
                 icon={
                     <Avatar
-                        src={User1}
+                        src={profileimage!==""?`${myApi}/${profileimage}`:User1}
                         className={classes.headerAvatar}
                         ref={anchorRef}
                         aria-controls={open ? 'menu-list-grow' : undefined}
@@ -232,6 +234,7 @@ const ProfileSection = () => {
                                                 'aria-label': 'weight'
                                             }}
                                         /> */}
+                                        <br/>
                                         <Divider />
                                         <PerfectScrollbar className={classes.ScrollHeight}>
                         

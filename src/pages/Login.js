@@ -62,6 +62,7 @@ const Login = () => {
                     sessionStorage.setItem('email', values.email);
                     sessionStorage.setItem('username', resp.data.response.firstName);
                     sessionStorage.setItem('u_id', resp.data.response._id);
+                    sessionStorage.setItem('profileimage', resp.data.response.image);
                     setLoading(false);
                     toast.success(resp.data.message, { autoClose: 3000, });
                     navigate('/', { replace: true })

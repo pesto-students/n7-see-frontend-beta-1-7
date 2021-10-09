@@ -374,6 +374,7 @@ export default function ListRequest(props) {
                   hover
                   key={i}
                 >
+                  <TableCell>
 
                     <ListItem>
                     <ListItemAvatar>
@@ -413,6 +414,7 @@ export default function ListRequest(props) {
               
 
                   </ListItem>
+                  {/* <Divider /> */}
                   <ListItem style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
                   <Grid
                       container
@@ -451,8 +453,9 @@ export default function ListRequest(props) {
                              <IconButton
                       edge="end"
                       size="small"
+                      onClick={()=>handleClick(request._id)}
                     >
-                      <Delete onClick={()=>handleClick(request._id)}/>
+                      <Delete />
                     </IconButton>
                     <IconButton
                       edge="end"
@@ -476,14 +479,16 @@ export default function ListRequest(props) {
                   {request.category}
                   </TableCell> */}
 
-                  <Divider />
-
+                 
+                  </TableCell>
                 </TableRow>
-              )):<TableCell>
+              )):
+              <TableRow><TableCell>
               <div style={{textAlign:"center"}}>
                 No Request Found
               </div>
               </TableCell>
+              </TableRow>
             }
            
            </TableBody>

@@ -214,7 +214,7 @@ export default function ListInterest(props) {
 
   return (
     <>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+      <Grid container style={{ marginTop: '30px',  padding: '0px 30px 60px 30px' }}>
         {/* <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
           <div style={{ display: 'flex', alignItems: 'center', fontSize: '24px' }}>
             <IconButton aria-label="add to favorites">

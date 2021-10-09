@@ -193,7 +193,7 @@ export default function Profile() {
   };
   return (
     <>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+      <Grid container style={{ marginTop: '30px',  padding: '0px 30px 60px 30px' }}>
         {/* <Grid item md={12} style={{ display: 'flex', justifyContent: 'space-between', minHeight: '70px' }}>
           <div style={{ display: 'flex', alignItems: 'center', fontSize: '24px' }}>
             <IconButton aria-label="add to favorites">
@@ -231,115 +231,126 @@ export default function Profile() {
                 <CardContent>
                  
                   <Grid container spacing={2}>
-                  <Grid item md={4}>
-                  <Grid container justifyContent="center">
-                    <Card>
-                    <CardHeader
-                              avatar={(
-                                <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={myProfileData!==null&&myProfileData.image!==""?`${myApi}/${myProfileData.image}`:user.avatar}
-                                title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
-                                subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
-                                >
-                    </Avatar>
-                      )}
-                            />
-                    <Divider/>
-                    <CardContent>
-                    <div style={{textAlign:"center"}}>
-                    <Typography
-                      color="textPrimary"
-                      gutterBottom
-                      variant="h3"
-                    >
-                   {myProfileData!==null?myProfileData.firstName+" "+myProfileData.lastName:""}
-                    </Typography>
-                    {/* <Chip
-                      label="Edit Profile"
-                      onClick={() => handleClick()}
-                      style={{ backgroundColor: '#ECA909',color:"#fff"}}
-                    /> */}
-
-                    <Button
-                      color="primary"
-                      fullWidth
-                      variant="contained"
-                      onClick={() => handleClick()}
-                    >
-                     Edit Profile
-                    </Button>
-                    </div>
-                    </CardContent>
-                    </Card>
-
-                  </Grid>
-                  
-
-                  </Grid>
-                    <Grid item md={8}>
-                      <Card>
-                    <CardHeader
-                      className={classes.tabHeader}
-                      title="General Information"
-                    />
-                    <CardContent>
-                      <Grid container>
-                      <Grid item md={12}>
-                          <b> Gender</b>
-                        </Grid>
-                      <Grid item md={12}>
-                     { myProfileData!==null?myProfileData.gender!==undefined?myProfileData.gender:"...":"..."}
-                        </Grid>
-
+                    {
+                      !loadingIndicator? <Grid item md={4}>
+                      <Grid container justifyContent="center">
+                        <Card>
+                        <CardHeader
+                                  avatar={(
+                                    <Avatar sx={{ bgcolor: '#000' }} className={classes.headerAvatar} aria-label="recipe"  src={myProfileData!==null&&myProfileData.image!==""?`${myApi}/${myProfileData.image}`:user.avatar}
+                                    title={<div>{myProfileData!==null?myProfileData.firstName+" dsfsdf"+myProfileData.lastName:""}</div>}
+                                    subheader=  { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"":""}
+                                    >
+                        </Avatar>
+                          )}
+                                />
+                        <Divider/>
+                        <CardContent>
+                        <div style={{textAlign:"center"}}>
+                        <Typography
+                          color="textPrimary"
+                          gutterBottom
+                          variant="h3"
+                        >
+                       {myProfileData!==null?myProfileData.firstName+" "+myProfileData.lastName:""}
+                        </Typography>
+                        {/* <Chip
+                          label="Edit Profile"
+                          onClick={() => handleClick()}
+                          style={{ backgroundColor: '#ECA909',color:"#fff"}}
+                        /> */}
+    
+                        <Button
+                          color="primary"
+                          fullWidth
+                          variant="contained"
+                          onClick={() => handleClick()}
+                        >
+                         Edit Profile
+                        </Button>
+                        </div>
+                        </CardContent>
+                        </Card>
+    
                       </Grid>
+                      
+    
+                      </Grid>:
+                      <Grid item md={4}>
+                         <Skeleton animation="wave" width="100%" height={300}/>
+                        </Grid> 
+                    }
+                   {
+                      
+                        !loadingIndicator?   <Grid item md={8}>
+                        <Card>
+                      <CardHeader
+                        className={classes.tabHeader}
+                        title="General Information"
+                      />
+                      <CardContent>
+                        <Grid container>
+                        <Grid item md={12}>
+                            <b> Gender</b>
+                          </Grid>
+                        <Grid item md={12}>
+                       { myProfileData!==null?myProfileData.gender!==undefined?myProfileData.gender:"...":"..."}
+                          </Grid>
+  
+                        </Grid>
+                        <Grid container>
+                        <Grid item md={12}>
+                            <b> Mobile Number</b>
+                          </Grid>
+                        <Grid item md={12}>
+                        { myProfileData!==null?myProfileData.mobno:""}
+                          </Grid>
+  
+                      </Grid>
+                        <br />
+                        <Grid container>
+                        <Grid item md={12}>
+                            <b> Email</b>
+                          </Grid>
+                        <Grid item md={12}>
+                        { myProfileData!==null?myProfileData.email:""}
+                          </Grid>
+  
+                      </Grid>
+                        <br />
+                        <Grid container>
+                        <Grid item md={12}>
+                            <b> Address</b>
+                          </Grid>
+                        <Grid item md={12}>
+                        { myProfileData!==null?myProfileData.address:""}
+                          </Grid>
+  
+                      </Grid>
+                      <br/>
                       <Grid container>
-                      <Grid item md={12}>
-                          <b> Mobile Number</b>
-                        </Grid>
-                      <Grid item md={12}>
-                      { myProfileData!==null?myProfileData.mobno:""}
-                        </Grid>
-
-                    </Grid>
-                      <br />
-                      <Grid container>
-                      <Grid item md={12}>
-                          <b> Email</b>
-                        </Grid>
-                      <Grid item md={12}>
-                      { myProfileData!==null?myProfileData.email:""}
-                        </Grid>
-
-                    </Grid>
-                      <br />
-                      <Grid container>
-                      <Grid item md={12}>
-                          <b> Address</b>
-                        </Grid>
-                      <Grid item md={12}>
-                      { myProfileData!==null?myProfileData.address:""}
-                        </Grid>
-
-                    </Grid>
-                    <br/>
-                    <Grid container>
-                      <Grid item md={12}>
-                          <b> City</b>
-                        </Grid>
-                      <Grid item md={12}>
-                      { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"...":"..."}
-                        </Grid>
-
-                    </Grid>
-                   
-                   
-                      <br />
-
-
-                    </CardContent>
-                  </Card>
-
-                    </Grid>
-                 
+                        <Grid item md={12}>
+                            <b> City</b>
+                          </Grid>
+                        <Grid item md={12}>
+                        { myProfileData!==null?myProfileData.city!==undefined?myProfileData.city:"...":"..."}
+                          </Grid>
+  
+                      </Grid>
+                     
+                     
+                        <br />
+  
+  
+                      </CardContent>
+                    </Card>
+  
+                      </Grid>
+                      :  <Grid item md={8}>
+                          <Skeleton animation="wave" width="100%" height={300}/>
+                      </Grid>
+                   }
+                  
                   </Grid>
 
                 </CardContent>

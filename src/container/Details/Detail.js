@@ -36,7 +36,7 @@ import {
   CssBaseline,
   TextField,
   Input,
-  LinearProgress, Chip, Modal,
+  LinearProgress, Chip, Modal,CircularProgress,
   IconButton
 } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -147,6 +147,7 @@ export default function Detail(props) {
   const [itemDetails, setItemDetails] = useState(null);
   const u_id = sessionStorage.getItem('u_id');
   console.log("asdsad",u_id)
+  
   const [include,setInclude]=useState(false);
   useEffect(() => {
     const getMyContactDetails = async () => {
@@ -192,9 +193,15 @@ export default function Detail(props) {
       }
       await axios.post(`${myApi}/request/expressinterest`,expressreq).then((resp) => {
         console.log(resp);
-        toast.success(resp.data.response.message, { autoClose: 3000, });
+        
         setLoadingIndicator(false);
-        navigate('/user/home')
+        toast.success(resp.data.message, { autoClose: 3000, });
+        setTimeout(() => {
+          navigate('/user/home')
+        }, 2000);
+       
+
+       
 
       }).catch((e) => {
         setLoadingIndicator(false);
@@ -210,9 +217,16 @@ export default function Detail(props) {
     setPageEdit(false);
   };
 
+  const handleClose = () => {
+    
+    navigate('/user/home')
+  };
+
+
   return (
     <>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+     {!loadingIndicator?<div>
+      <Grid container style={{ marginTop: '30px',  padding: '0px 30px 60px 30px' }}>
 
 
         <Grid item md={12}>
@@ -250,12 +264,16 @@ export default function Detail(props) {
                   <Grid container spacing={2}>
                 <Grid item md={12}>
                   <Grid container>
-                    <Grid item md={4}>
-                      <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
-                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""} />
+                    <Grid item md={6}>
+                    <img style={{ height: '400px', width: '500px' }}
+                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""}
+                          />
+
+                      {/* <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}
+                        src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""} /> */}
 
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item md={6}>
                       {itemDetails != null ? itemDetails.description : ''}
 
                     </Grid>
@@ -335,20 +353,29 @@ export default function Detail(props) {
               </Grid>
 
                 </CardContent>
+                <Divider/>
+                <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
+                
                 {
-                  !include&&(u_id!==undefined&&u_id!==null)&&(itemDetails!==null&&itemDetails.u_id!==u_id)?<>
-                      <Divider/>
-                 <div style={{display:"flex",justifyContent:"end",alignItems:"center",height:"7vh",paddingRight:"10px"}}>
+                  !include&&(u_id!==undefined&&u_id!==null)&&(itemDetails!==null&&itemDetails.u_id!==u_id)?<div>
+                     
+                 
                   <Chip
                       label="Express Interest"
                       onClick={() => expressInterestFunc(itemDetails._id,u_id)}
                       style={{ backgroundColor: '#ECA909', color:"#fff"}}
                       />
-                 
-                  </div>
-                  </>:""
+
+                 &nbsp;
+                  </div>:""
                 }
-            
+                 <Chip
+                      label="Close"
+                      onClick={() => handleClose()}
+                      style={{ backgroundColor: '#f50057',color:"#fff" }}
+                    />
+                 </div>
+              
               </Card>
 
             </Grid>
@@ -358,6 +385,13 @@ export default function Detail(props) {
 
       </Grid>
       <ToastContainer />
+      </div>:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+      <Skeleton animation="wave" width="90%" height={500}/>
+      
+        {/* <CircularProgress /> */}
+        
+        </div>
+    }
     </>
   );
 }

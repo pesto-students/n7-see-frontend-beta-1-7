@@ -136,8 +136,10 @@ export default function UpdateProfile(props) {
   const [cityData, setCityData] = useState([]);
   const [cityLoading, setCityLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imageUpload, setImageUpload] = useState(false);
   const [myFile,setMyFile]=useState(null);
-  const [showImage,setShowImage]=useState(props.myProfileData!==null?props.myProfileData.image:null);
+  const [showImage,setShowImage]=useState(props.myProfileData!==null&&props.myProfileData.image!==undefined&&props.myProfileData.image!==""?props.myProfileData.image:"");
+  console.log("img",props.myProfileData)
   const formRef = useRef();
   useEffect(() => {
     async function getCity() {
@@ -146,9 +148,10 @@ export default function UpdateProfile(props) {
         const options = resp.data.response.map(function(row) {
           return { value : row._id, label : row.city }
        })
-        console.log(resp)
-        
+        // console.log("cityd",myProfileData.city!==null?options.find((citydata)=>citydata.label==myProfileData.city):null)
+        formRef.current.setFieldValue('city',myProfileData.city!==null?options.find((citydata)=>citydata.label==myProfileData.city):null)
         setCityData(options)
+        
         setCityLoading(false);
       })
     }
@@ -179,6 +182,7 @@ const onChangeHandler=(event,setFieldValue)=>{
 }
 
 const onClickHandler = () => {
+  setImageUpload(true)
   const data = new FormData()
   console.log(myFile)
   if(myFile!==null)
@@ -186,11 +190,14 @@ const onClickHandler = () => {
   data.append('file', myFile)
   axios.post(`${myApi}/request/upload`, data)
     .then(res => { 
+      setImageUpload(false)
+      toast.success("Image Uploaded", { autoClose: 3000, });
       setShowImage(res.data);
       console.log(`${myApi}/${res.data.filename}`)
     })
   }
   else{
+    setImageUpload(false)
      toast.error("Please Upload atleast one image", { autoClose: 3000, });
   }
 
@@ -211,7 +218,7 @@ const onClickHandler = () => {
     <>
      {
                       !loading?<div>
-      <Grid container style={{ marginTop: '30px', backgroundColor: '#fcfcfc', padding: '0px 30px 60px 30px' }}>
+      <Grid container style={{ marginTop: '30px', padding: '0px 30px 60px 30px' }}>
           <Grid item md={12}>
             <Grid container spacing={2}>
               <Grid item md={12}>
@@ -226,10 +233,10 @@ const onClickHandler = () => {
                       initialValues={{
                         firstName: myProfileData!==null?myProfileData.firstName:"",
                         lastName: myProfileData!==null?myProfileData.lastName:"",
-                        gender: myProfileData!==null?genderData.filter((genderdata)=>genderdata.label==myProfileData.gender):null,
+                        gender: myProfileData!==null&&myProfileData.gender!==""?genderData.find((genderdata)=>genderdata.label==myProfileData.gender):null,
                         mobno: myProfileData!==null?myProfileData.mobno:"",
                         email: myProfileData!==null?myProfileData.email:"",
-                        city: myProfileData!==null&&myProfileData.city!==null?cityData.filter((citydata)=>citydata.label==myProfileData.city):null,
+                        city: myProfileData!==null&&myProfileData.city!==null?cityData.find((citydata)=>citydata.label==myProfileData.city):null,
                         address:myProfileData!==null?myProfileData.address:"",
                       }}
                       validationSchema={
@@ -238,21 +245,22 @@ const onClickHandler = () => {
                           lastName: Yup.string().max(255).required('Last name is required'),
                           gender: Yup.object().nullable().required("Gender Required"),
                           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                          city:Yup.object().nullable(),
+                          city:Yup.object().nullable().required(),
                           mobno:Yup.number().positive().typeError("Must be Positive number").required('Mobile Number is required'),
-                          address:Yup.string(),
+                          address:Yup.string().nullable(),
                          
                         })
                       }
                       onSubmit={(values, { setSubmitting }) => {
+                        console.log(values.city)
                         setLoading(true)
                         setSubmitting(true);
-                        console.log("showImage",showImage.filename);
+                        console.log("showImage",showImage);
                         const valueCopy = JSON.parse(JSON.stringify(values));
                         valueCopy.u_id = sessionStorage.getItem('u_id');
                         valueCopy.city = values.city!=null?values.city.label:null
                         valueCopy.gender = values.gender!=null?values.gender.label:null
-                        valueCopy.image=showImage.filename
+                        valueCopy.image=showImage
                         axios.post(`${myApi}/users/updateuser`, valueCopy,
                         ).then((resp) => {
                           console.log(resp);
@@ -260,17 +268,19 @@ const onClickHandler = () => {
                           setSubmitting(false);
                           if (resp.status == 200) {
                             console.log('resp', resp);
-                            toast.success(resp.data.message, { autoClose: 3000, });
+                            setLoading(false)
+                            toast.success("Updated Successfully", { autoClose: 3000, });
                             setTimeout(() => {navigate("/", { replace: true })}, 3000);
                             // navigate("/")
                            
                           
                           } else {
-                            toast.error(resp.data.message, { autoClose: 3000, });
+                            setLoading(false)
+                            toast.error("Updation Failed", { autoClose: 3000, });
                             console.log(resp);
                           }
                         });
-                        setLoading(false)
+    
                       }}
 
 
@@ -354,6 +364,9 @@ const onClickHandler = () => {
                                 touched={touched.city}
                                 isLoading={cityLoading}
                                 isClearable
+                                style={{
+                                  zIndex:"10000"
+                                }}
                               />
                             </Grid>
 
@@ -390,47 +403,8 @@ const onClickHandler = () => {
                                 fullWidth
                               />
                             </Grid>
-
-                  </Grid>
-                  </Grid>
-                    <Grid item md={6} style={{ width: '25px', height: '25px' }}>
-                    <Grid container justifyContent="center">
-                    <Card>
-                    <CardHeader
-                              avatar={(
-                                <Avatar 
-                                sx={{ bgcolor: '#000' }} 
-                                className={classes.headerAvatar} 
-                                aria-label="recipe"
-                                // src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
-                                src={myFile!==null?URL.createObjectURL(myFile):showImage!==null?`${myApi}/${showImage}`:user.avatar}
-                                onClick={()=>handleClick()}
-                                >
-                        </Avatar>    
-                        )}
-                   />
-                  <Divider/>
-                  <CardContent>
-                  <div style={{textAlign:"center"}}>
-                  <input type="file" style={{display: 'none'}}  ref={hiddenFileInput} name="file" onChange={(ev)=>onChangeHandler(ev,setFieldValue)}/>
-                  <Button
-                      color="primary"
-                      fullWidth
-                      variant="contained"
-                      onClick={()=>onClickHandler()}
-                    >
-                     Upload
-                    </Button>
-                    </div>
-                  </CardContent>
-                  
-                  </Card>
-                  </Grid>
-
-                  </Grid>
-
-                    <Grid item xs={12} sm={12}>
-                    <Field
+                            <Grid item xs={12} sm={12}>
+                            <Field
                     component={TextField}
                     label="Address"
                     name="address"
@@ -447,13 +421,55 @@ const onClickHandler = () => {
                     row={4}
                     fullWidth
                   />
+                            </Grid>
 
-                  </Grid>
-
-                  </Grid>
+                    </Grid>
+                    </Grid>
+                    <Grid item md={6} style={{ width: '25px', height: '25px' }}>
+                      <Grid container justifyContent="center">
+                      <Card>
+                      {!imageUpload? <CardHeader
+                                avatar={(
+                                  <Avatar 
+                                  sx={{ bgcolor: '#000' }} 
+                                  className={classes.headerAvatar} 
+                                  aria-label="recipe"
+                                  // src={myFile!==null?URL.createObjectURL(myFile):user.avatar}
+                                  src={myFile!==null?URL.createObjectURL(myFile):showImage!==""?`${myApi}/${showImage}`:user.avatar}
+                                  onClick={()=>handleClick()}
+                                  >
+                          </Avatar>    
+                          )}
+                      />:<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><CircularProgress /></div>
+                      }
+                     
+                    <Divider/>
+                      <CardContent>
+                    <div style={{textAlign:"center"}}>
+                    <input type="file" style={{display: 'none'}}  ref={hiddenFileInput} name="file" onChange={(ev)=>onChangeHandler(ev,setFieldValue)}/>
+                    <Button
+                        color="primary"
+                        fullWidth
+                        variant="contained"
+                        onClick={()=>onClickHandler()}
+                      >
+                      Upload
+                      </Button>
+                      </div>
+                    </CardContent>
                     
+                    </Card>
+                    </Grid>
+
+                  </Grid>
+
+
+                  </Grid>
+                  <br/>
+                    <Divider/>
+                    <br/>
                     <Grid container spacing={2} justifyContent="flex-end">
-                    {isSubmitting && <LinearProgress />}
+                
                     <Grid item xs={2}>
 
                     <Button type="submit" fullWidth color="primary" variant="contained">
