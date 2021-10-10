@@ -1,23 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import './index.css';
+import './assets/autumn-in-november.regular.ttf';
 import store from './store';
-import { ThemeProvider } from '@material-ui/core/styles';
+import App from './App';
+// import reportWebVitals from './reportWebVitals';
+// import { ThemeProvider } from '@material-ui/core/styles';
 ReactDOM.render(
-  <React.StrictMode>
-        <Provider store={store}>
+  (
+    // <React.StrictMode>
+    // "scripts": {
+    //   "start": "react-scripts start",
+    //   "build": "react-scripts build",
+    //   "test": "react-scripts test",
+    //   "eject": "react-scripts eject"
+    // },
+    <BrowserRouter>
+      <Provider store={store}>
         <CssBaseline />
         <App />
-    </Provider>
-  </React.StrictMode>,
+      </Provider>
+    </BrowserRouter>
+  // </React.StrictMode>
+  ),
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// reportWebVitals();

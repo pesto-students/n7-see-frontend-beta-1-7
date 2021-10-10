@@ -1,8 +1,8 @@
-import React, { Fragment,useEffect,useState } from "react";
+import React, { Fragment, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,11 +23,8 @@ import CategoryCard from '../../components/Card/CategoryCard';
 // import { increment, decrement, getCounter } from "./counterReducer";
 // import { useSelector, useDispatch } from "react-redux";
 import dashboardimg from '../../assets/images/dashboardimg.png';
-import { CardHeader, collapseClasses } from "@material-ui/core";
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
 import {
+  CardHeader, collapseClasses,
   Container,
   Box,
   Typography,
@@ -38,15 +35,23 @@ import {
   TextField,
   Input,
   LinearProgress,
-  makeStyles,
 } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import {
+  Formik, Field, Form, ErrorMessage
+} from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
-import RSelect from "../../components/Select/RSelect";
 import { Redirect, useHistory } from 'react-router-dom';
-import { Skeleton } from "@material-ui/lab";
-import ListRequest  from "./ListRequest";
+// import { Skeleton } from '@material-ui/lab';
+import Skeleton from '@material-ui/core/Skeleton';
+import RSelect from '../../components/Select/RSelect';
+import ListRequest from './ListRequest';
 import NewRequest from './NewRequest';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -61,8 +66,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    marginLeft:"40px",
-    //border:"1px solid #000"
+    marginLeft: '40px',
+    // border:"1px solid #000"
   },
   paper: {
     padding: theme.spacing(2),
@@ -75,43 +80,47 @@ const useStyles = makeStyles((theme) => ({
     // border:"1px solid #000"
   },
   headerAvatar: {
-    height:'10vh'
+    height: '10vh'
   },
-  grid1Col1:{
-    display:"flex",
-    alignItems:"center",
-    justifyContent:"center",
+  grid1Col1: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  grid1Col1Img:{
-    height: "100%",
-    width: "600px"
+  grid1Col1Img: {
+    height: '100%',
+    width: '600px'
   },
-  grid1Col2:{
-    backgroundColor:"#F9F9FB",
-    marginRight:'10px',
+  grid1Col2: {
+    backgroundColor: '#F9F9FB',
+    marginRight: '10px',
     // border:"1px solid #000",
-    borderRadius: "0px 5px 5px 0px",
-    padding:"40px"
+    borderRadius: '0px 5px 5px 0px',
+    padding: '40px'
   },
-  grid1Col2Buyer:{
-    backgroundColor:"#F9F9FB",
-    marginRight:'10px',
+  grid1Col2Buyer: {
+    backgroundColor: '#F9F9FB',
+    marginRight: '10px',
     // border:"1px solid #000",
-    borderRadius: "0px 5px 5px 0px",
-    padding:"40px"
+    borderRadius: '0px 5px 5px 0px',
+    padding: '40px'
   }
 }));
 
 export default function MyRequest() {
   const classes = useStyles();
-  const [addNewRequest,setAddNewRequest]=useState(false);
+  const [addNewRequest, setAddNewRequest] = useState(false);
+  const setAddNewRequestFunc=(value)=>{
+    // console.log(value)
+    setAddNewRequest(true);
+  }
   return (
-  <Fragment>
-    
-    {
-    !addNewRequest?
-    <ListRequest setAddNewRequest={setAddNewRequest}/>:<NewRequest setAddNewRequest={setAddNewRequest}/>
+    <>
+
+      {
+    !addNewRequest
+      ? <ListRequest setAddNewRequest={setAddNewRequestFunc} /> : <NewRequest setAddNewRequest={setAddNewRequest} />
     }
-  </Fragment>
+    </>
   );
-};
+}

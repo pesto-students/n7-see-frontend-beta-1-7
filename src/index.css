@@ -1,11 +1,18 @@
 
+@font-face {
+    font-family: "AssistantRegular";
+    src: local("AssistantRegular"),
+      url("./assets/autumn-in-november.regular.ttf") format("truetype");
+    font-weight: normal;
+  }
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue','AssistantRegular',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   /* background: url('./assets/images/bg1.jpeg') no-repeat center fixed;
   background-position: 'center';
         background-size: 'cover';

@@ -1,5 +1,5 @@
-import React from "react";
-import Select from "react-select";
+import React from 'react';
+import Select from 'react-select';
 // import "react-select-css/dist/react-select-css.css";
 
 function RSelect(props) {
@@ -13,19 +13,15 @@ function RSelect(props) {
         borderColor: '#DC3545',
       }
     }),
-  }
+  };
   const style1 = {
     // control: (base, state) => ({
     //   ...base,
     //  height:32,
     //  minHeight:32
     // }),
-    menu: provided => ({ ...provided, zIndex: 9999 })
-  }
-
-
-
-
+    menu: (provided) => ({ ...provided, zIndex: 9999 })
+  };
 
   return (
     <div>
@@ -41,13 +37,13 @@ function RSelect(props) {
         isLoading={props.isLoading}
         defaultValue={props.defaultValue}
         isDisabled={props.disabled}
-        isClearable={props.isClearable} 
-        menuPlacement="auto"   
+        isClearable={props.isClearable}
+        menuPlacement="auto"
         id={props.id}
       />
       {!!props.error && props.touched && (
         <div
-          style={{ color: "#DC3545", fontSize: 11.264, marginTop: ".4rem" }}
+          style={{ color: '#DC3545', fontSize: 11.264, marginTop: '.4rem' }}
         >
           {props.error}
         </div>
@@ -56,4 +52,3 @@ function RSelect(props) {
   );
 }
 export default RSelect;
-

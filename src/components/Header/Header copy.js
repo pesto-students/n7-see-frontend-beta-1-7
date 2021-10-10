@@ -1,15 +1,16 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import PersonIcon from "@material-ui/icons/Person";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
-const styles = theme => ({
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import MenuIcon from '@material-ui/icons/Menu';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonIcon from '@material-ui/icons/Person';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/styles';
+import classNames from 'classnames';
+
+const styles = (theme) => ({
   toolbarRoot: {
     paddingRight: 24
   },
@@ -22,19 +23,20 @@ const styles = theme => ({
   }
 });
 
-const Header = props => {
-  const { classes, handleToggleDrawer,open } = props;
+const Header = (props) => {
+  const { classes, handleToggleDrawer, open } = props;
   return (
-    <AppBar position="absolute" 
-    classes={{
-      paper: classNames(
-        classes.appBar, open && classes.appBarShift
-      )
-    }}
+    <AppBar
+      position="absolute"
+      classes={{
+        paper: classNames(
+          classes.appBar, open && classes.appBarShift
+        )
+      }}
 
     // className={clsx(classes.appBar, open && classes.appBarShift)}
     >
-      <Toolbar disableGutters={true} classes={{ root: classes.toolbarRoot }}>
+      <Toolbar disableGutters classes={{ root: classes.toolbarRoot }}>
         <IconButton
           color="inherit"
           aria-label="Open drawer"

@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid, Divider as MuiDivider } from "@material-ui/core";
+import React from 'react';
+import { Grid, Divider as MuiDivider } from '@material-ui/core';
 
 const DividerComponent = ({ children, ...props }) => (
   <Grid container alignItems="center" spacing={3} {...props}>

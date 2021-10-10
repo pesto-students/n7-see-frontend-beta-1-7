@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Chart from "react-apexcharts";
+import React, { Component } from 'react';
+import Chart from 'react-apexcharts';
 
 class TotalGrowthBarChart extends Component {
   constructor(props) {
@@ -10,21 +10,21 @@ class TotalGrowthBarChart extends Component {
     this.state = {
       optionsMixedChart: {
         chart: {
-          id: "basic-bar",
+          id: 'basic-bar',
           toolbar: {
             show: false
           }
         },
         plotOptions: {
           bar: {
-            columnWidth: "50%"
+            columnWidth: '50%'
           }
         },
         stroke: {
           width: [4, 0, 0]
         },
         xaxis: {
-          categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         markers: {
           size: 6,
@@ -43,18 +43,18 @@ class TotalGrowthBarChart extends Component {
       },
       seriesMixedChart: [
         {
-          name: "series-1",
-          type: "line",
+          name: 'series-1',
+          type: 'line',
           data: [30, 40, 25, 50, 49, 21, 70, 51]
         },
         {
-          name: "series-2",
-          type: "column",
+          name: 'series-2',
+          type: 'column',
           data: [23, 12, 54, 61, 32, 56, 81, 19]
         },
         {
-          name: "series-3",
-          type: "column",
+          name: 'series-3',
+          type: 'column',
           data: [62, 12, 45, 55, 76, 41, 23, 43]
         }
       ],
@@ -65,12 +65,12 @@ class TotalGrowthBarChart extends Component {
             endAngle: 225,
             hollow: {
               margin: 0,
-              size: "70%",
-              background: "#fff",
+              size: '70%',
+              background: '#fff',
               image: undefined,
               imageOffsetX: 0,
               imageOffsetY: 0,
-              position: "front",
+              position: 'front',
               dropShadow: {
                 enabled: true,
                 top: 3,
@@ -80,8 +80,8 @@ class TotalGrowthBarChart extends Component {
               }
             },
             track: {
-              background: "#fff",
-              strokeWidth: "67%",
+              background: '#fff',
+              strokeWidth: '67%',
               margin: 0, // margin is in pixels
               dropShadow: {
                 enabled: true,
@@ -93,31 +93,31 @@ class TotalGrowthBarChart extends Component {
             },
 
             dataLabels: {
-              showOn: "always",
+              showOn: 'always',
               name: {
                 offsetY: -20,
                 show: true,
-                color: "#888",
-                fontSize: "13px"
+                color: '#888',
+                fontSize: '13px'
               },
               value: {
-                formatter: function (val) {
+                formatter(val) {
                   return val;
                 },
-                color: "#111",
-                fontSize: "30px",
+                color: '#111',
+                fontSize: '30px',
                 show: true
               }
             }
           }
         },
         fill: {
-          type: "gradient",
+          type: 'gradient',
           gradient: {
-            shade: "dark",
-            type: "horizontal",
+            shade: 'dark',
+            type: 'horizontal',
             shadeIntensity: 0.5,
-            gradientToColors: ["#ABE5A1"],
+            gradientToColors: ['#ABE5A1'],
             inverseColors: true,
             opacityFrom: 1,
             opacityTo: 1,
@@ -125,15 +125,15 @@ class TotalGrowthBarChart extends Component {
           }
         },
         stroke: {
-          lineCap: "round"
+          lineCap: 'round'
         },
-        labels: ["Percent"]
+        labels: ['Percent']
       },
       seriesRadial: [76],
       optionsBar: {
         chart: {
           stacked: true,
-          stackType: "100%",
+          stackType: '100%',
           toolbar: {
             show: false
           }
@@ -152,7 +152,7 @@ class TotalGrowthBarChart extends Component {
           width: 0
         },
         xaxis: {
-          categories: ["Fav Color"],
+          categories: ['Fav Color'],
           labels: {
             show: false
           },
@@ -165,10 +165,10 @@ class TotalGrowthBarChart extends Component {
         },
         fill: {
           opacity: 1,
-          type: "gradient",
+          type: 'gradient',
           gradient: {
-            shade: "dark",
-            type: "vertical",
+            shade: 'dark',
+            type: 'vertical',
             shadeIntensity: 0.35,
             gradientToColors: undefined,
             inverseColors: false,
@@ -179,25 +179,25 @@ class TotalGrowthBarChart extends Component {
         },
 
         legend: {
-          position: "bottom",
-          horizontalAlign: "right"
+          position: 'bottom',
+          horizontalAlign: 'right'
         }
       },
       seriesBar: [
         {
-          name: "blue",
+          name: 'blue',
           data: [32]
         },
         {
-          name: "green",
+          name: 'green',
           data: [41]
         },
         {
-          name: "yellow",
+          name: 'yellow',
           data: [12]
         },
         {
-          name: "red",
+          name: 'red',
           data: [65]
         }
       ]
@@ -211,16 +211,12 @@ class TotalGrowthBarChart extends Component {
     const newBarSeries = [];
 
     this.state.seriesMixedChart.forEach((s) => {
-      const data = s.data.map(() => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      });
-      newMixedSeries.push({ data: data, type: s.type });
+      const data = s.data.map(() => Math.floor(Math.random() * (max - min + 1)) + min);
+      newMixedSeries.push({ data, type: s.type });
     });
 
     this.state.seriesBar.forEach((s) => {
-      const data = s.data.map(() => {
-        return Math.floor(Math.random() * (180 - min + 1)) + min;
-      });
+      const data = s.data.map(() => Math.floor(Math.random() * (180 - min + 1)) + min);
       newBarSeries.push({ data, name: s.name });
     });
 
