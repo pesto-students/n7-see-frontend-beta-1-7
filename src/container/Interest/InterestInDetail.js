@@ -66,6 +66,10 @@ import { Redirect, useNavigate } from 'react-router-dom';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
 import { myApi } from 'src/Api';
+<<<<<<< HEAD
+=======
+import defaultimg from '../../assets/images/defaultimg.png';
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -143,7 +147,11 @@ const style = {
   p: 4,
 };
 export default function InterestInDetail(props) {
+<<<<<<< HEAD
   // console.log(props.selectedData)
+=======
+  console.log("dsfsdf",props.selectedData)
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
   const classes = useStyles();
   const navigate = useNavigate();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -156,8 +164,13 @@ export default function InterestInDetail(props) {
   useEffect(() => {
     const getMyContactDetails = async () => {
       setLoadingIndicator(true);
+<<<<<<< HEAD
       await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
         // console.log(resp);
+=======
+      await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.r_id}`).then((resp) => {
+        console.log(resp);
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
         setContactData(resp.data.response);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -211,8 +224,13 @@ export default function InterestInDetail(props) {
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
                       */}
                       <img style={{ height: '400px', width: '500px' }}
+<<<<<<< HEAD
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} 
                           />
+=======
+                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:"" } 
+                        onError={e => { e.currentTarget.src = defaultimg; }}  />
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
                     </Grid>
                     <Grid item md={6}>
                       {props.selectedData.description}

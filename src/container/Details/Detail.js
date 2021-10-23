@@ -61,6 +61,10 @@ import 'material-react-toastify/dist/ReactToastify.css';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
 import { myApi } from 'src/Api';
+<<<<<<< HEAD
+=======
+import defaultimg from '../../assets/images/defaultimg.png';
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -164,9 +168,16 @@ export default function Detail(props) {
 
       // setUser(result.data);
     };
+<<<<<<< HEAD
     if (itemDetails != null) {
       setInclude( itemDetails.interest.length>0?itemDetails.interest.some(item=>item._id===u_id):false)
       getMyContactDetails();
+=======
+    console.log("u_id",u_id);
+    if (itemDetails != null) {
+      setInclude( itemDetails.interest.length>0?itemDetails.interest.some(item=>item._id===u_id):false)
+      // getMyContactDetails();
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
     }
   }, [itemDetails]);
 
@@ -267,6 +278,10 @@ export default function Detail(props) {
                     <Grid item md={6}>
                     <img style={{ height: '400px', width: '500px' }}
                         src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApi}/${itemDetails.image[0].filename}`:""}
+<<<<<<< HEAD
+=======
+                        onError={e => { e.currentTarget.src = defaultimg; }}
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
                           />
 
                       {/* <Avatar variant="rounded" style={{ height: '300px', width: '300px' }}

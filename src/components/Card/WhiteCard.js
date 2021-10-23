@@ -130,6 +130,11 @@ export default function WhiteCard(props) {
       state: items
     })
   };
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
   // const counter = useSelector(getCounter);
 // console.log("dsdfsd",props.item);
   // const dispatch = useDispatch();
@@ -164,8 +169,14 @@ export default function WhiteCard(props) {
         </div>
         {/* <img src={img31} width="100%"/> */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
+<<<<<<< HEAD
       {
          props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+=======
+         
+      {
+         props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} onError={e => { e.currentTarget.src = defaultimg; }} width="300px" height="250px"/>:
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
         <img src={defaultimg} width="300px" height="250px"/>
       }
     </div>

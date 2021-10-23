@@ -65,6 +65,10 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
+<<<<<<< HEAD
+=======
+import defaultimg from '../../assets/images/defaultimg.png';
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
 import { myApi } from 'src/Api';
 const drawerWidth = 240;
 
@@ -224,6 +228,10 @@ export default function RequestInDetail(props) {
             
                             <img style={{ height: '400px', width: '500px' }}
                             src={props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""}
+<<<<<<< HEAD
+=======
+                            onError={e => { e.currentTarget.src = defaultimg; }}
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
                               />
 
                         </Grid>

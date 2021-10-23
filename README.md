@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## [Material Kit - React](https://material-kit-react.devias.io/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=%F0%9F%9A%A8Devias%20Freebie%20Alert%20-%20An%20awesome%20ready-to-use%20register%20page%20made%20with%20%23material%20%23react%0D%0Ahttps%3A%2F%2Fdevias.io%20%23createreactapp%20%23devias%20%23material%20%23freebie%20%40devias-io)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
@@ -98,6 +99,8 @@ material-react-dashboard
 
 - [Github Issues Page](https://github.com/devias-io/react-material-dashboard/issues?ref=devias-io)
 
+=======
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
 ## About Product
 - On Landing Page, we will showcase our product features, a walkthrough
 on how to use our product, with contact us and product feature descriptions
@@ -109,4 +112,15 @@ page
 
 https://see-frontend.herokuapp.com/
 
+<<<<<<< HEAD
+=======
+Admin User
+    username:admin@serveend.com
+    password:admin
+Public user
+    username:pesto@pestotech.com
+    password:pesto
+
+
+>>>>>>> 3fe32b2c07df3eef7318f882db479724e5313793
  
