@@ -9,4 +9,12 @@ page
 
 https://see-frontend.herokuapp.com/
 
+Admin User
+    username:admin@serveend.com
+    password:admin
+Public user
+    username:pesto@pestotech.com
+    password:pesto
+
+
  
