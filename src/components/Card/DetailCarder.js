@@ -163,7 +163,7 @@ export default function DetailCarder(props) {
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
         {
-         props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} width="300px" height="250px"/>:
+         props.item!==""&&props.item.image.length>0? <img src={`${myApi}/${props.item.image[0].filename}`} onError={e => { e.currentTarget.src = defaultimg; }} width="300px" height="250px"/>:
         <img src={defaultimg} width="300px" height="250px"/>
       }
       </div>

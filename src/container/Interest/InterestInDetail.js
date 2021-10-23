@@ -66,6 +66,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
 import { myApi } from 'src/Api';
+import defaultimg from '../../assets/images/defaultimg.png';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -211,8 +212,8 @@ export default function InterestInDetail(props) {
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
                       */}
                       <img style={{ height: '400px', width: '500px' }}
-                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} 
-                          />
+                        src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:"" } 
+                        onError={e => { e.currentTarget.src = defaultimg; }}  />
                     </Grid>
                     <Grid item md={6}>
                       {props.selectedData.description}
