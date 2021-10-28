@@ -55,7 +55,6 @@ You should be able to see the landing page.
 ## Features
 
 - PWA developed using React, React-hooks, Redux, Material-Ui and other useful resources mentioned above.
-- Secured using parse authentication
 - Unit test coverage(React Testing Library)
 
 ## About
@@ -74,11 +73,11 @@ You should be able to see the landing page.
 -  Admin have privilage to block and activate user 
 -  Admin have privilage reject or approve request
 
-# Admin User
+## Admin User
     - username:admin@serveend.com
     - password:admin
 
-# Public user
+## Public user
     - username:pesto@pestotech.com
     - password:pesto
 
