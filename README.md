@@ -6,6 +6,8 @@
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Features](#features)
+- [About](#about)
+- [Credentials](#credentials)
 - [Screenshots](#screenshots)
 - [Contributors](#contributors)
 - [Community](#Community)
@@ -21,7 +23,7 @@ Frontend and Backend are hosted on Heroku
 
 ## Technologies used to build this project
 
-![Node.js **v12.18.3**](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)\
+![Node.js **v12.18.3**](https://img.shields.io/badge/Node-Node-white)\
 ![React JS](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)\
 ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)\
 ![Mongo](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
@@ -72,7 +74,7 @@ You should be able to see the landing page.
 -  Admin can manage request given by user 
 -  Admin have privilage to block and activate user 
 -  Admin have privilage reject or approve request
-
+# Credentials
 ## Admin User
     - username:admin@serveend.com
     - password:admin
