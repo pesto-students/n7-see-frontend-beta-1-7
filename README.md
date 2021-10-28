@@ -1,4 +1,4 @@
-<p align="center">
+<p align="center" font-size="30">
         Serve End - SeE
 </p>
 
