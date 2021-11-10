@@ -2,9 +2,6 @@
         Serve End - SeE
 </p>
 
-
-## Introduction
-
 ServeEnd(SEE) an online platform for people to flea market to find best deals on all type of services.Peoples have local made products, people who want to sell or buy used
 products,our platform provide wide connection for those users to give communication to all customers in network.
 
