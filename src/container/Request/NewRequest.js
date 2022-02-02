@@ -233,7 +233,7 @@ const onClickHandler = () => {
   data.append('file', myFile)
   axios.post(`${myApi}/request/upload`, data)
     .then(res => { 
-      console.log("SDfdsf",res.data)
+      // console.log("SDfdsf",res.data)
       var result=res.data;
       result.filename=res.data.originalname;
       setShowImage([...showImage,result]);
