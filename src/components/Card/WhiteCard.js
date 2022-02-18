@@ -130,8 +130,6 @@ export default function WhiteCard(props) {
       state: items
     })
   };
-
-
   // const counter = useSelector(getCounter);
 // console.log("dsdfsd",props.item);
   // const dispatch = useDispatch();
@@ -166,6 +164,7 @@ export default function WhiteCard(props) {
         </div>
         {/* <img src={img31} width="100%"/> */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
+
          
       {
          props.item!==""&&props.item.image.length>0? <img src={`${myApiS3}/${props.item.image[0].filename}`} onError={e => { e.currentTarget.src = defaultimg; }} width="300px" height="250px"/>:

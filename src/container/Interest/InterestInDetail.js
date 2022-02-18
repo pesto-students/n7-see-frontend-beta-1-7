@@ -65,6 +65,7 @@ import { Redirect, useNavigate } from 'react-router-dom';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
+
 import { myApi,myApiS3 } from 'src/Api';
 import defaultimg from '../../assets/images/defaultimg.png';
 const drawerWidth = 240;
@@ -157,8 +158,10 @@ export default function InterestInDetail(props) {
   useEffect(() => {
     const getMyContactDetails = async () => {
       setLoadingIndicator(true);
-      await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.r_id}`).then((resp) => {
+
+      await axios.get(`${myApi}/users/getcontactinfo/${props.selectedData.u_id}`).then((resp) => {
         // console.log(resp);
+        console.log(resp);
         setContactData(resp.data!==""&&resp.data!==null?resp.data.response:null);
         setLoadingIndicator(false);
       }).catch((e) => {
@@ -212,6 +215,7 @@ export default function InterestInDetail(props) {
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApi}/${props.selectedData.image[0].filename}`:""} />
                       */}
                       <img style={{ height: '400px', width: '500px' }}
+
                         src={props.selectedData.image!==undefined&&props.selectedData.image.length>0?`${myApiS3}/${props.selectedData.image[0].filename}`:"" } 
                         onError={e => { e.currentTarget.src = defaultimg; }}  />
                     </Grid>

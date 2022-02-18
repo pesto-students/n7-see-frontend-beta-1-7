@@ -163,6 +163,7 @@ export default function DetailCard(props) {
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:"5px"}}>
         {
+
           // <img src={`${myApi}/${props.item.image[0].filename}
         props.item!==""&&props.item.image.length>0? <img src={`${myApiS3}/${props.item.image[0].filename}`} onError={e => { e.currentTarget.src = defaultimg; }} width="300px" height="250px"/>:
         <img src={defaultimg} width="300px" height="250px"/>

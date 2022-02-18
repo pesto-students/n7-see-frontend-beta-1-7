@@ -144,7 +144,6 @@ export default function Search(props) {
     >
       <Grid item md={4} lg={4}>
         <div className={classes.image}>
-        
           <img src={ props.data!==""&&props.data.image.length>0?`${myApiS3}/${props.data.image[0].filename}`:img2} onError={e => { e.currentTarget.src = img2; }} className={classes.image} />
         </div>
 

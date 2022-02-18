@@ -60,6 +60,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 // import { Skeleton } from '@material-ui/lab';
 import Skeleton from '@material-ui/core/Skeleton';
 import RSelect from '../../components/Select/RSelect';
+
 import { myApi,myApiS3 } from 'src/Api';
 import defaultimg from '../../assets/images/defaultimg.png';
 const drawerWidth = 240;
@@ -268,6 +269,7 @@ export default function Detail(props) {
 
                     <Grid item md={6}>
                     <img style={{ height: '400px', width: '500px' }}
+
                         src={itemDetails!==null&&itemDetails.image!==undefined&&itemDetails.image.length>0?`${myApiS3}/${itemDetails.image[0].filename}`:""}
                         onError={e => { e.currentTarget.src = defaultimg; }}
                           />

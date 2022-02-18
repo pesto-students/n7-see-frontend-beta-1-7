@@ -84,6 +84,7 @@ export default function HighlightCard(props) {
       />
       <Divider/>
       <div style={{display:"flex",justifyContent:"center"}} >
+
       <img src={props.item!==""&&props.item.image.length>0?`${myApiS3}/${props.item.image[0].filename}`:img2} onError={e => { e.currentTarget.src = img2; }} width="300px" height="200px" />
         </div>
       
