@@ -233,12 +233,17 @@ const onClickHandler = () => {
   data.append('file', myFile)
   axios.post(`${myApi}/request/upload`, data)
     .then(res => { 
-      // console.log("SDfdsf",res.data)
+      console.log("SDfdsf",res.data)
       var result=res.data;
-      result.filename=res.data.originalname;
+      // result.filename=res.data.originalname;
+      result.filename=res.data.key;
       setShowImage([...showImage,result]);
       setMyFile(null)
       //console.log(`${myApi}/${res.data.filename}`)
+      setLoadingIndicator(false)
+    })
+    .catch((err)=>{
+      toast.error("Image upload failed!!", { autoClose: 3000, });
       setLoadingIndicator(false)
     })
   }
